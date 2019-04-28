@@ -1,6 +1,6 @@
 Class {
 	#name : #FAMIXNamespaceChefTest,
-	#superclass : #AbstractFAMIXNavigationTest,
+	#superclass : #TestCase,
 	#category : #'Famix-Tests-Core'
 }
 
