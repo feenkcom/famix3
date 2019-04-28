@@ -19,7 +19,7 @@ BaselineOfFamix3SmalltalkImporter >> baseline: spec [
 				package: 'Moose-Tests-SmalltalkImporter-Core' with: [
 					spec requires: #('Moose-Tests-SmalltalkImporter-LAN' 'Moose-TestResources-Reference-PackageOne') ];
 				package: 'Moose-Tests-SmalltalkImporter-LAN' with: [
-					spec requires: #('Moose-Tests-Core' 'Moose-TestResources-LAN') ];
+					spec requires: #('Moose-TestResources-LAN') ];
 				package: 'Famix-Tests-Extensions' with: [
 					spec requires: #('Moose-TestResources-LCOM') ];
 				package: #'Moose-TestResources-KGB-P1FullReferencer' with: [
