@@ -95,6 +95,14 @@ FAMIXAnnotationInstance >> belongsTo [
 	^ self annotatedEntity
 ]
 
+{ #category : #accessing }
+FAMIXAnnotationInstance >> children [
+	| res |
+	res := OrderedCollection new.
+	self childrenSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
+	^ res asSet
+]
+
 { #category : #'moosequery-queries-incoming' }
 FAMIXAnnotationInstance >> incomingTypeDeclarations [
 	"Should return the incoming type declarations of the entity as MooseQueryTypeDeclarationAssociation.
@@ -140,4 +148,40 @@ FAMIXAnnotationInstance >> outgoingTypeDeclarations [
 	typeDeclaration is a virtual association that relates a structural entity (i.e. a variable) to its type."
 
 	^ {}
+]
+
+{ #category : #accessing }
+FAMIXAnnotationInstance >> parents [
+	| res |
+	res := OrderedCollection new.
+	self parentSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
+	^ res asSet
+]
+
+{ #category : #'moosequery-queries-incoming' }
+FAMIXAnnotationInstance >> queryIncomingTypeDeclarationsIn: aCollection [
+	"This method could be more readable but it needs to be really performant"
+
+	| selectors |
+	1 to: (selectors := self childrenSelectors) size do: [ :index | 
+		(self perform: (selectors at: index))
+			ifNotNil: [ :children | 
+				| coll |
+				1 to: (coll := children asFamixCollection) size do: [ :i | (coll at: i) queryIncomingTypeDeclarationsIn: aCollection ] ] ].
+	aCollection addAll: self incomingTypeDeclarations.
+	^ aCollection
+]
+
+{ #category : #'moosequery-queries-outgoing' }
+FAMIXAnnotationInstance >> queryOutgoingTypeDeclarationsIn: aCollection [
+	"This method could be more readable but it needs to be really performant"
+
+	| selectors |
+	1 to: (selectors := self childrenSelectors) size do: [ :index | 
+		(self perform: (selectors at: index))
+			ifNotNil: [ :children | 
+				| coll |
+				1 to: (coll := children asFamixCollection) size do: [ :i | (coll at: i) queryOutgoingTypeDeclarationsIn: aCollection ] ] ].
+	aCollection addAll: self outgoingTypeDeclarations.
+	^ aCollection
 ]

@@ -123,6 +123,14 @@ FAMIXNamedEntity >> belongsTo [
 	^self subclassResponsibility
 ]
 
+{ #category : #accessing }
+FAMIXNamedEntity >> children [
+	| res |
+	res := OrderedCollection new.
+	self childrenSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
+	^ res asSet
+]
+
 { #category : #testing }
 FAMIXNamedEntity >> hasUniqueMooseNameInModel [
 	" all subclasses should call the method: 'resetMooseName' if a change causes the moosename to change "
@@ -236,6 +244,42 @@ FAMIXNamedEntity >> parentPackage: aPackage [
 					update: #childNamedEntities
 					from: self parentPackage
 					to: aPackage
+]
+
+{ #category : #accessing }
+FAMIXNamedEntity >> parents [
+	| res |
+	res := OrderedCollection new.
+	self parentSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
+	^ res asSet
+]
+
+{ #category : #'moosequery-queries-incoming' }
+FAMIXNamedEntity >> queryIncomingTypeDeclarationsIn: aCollection [
+	"This method could be more readable but it needs to be really performant"
+
+	| selectors |
+	1 to: (selectors := self childrenSelectors) size do: [ :index | 
+		(self perform: (selectors at: index))
+			ifNotNil: [ :children | 
+				| coll |
+				1 to: (coll := children asFamixCollection) size do: [ :i | (coll at: i) queryIncomingTypeDeclarationsIn: aCollection ] ] ].
+	aCollection addAll: self incomingTypeDeclarations.
+	^ aCollection
+]
+
+{ #category : #'moosequery-queries-outgoing' }
+FAMIXNamedEntity >> queryOutgoingTypeDeclarationsIn: aCollection [
+	"This method could be more readable but it needs to be really performant"
+
+	| selectors |
+	1 to: (selectors := self childrenSelectors) size do: [ :index | 
+		(self perform: (selectors at: index))
+			ifNotNil: [ :children | 
+				| coll |
+				1 to: (coll := children asFamixCollection) size do: [ :i | (coll at: i) queryOutgoingTypeDeclarationsIn: aCollection ] ] ].
+	aCollection addAll: self outgoingTypeDeclarations.
+	^ aCollection
 ]
 
 { #category : #accessing }

@@ -25,6 +25,11 @@ MooseOutgoingQueryResult >> opposite: aDependency [
 ]
 
 { #category : #accessing }
+MooseOutgoingQueryResult >> opposites [
+	^ self newObjectResultWith: (self storage flatCollectAsSet: [ :d | (self opposite: d) asFamixCollection ])
+]
+
+{ #category : #accessing }
 MooseOutgoingQueryResult >> sourceClasses [
 
 	^ self sources collectAsSet: #typeScope
@@ -34,4 +39,11 @@ MooseOutgoingQueryResult >> sourceClasses [
 MooseOutgoingQueryResult >> sources [
 
 	^ self collectAsSet: #from
+]
+
+{ #category : #filtering }
+MooseOutgoingQueryResult >> withoutSelfLoops [
+	"exclude dependencies which loop back to the receiver"
+
+	^ self reject: [ :dep | (self opposite: dep) asFamixCollection anySatisfy: [ :opp | opp withAllParents includes: self receiver ] ]
 ]

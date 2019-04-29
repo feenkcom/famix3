@@ -265,7 +265,7 @@ TEntityMetaLevelDependency >> atScope: aClassFAMIX in: aCollection [
 TEntityMetaLevelDependency >> children [
 	| res |
 	res := OrderedCollection new.
-	self childrenSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asCollection ] ].
+	self childrenSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
 	^ res asSet
 ]
 
@@ -358,7 +358,7 @@ TEntityMetaLevelDependency >> parentTypes [
 TEntityMetaLevelDependency >> parents [
 	| res |
 	res := OrderedCollection new.
-	self parentSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asCollection ] ].
+	self parentSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
 	^ res asSet
 ]
 

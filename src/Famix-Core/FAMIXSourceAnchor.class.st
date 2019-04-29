@@ -39,6 +39,14 @@ FAMIXSourceAnchor class >> outgoingMSEProperties [
 ]
 
 { #category : #accessing }
+FAMIXSourceAnchor >> children [
+	| res |
+	res := OrderedCollection new.
+	self childrenSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
+	^ res asSet
+]
+
+{ #category : #accessing }
 FAMIXSourceAnchor >> completeText [
 	"The complete text of a FileAnchor contains all the code of the file pointed by the source anchor. On the contrary the #sourceText return only the pant of the file concerned by the entity. For example a FAMIXFileAnchon knows the start line and end line of the source anchor into the file."
 	
@@ -99,6 +107,14 @@ FAMIXSourceAnchor >> outgoingTypeDeclarations [
 	^ {}
 ]
 
+{ #category : #accessing }
+FAMIXSourceAnchor >> parents [
+	| res |
+	res := OrderedCollection new.
+	self parentSelectors do: [ :accessor | (self perform: accessor) ifNotNil: [ :r | res addAll: r asFamixCollection ] ].
+	^ res asSet
+]
+
 { #category : #'moosequery-queries-incoming' }
 FAMIXSourceAnchor >> queryAllIncomingInvocations [
 	^ MooseQueryResult new
@@ -124,6 +140,20 @@ FAMIXSourceAnchor >> queryIncomingTypeDeclarations [
 	^ MooseQueryResult new
 ]
 
+{ #category : #'moosequery-queries-incoming' }
+FAMIXSourceAnchor >> queryIncomingTypeDeclarationsIn: aCollection [
+	"This method could be more readable but it needs to be really performant"
+
+	| selectors |
+	1 to: (selectors := self childrenSelectors) size do: [ :index | 
+		(self perform: (selectors at: index))
+			ifNotNil: [ :children | 
+				| coll |
+				1 to: (coll := children asFamixCollection) size do: [ :i | (coll at: i) queryIncomingTypeDeclarationsIn: aCollection ] ] ].
+	aCollection addAll: self incomingTypeDeclarations.
+	^ aCollection
+]
+
 { #category : #'moosequery-queries-outgoing' }
 FAMIXSourceAnchor >> queryOutgoingAccesses [
 	^ MooseQueryResult new
@@ -137,6 +167,20 @@ FAMIXSourceAnchor >> queryOutgoingReferences [
 { #category : #'moosequery-queries-outgoing' }
 FAMIXSourceAnchor >> queryOutgoingTypeDeclarations [
 	^ MooseQueryResult new
+]
+
+{ #category : #'moosequery-queries-outgoing' }
+FAMIXSourceAnchor >> queryOutgoingTypeDeclarationsIn: aCollection [
+	"This method could be more readable but it needs to be really performant"
+
+	| selectors |
+	1 to: (selectors := self childrenSelectors) size do: [ :index | 
+		(self perform: (selectors at: index))
+			ifNotNil: [ :children | 
+				| coll |
+				1 to: (coll := children asFamixCollection) size do: [ :i | (coll at: i) queryOutgoingTypeDeclarationsIn: aCollection ] ] ].
+	aCollection addAll: self outgoingTypeDeclarations.
+	^ aCollection
 ]
 
 { #category : #'moosequery-queries-incoming' }

@@ -180,7 +180,7 @@ FAMIXType >> printOn: aStream [
 		parent mooseNameOn: aStream ].
 	aStream 
 		nextPutAll: ' (';
-		nextPutAll: (self class name removePrefix: 'FAMIX');
+		nextPutAll: (self class name famixRemovePrefix: 'FAMIX');
 		nextPutAll: ')'
 ]
 

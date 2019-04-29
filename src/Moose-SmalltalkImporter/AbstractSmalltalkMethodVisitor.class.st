@@ -174,7 +174,7 @@ AbstractSmalltalkMethodVisitor >> resolveInstanceSide: aNamedEntity [
 
 	((aNamedEntity isKindOf: FAMIXClass) and: ['*_class' match: aNamedEntity name])
 		ifTrue: [| className |
-				className := aNamedEntity name removeSuffix: '_class'.
+				className := aNamedEntity name famixRemoveSuffix: '_class'.
 				^ importer ensureClass: (Smalltalk at: className asSymbol) ]
 		ifFalse: [ ^ aNamedEntity ]
 ]

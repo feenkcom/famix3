@@ -23,6 +23,11 @@ MooseIncomingQueryResult >> opposite: aDependency [
 	^ aDependency from
 ]
 
+{ #category : #accessing }
+MooseIncomingQueryResult >> opposites [
+	^ self newObjectResultWith: (self storage flatCollectAsSet: [ :d | (self opposite: d) asFamixCollection ])
+]
+
 { #category : #scoping }
 MooseIncomingQueryResult >> primCollectAtScope: aScopeSymbol [
 	"
@@ -51,4 +56,11 @@ MooseIncomingQueryResult >> targetMethods [
 MooseIncomingQueryResult >> targets [
 
 	^ self collectAsSet: #to
+]
+
+{ #category : #filtering }
+MooseIncomingQueryResult >> withoutSelfLoops [
+	"exclude dependencies which loop back to the receiver"
+
+	^ self reject: [ :dep | (self opposite: dep) asFamixCollection anySatisfy: [ :opp | opp withAllParents includes: self receiver ] ]
 ]

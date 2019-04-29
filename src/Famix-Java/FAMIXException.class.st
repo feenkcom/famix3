@@ -35,7 +35,7 @@ FAMIXException >> exceptionClass: anObject [
 
 { #category : #accessing }
 FAMIXException >> mooseNameOn: aStream [ 
-	aStream nextPutAll: (self class name removePrefix: 'FAMIX').
+	aStream nextPutAll: (self class name famixRemovePrefix: 'FAMIX').
 	aStream nextPut: $-.
 	self exceptionClass notNil ifTrue: [self exceptionClass mooseNameOn: aStream]
 ]

@@ -91,7 +91,7 @@ SmalltalkImporter >> createAnnotationType: aPragmaNode [
 		(aPragmaNode selector piecesCutWhere: [:a :b | a = $: ]) do: [ :each | 
 			| attribute |
 			attribute := FAMIXAnnotationTypeAttribute new.
-			attribute name: (each removeSuffix: ':').
+			attribute name: (each famixRemoveSuffix: ':').
 			attribute parentAnnotationType: pragmaAnnotationType.
 			self addEntity: attribute
 			] ].

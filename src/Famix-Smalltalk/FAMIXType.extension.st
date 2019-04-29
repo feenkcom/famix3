@@ -31,7 +31,7 @@ FAMIXType >> instanceSide [
 	^self isClassSide
 		ifTrue:
 			[self mooseModel allClasses
-				entityNamed: (self mooseName removeSuffix: '_class') asSymbol]
+				entityNamed: (self mooseName famixRemoveSuffix: '_class') asSymbol]
 		ifFalse: [self]
 ]
 
