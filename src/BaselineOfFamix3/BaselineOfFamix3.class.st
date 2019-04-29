@@ -14,6 +14,9 @@ BaselineOfFamix3 >> baseline: spec [
 				baseline: 'Fame' with: [
 					spec repository: 'github://feenkcom/famix3/src' ].
 			spec 
+				baseline: 'CollectionExtensions' with: [
+					spec repository: 'github://pharo-contributions/CollectionExtensions/src' ].
+			spec 
 				package: 'Famix-C' with: [
 					spec requires: #('Famix-Core' 'Famix-File' ). ];
 				package: 'Famix-Core' with: [
