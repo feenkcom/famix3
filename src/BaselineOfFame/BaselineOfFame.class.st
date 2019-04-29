@@ -11,6 +11,9 @@ BaselineOfFame >> baseline: spec [
 		for: #common
 		do: [ 
 			spec
+			    baseline: 'Mocketry'
+			    with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ].
+			spec
 				package: 'Fame-Core';
 				package: 'Fame-Util';
 				package: 'Fame-ImportExport' with: [ spec requires: #('Fame-Core') ];
