@@ -27,7 +27,7 @@ FMImporter >> assign: element to: serial [
 		[ :each | 
 		each resolve: element.
 		tally := tally - 1.
-		tally should >= 0 ]
+		self assert: [ tally >= 0 ] ]
 ]
 
 { #category : #parsing }
