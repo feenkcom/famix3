@@ -63,7 +63,7 @@ FAMIXComment >> content: aString [
 { #category : #accessing }
 FAMIXComment >> gtDisplayOn: aStream [
 	| preview |
-	preview := self sourceText truncate: 10.
+	preview := self sourceText.
 	preview := preview copyReplaceAll: (String with: Character cr with: Character lf) with: ' '.	
 	preview := preview copyReplaceAll: (String with: Character cr) with: ' '.	
 	preview := preview copyReplaceAll: (String with: Character lf) with: ' '.
