@@ -217,6 +217,15 @@ FAMIXTypeGroup >> efferentCoupling [
 	^ (cgClasses flatCollect: [ :aClass | (aClass queryOutgoingDependencies atScope: FAMIXType) select: [ :c | (cgClasses includes: c) not and: [ c isInstanceSide ] ] ]) asSet size
 ]
 
+{ #category : #accessing }
+FAMIXTypeGroup >> gtHierarchyFor: aView [
+	<gtView>
+	^ aView mondrian
+		title: 'Hierarchy';
+		priority: 5;
+		painting: [ :m | self viewHierarchyWith: m ]
+]
+
 { #category : #'*famix-extensions-metrics' }
 FAMIXTypeGroup >> instability [
 	"I =	Ce(P)/(Ce(P)+Ca(P)), in the range [0, 1]. 0 means package is maximally stable (i.e., no dependency to other packages and can not change without big consequences), 1 means it is unstable."
@@ -230,6 +239,22 @@ FAMIXTypeGroup >> instability [
 	afferentCoupling := self afferentCoupling.
 	(efferentCoupling + afferentCoupling) == 0 ifTrue: [^ nil].
 	^ efferentCoupling / (efferentCoupling + afferentCoupling) asFloat
+]
+
+{ #category : #accessing }
+FAMIXTypeGroup >> viewHierarchyWith: mondrian [
+	mondrian nodes 
+		stencil: [ :c | 
+			BlElement new 
+				border: (BlBorder paint: (Color black alpha: 0.5) width: 2);
+				width: (c numberOfAttributes max: 5);
+				height: (c numberOfMethods max: 5)];
+		with: self.
+	mondrian edges 
+		fromCenterBottom;
+		toCenterTop;
+		connectFrom: #superclass.
+	mondrian layout custom: (GtGraphTreeLayout new).
 ]
 
 { #category : #navigation }
