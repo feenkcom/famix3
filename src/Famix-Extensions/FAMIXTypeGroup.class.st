@@ -223,7 +223,7 @@ FAMIXTypeGroup >> gtHierarchyFor: aView [
 	^ aView mondrian
 		title: 'Hierarchy';
 		priority: 5;
-		painting: [ :m | self viewHierarchyWith: m ]
+		painting: [ :m | self paintHierarchyWith: m ]
 ]
 
 { #category : #'*famix-extensions-metrics' }
@@ -242,7 +242,7 @@ FAMIXTypeGroup >> instability [
 ]
 
 { #category : #accessing }
-FAMIXTypeGroup >> viewHierarchyWith: mondrian [
+FAMIXTypeGroup >> paintHierarchyWith: mondrian [
 	mondrian nodes 
 		stencil: [ :c | 
 			BlElement new 
