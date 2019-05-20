@@ -19,6 +19,8 @@ BaselineOfFamix3 >> baseline: spec [
 			spec 
 				package: 'Famix-C' with: [
 					spec requires: #('Famix-Core' 'Famix-File' ). ];
+				package: 'Famix-CPP' with: [
+					spec requires: #('Famix-Core' 'Famix-File' 'Famix-C' ). ];
 				package: 'Famix-Core' with: [
 					spec requires: #('Moose-Core' ). ];
 				package: 'Famix-Extensions' with: [
