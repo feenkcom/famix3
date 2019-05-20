@@ -3,13 +3,13 @@ FAMIXMethodGroup is a MooseGroup containing only FAMIX enities of type FAMIXMeth
 "
 Class {
 	#name : #FAMIXMethodGroup,
-	#superclass : #MooseGroup,
+	#superclass : #FAMIXBehaviouralEntityGroup,
 	#category : #'Famix-Extensions'
 }
 
 { #category : #meta }
 FAMIXMethodGroup class >> annotation [
-	<MSEClass: #MethodGroup super: #MooseGroup>
+	<MSEClass: #MethodGroup super: #FAMIXBehaviouralEntityGroup>
 	<package: #FAMIX>
 
 ]
