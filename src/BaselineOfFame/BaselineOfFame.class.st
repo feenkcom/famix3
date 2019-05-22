@@ -10,9 +10,9 @@ BaselineOfFame >> baseline: spec [
 	spec
 		for: #common
 		do: [ 
-			spec
+			"spec
 			    baseline: 'Mocketry'
-			    with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ].
+			    with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ]."
 			spec
 				package: 'Fame-Core';
 				package: 'Fame-Util';
