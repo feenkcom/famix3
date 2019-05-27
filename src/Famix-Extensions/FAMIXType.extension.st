@@ -17,6 +17,11 @@ FAMIXType >> accessTo: aFAMIXPackageOrFAMIXClass [
 ]
 
 { #category : #'*Famix-Extensions' }
+FAMIXType >> accessorMethods [
+	^ self methods select: #isPureAccessor
+]
+
+{ #category : #'*Famix-Extensions' }
 FAMIXType >> allAnnotationInstances [
 	| result |
 	result := OrderedCollection new.
@@ -62,6 +67,11 @@ FAMIXType >> clientTypes [
 	<derived>
 	<MSEComment: 'All types that depend on (inherit, staticly access, or use some methods of) the receiver'>
 	^ (self queryAllIncoming atScope: FAMIXType) withoutSelfLoops
+]
+
+{ #category : #'*Famix-Extensions' }
+FAMIXType >> constructors [
+	^ self methods select: #isConstructor
 ]
 
 { #category : #'*Famix-Extensions' }
@@ -113,6 +123,11 @@ FAMIXType >> fanOut: aNumber [
 ]
 
 { #category : #'*Famix-Extensions' }
+FAMIXType >> getterMethods [
+	^ self methods select: #isGetter
+]
+
+{ #category : #'*Famix-Extensions' }
 FAMIXType >> hasMethodWithSignature: aStringOrSymbol [
 	| symbol |
 	symbol := aStringOrSymbol asSymbol.
@@ -150,6 +165,11 @@ FAMIXType >> hierarchyNestingLevel: aNumber [
 	self privateState propertyAt: #hierarchyNestingLevel put: aNumber
 ]
 
+{ #category : #'*Famix-Extensions' }
+FAMIXType >> implementationMethods [
+	^ self methods select: #isInternalImplementation
+]
+
 { #category : #'*Famix-Extensions-navigation' }
 FAMIXType >> incomingAccesses [
 	^ self privateState 
@@ -166,6 +186,14 @@ FAMIXType >> incomingAccessesGroup [
 			[MooseGroup
 				withAll: self incomingAccesses
 				withDescription: 'Incoming accesses to ' , self mooseName]
+]
+
+{ #category : #'*Famix-Extensions' }
+FAMIXType >> interfaceMethods [
+	^ self methods select: [:each | 
+		each isInternalImplementation not & 
+		each isInitializer not & 
+		each isPureAccessor not]
 ]
 
 { #category : #'*Famix-Extensions' }

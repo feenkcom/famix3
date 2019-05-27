@@ -148,6 +148,24 @@ FAMIXType >> container: aContainerEntity [
 ]
 
 { #category : #accessing }
+FAMIXType >> gtAttributesFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Attributes';
+		priority: 15;
+		items: [ self attributes ]
+]
+
+{ #category : #accessing }
+FAMIXType >> gtMethodsFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Methods';
+		priority: 10;
+		items: [ self methods ]
+]
+
+{ #category : #accessing }
 FAMIXType >> incomingReferences [
 	<MSEProperty: #incomingReferences type: #FAMIXReference opposite: #target> <multivalued> <derived>
 	<MSEComment: 'References to this entity by other entities.'>
@@ -223,6 +241,41 @@ FAMIXType >> outgoingTraitUsages: aCollectionOfTraitUsages [
 FAMIXType >> packageScope [
 
 	^ self parentPackage
+]
+
+{ #category : #accessing }
+FAMIXType >> paintBlueprintWith: m [
+	m nodes 
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
+		with: {self constructors};
+		forEach: [ :group | 
+			m nodes with: group.
+			m layout vertical ].
+	m nodes 
+		with: {self interfaceMethods};
+		forEach: [ :group | 
+			m nodes with: group.
+			m layout vertical ].
+	m nodes 
+		with: {self implementationMethods};
+		forEach: [ :group | 
+			m nodes with: group.
+			m layout vertical ].
+	m nodes 
+		with: {self accessorMethods};
+		forEach: [ :group | 
+			m nodes with: group.
+			m layout vertical ].
+	m nodes 
+		with: {self attributes};
+		forEach: [ :group | 
+			m nodes with: group.
+			m layout vertical ].
+	m edges connect: self methods toAll: [:method | 
+		method outgoingInvocations flatCollectAsSet: #candidates ].
+	m edges connect: self methods toAll: [:method | 
+		method accesses collectAsSet: #variable ].
+	m layout tree
 ]
 
 { #category : #accessing }
