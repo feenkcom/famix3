@@ -148,24 +148,6 @@ FAMIXType >> container: aContainerEntity [
 ]
 
 { #category : #accessing }
-FAMIXType >> gtAttributesFor: aView [
-	<gtView>
-	^ aView list
-		title: 'Attributes';
-		priority: 15;
-		items: [ self attributes ]
-]
-
-{ #category : #accessing }
-FAMIXType >> gtMethodsFor: aView [
-	<gtView>
-	^ aView list
-		title: 'Methods';
-		priority: 10;
-		items: [ self methods ]
-]
-
-{ #category : #accessing }
 FAMIXType >> incomingReferences [
 	<MSEProperty: #incomingReferences type: #FAMIXReference opposite: #target> <multivalued> <derived>
 	<MSEComment: 'References to this entity by other entities.'>
