@@ -148,6 +148,14 @@ FAMIXType >> container: aContainerEntity [
 ]
 
 { #category : #accessing }
+FAMIXType >> gtBlueprintFor: aView [
+	<gtView>
+	^ aView mondrian
+		title: 'Blueprint';
+		painting: [ :m | self paintBlueprintWith: m ]
+]
+
+{ #category : #accessing }
 FAMIXType >> incomingReferences [
 	<MSEProperty: #incomingReferences type: #FAMIXReference opposite: #target> <multivalued> <derived>
 	<MSEComment: 'References to this entity by other entities.'>
@@ -232,27 +240,31 @@ FAMIXType >> paintBlueprintWith: m [
 		with: {self constructors};
 		forEach: [ :group | 
 			m nodes with: group.
-			m layout vertical ].
+			m layout vertical cellSpacing: 5 ].
 	m nodes 
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
 		with: {self interfaceMethods};
 		forEach: [ :group | 
 			m nodes with: group.
-			m layout vertical ].
+			m layout vertical cellSpacing: 5 ].
 	m nodes 
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
 		with: {self implementationMethods};
 		forEach: [ :group | 
 			m nodes with: group.
-			m layout vertical ].
+			m layout vertical cellSpacing: 5 ].
 	m nodes 
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
 		with: {self accessorMethods};
 		forEach: [ :group | 
 			m nodes with: group.
-			m layout vertical ].
+			m layout vertical cellSpacing: 5 ].
 	m nodes 
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
 		with: {self attributes};
 		forEach: [ :group | 
 			m nodes with: group.
-			m layout vertical ].
+			m layout vertical cellSpacing: 5 ].
 	m edges connect: self methods toAll: [:method | 
 		method outgoingInvocations flatCollectAsSet: #candidates ].
 	m edges connect: self methods toAll: [:method | 
