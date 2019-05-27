@@ -236,31 +236,31 @@ FAMIXType >> packageScope [
 { #category : #accessing }
 FAMIXType >> paintBlueprintWith: m [
 	m nodes 
-		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 10) ];
 		with: {self constructors};
 		forEach: [ :group | 
 			m nodes with: group.
 			m layout vertical cellSpacing: 5 ].
 	m nodes 
-		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 10) ];
 		with: {self interfaceMethods};
 		forEach: [ :group | 
 			m nodes with: group.
 			m layout vertical cellSpacing: 5 ].
 	m nodes 
-		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 10) ];
 		with: {self implementationMethods};
 		forEach: [ :group | 
 			m nodes with: group.
 			m layout vertical cellSpacing: 5 ].
 	m nodes 
-		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 10) ];
 		with: {self accessorMethods};
 		forEach: [ :group | 
 			m nodes with: group.
-			m layout vertical cellSpacing: 5 ].
+			m layout horizontalTree ].
 	m nodes 
-		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 5) ];
+		stencil: [:method | BlElement new border: (BlBorder paint: Color gray); padding: (BlInsets all: 10) ];
 		with: {self attributes};
 		forEach: [ :group | 
 			m nodes with: group.
@@ -269,7 +269,7 @@ FAMIXType >> paintBlueprintWith: m [
 		method outgoingInvocations flatCollectAsSet: #candidates ].
 	m edges connect: self methods toAll: [:method | 
 		method accesses collectAsSet: #variable ].
-	m layout tree
+	m layout horizontal
 ]
 
 { #category : #accessing }
