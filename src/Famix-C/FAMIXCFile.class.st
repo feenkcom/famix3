@@ -36,6 +36,11 @@ FAMIXCFile >> allIncomingIncludeRelations: visitedPath [
 ]
 
 { #category : #accessing }
+FAMIXCFile >> basenameWithoutExtension [
+	^ ((self name gtRemoveSuffix: '.h') gtRemoveSuffix: '.cpp') gtRemoveSuffix: '.c'
+]
+
+{ #category : #accessing }
 FAMIXCFile >> includedFiles [
 	<MSEProperty: #includedFiles type: #FAMIXCFile> <multivalued> <derived>
 	<MSEComment: 'Files included by this file.'>
