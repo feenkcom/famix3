@@ -28,7 +28,7 @@ FMFutureAttribute >> count: aNumber [
 
 { #category : #parsing }
 FMFutureAttribute >> endAttribute: aString [ 
-	name should = aString.
+	self assert: [ name = aString ].
 	self maybeEnd
 ]
 
