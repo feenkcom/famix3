@@ -360,6 +360,13 @@ MooseModel >> exportToMSEStream: aStream [
 	self class export: self to: aStream
 ]
 
+{ #category : #accessing }
+MooseModel >> gtRootFolderFor: aView [
+	<gtView>
+	self rootFolder isNil ifTrue: [ ^ aView empty].
+	^ (self rootFolder gtItemsFor: aView) title: 'Root folder'
+]
+
 { #category : #actions }
 MooseModel >> importFromMSEStream: aStream [
 	"Benchmarks
