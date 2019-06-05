@@ -1,44 +1,47 @@
-"
-This offers a source anchor that connects a sourced entity to a file through a relative path stored in the fileName.
-Contrary to FAMIXFileAnchor positions in the file are recorded as number of characters from the begining
-"
 Class {
-	#name : #FAMIXIndexedFileAnchor,
-	#superclass : #FAMIXAbstractFileReferenceAnchor,
+	#name : #FAMIXIndexedFileEntityAnchor,
+	#superclass : #FAMIXAbstractFileAnchor,
 	#instVars : [
+		'correspondingFile',
 		'startPos',
 		'endPos'
 	],
-	#category : #'Famix-SourceAnchor'
+	#category : #'Famix-File'
 }
 
-{ #category : #meta }
-FAMIXIndexedFileAnchor class >> annotation [
-	<MSEClass: #IndexedFileAnchor super: #FAMIXAbstractFileAnchor>
-	<package: #FAMIX>
-]
-
 { #category : #'instance creation' }
-FAMIXIndexedFileAnchor class >> fileName: aString startPos: anInteger endPos: anotherInteger [
+FAMIXIndexedFileEntityAnchor class >> file: aFAMIXFile startPos: anInteger endPos: anotherInteger [
 	^ self
-		fileName: aString
+		file: aFAMIXFile
 		startPos: anInteger
 		endPos: anotherInteger
 		model: nil
 ]
 
 { #category : #'instance creation' }
-FAMIXIndexedFileAnchor class >> fileName: aString startPos: anInteger endPos: anotherInteger model: aMooseModel [
+FAMIXIndexedFileEntityAnchor class >> file: aFAMIXFile startPos: anInteger endPos: anotherInteger model: aMooseModel [
 	^ self new
 		mooseModel: aMooseModel;
-		fileName: aString;
+		correspondingFile: aFAMIXFile;
 		startPos: anInteger;
 		endPos: anotherInteger;
 		yourself
 ]
 
+{ #category : #accessing }
+FAMIXIndexedFileEntityAnchor >> correspondingFile [
+	<MSEProperty: #correspondingFile type: #FAMIXFile>
+	<MSEComment: 'File associated to this source anchor'>
+	^ correspondingFile
+]
+
+{ #category : #accessing }
+FAMIXIndexedFileEntityAnchor >> correspondingFile: aFAMIXFile [
+	correspondingFile := aFAMIXFile
+]
+
 { #category : #private }
-FAMIXIndexedFileAnchor >> countNumberOfLinesRuturnsFrom: aStream from: start to: end [
+FAMIXIndexedFileEntityAnchor >> countNumberOfLinesRuturnsFrom: aStream from: start to: end [
 	"Here is a speedup version of the #lineCount method for the IndexedFileAnchors.
 	If we have the file of the entity, instead of reading the full file we can jump directly to the startPos in the stream of the file and read the characters until the endPos. 
 	If it is a cr we increment a counter and we ignore a potential lf to manage crlf. If this is a lf, we increment."
@@ -59,19 +62,29 @@ FAMIXIndexedFileAnchor >> countNumberOfLinesRuturnsFrom: aStream from: start to:
 ]
 
 { #category : #accessing }
-FAMIXIndexedFileAnchor >> endPos [
+FAMIXIndexedFileEntityAnchor >> endPos [
 	<MSEProperty: #endPos type: #Number>
 	<MSEComment: 'Stop position in the source'>
 	^ endPos
 ]
 
 { #category : #accessing }
-FAMIXIndexedFileAnchor >> endPos: aNumber [
+FAMIXIndexedFileEntityAnchor >> endPos: aNumber [
 	endPos := aNumber
 ]
 
 { #category : #accessing }
-FAMIXIndexedFileAnchor >> lineCount [
+FAMIXIndexedFileEntityAnchor >> fileName [
+	^ self fileReference pathString
+]
+
+{ #category : #accessing }
+FAMIXIndexedFileEntityAnchor >> fileReference [
+	^ self correspondingFile fileReference
+]
+
+{ #category : #accessing }
+FAMIXIndexedFileEntityAnchor >> lineCount [
 	| file |
 	^ (file := self fileReference) exists
 		ifTrue: [ file
@@ -82,8 +95,8 @@ FAMIXIndexedFileAnchor >> lineCount [
 		ifFalse: [ super lineCount ]
 ]
 
-{ #category : #accessing }
-FAMIXIndexedFileAnchor >> mooseNameOn: aStream [
+{ #category : #printing }
+FAMIXIndexedFileEntityAnchor >> mooseNameOn: aStream [
 	super mooseNameOn: aStream.
 	aStream
 		nextPut: $(;
@@ -96,7 +109,7 @@ FAMIXIndexedFileAnchor >> mooseNameOn: aStream [
 ]
 
 { #category : #accessing }
-FAMIXIndexedFileAnchor >> sourceText [
+FAMIXIndexedFileEntityAnchor >> sourceText [
 	| start |
 	self sourcesAreReadable ifFalse: [ ^ '' ].
 	
@@ -111,13 +124,13 @@ FAMIXIndexedFileAnchor >> sourceText [
 ]
 
 { #category : #accessing }
-FAMIXIndexedFileAnchor >> startPos [
+FAMIXIndexedFileEntityAnchor >> startPos [
 	<MSEProperty: #startPos type: #Number>
 	<MSEComment: 'Start position in the source'>
 	^ startPos
 ]
 
 { #category : #accessing }
-FAMIXIndexedFileAnchor >> startPos: aNumber [
+FAMIXIndexedFileEntityAnchor >> startPos: aNumber [
 	startPos := aNumber
 ]
