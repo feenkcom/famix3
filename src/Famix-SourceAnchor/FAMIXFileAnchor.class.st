@@ -3,7 +3,7 @@ This offers a source anchor that connects a sourced entity to a file through a r
 "
 Class {
 	#name : #FAMIXFileAnchor,
-	#superclass : #FAMIXAbstractFileAnchor,
+	#superclass : #FAMIXAbstractFileReferenceAnchor,
 	#instVars : [
 		'startLine',
 		'startColumn',

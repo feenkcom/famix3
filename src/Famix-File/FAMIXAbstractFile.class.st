@@ -42,8 +42,18 @@ FAMIXAbstractFile >> belongsTo [
 ]
 
 { #category : #accessing }
-FAMIXAbstractFile >> fileReference [ 
-	^ (FileSystem disk referenceTo: (self mooseName copyReplaceAll: self class famixFolderSeparatorString with: FileSystem disk delimiter asString))
+FAMIXAbstractFile >> fileReference [
+	^ (self mooseModel notNil and: [ self mooseModel rootFolder exists ])
+		ifTrue: [ self mooseModel rootFolder
+				resolveReference:
+					(self mooseName
+						copyReplaceAll: self class famixFolderSeparatorString
+						with: FileSystem disk delimiter asString) asFileReference ]
+		ifFalse: [ FileSystem disk
+				referenceTo:
+					(self mooseName
+						copyReplaceAll: self class famixFolderSeparatorString
+						with: FileSystem disk delimiter asString) ]
 ]
 
 { #category : #accessing }

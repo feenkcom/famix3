@@ -6,7 +6,6 @@ Class {
 	#name : #FAMIXAbstractFileAnchor,
 	#superclass : #FAMIXSourceAnchor,
 	#instVars : [
-		'fileName',
 		'encoding'
 	],
 	#category : #'Famix-SourceAnchor'
@@ -55,14 +54,7 @@ FAMIXAbstractFileAnchor >> encoding: aString [
 
 { #category : #accessing }
 FAMIXAbstractFileAnchor >> fileName [
-	<MSEProperty: #fileName type: #String>
-	<MSEComment: 'Name of the source file'>
-	^ fileName
-]
-
-{ #category : #accessing }
-FAMIXAbstractFileAnchor >> fileName: aFileName [
-	fileName := aFileName copyReplaceAll: '\' with: '/'. 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
