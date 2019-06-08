@@ -15,7 +15,7 @@ Class {
 
 { #category : #meta }
 FAMIXFileAnchor class >> annotation [
-	<MSEClass: #FileAnchor super: #FAMIXAbstractFileAnchor>
+	<MSEClass: #FileAnchor super: #FAMIXAbstractFileReferenceAnchor>
 	<package: #FAMIX>
 ]
 

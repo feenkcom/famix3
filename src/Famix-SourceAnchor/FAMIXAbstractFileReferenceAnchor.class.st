@@ -7,6 +7,12 @@ Class {
 	#category : #'Famix-SourceAnchor'
 }
 
+{ #category : #meta }
+FAMIXAbstractFileReferenceAnchor class >> annotation [
+	<MSEClass: #AbstractFileReferenceAnchor super: #FAMIXAbstractFileAnchor>
+	<package: #FAMIX>
+]
+
 { #category : #accessing }
 FAMIXAbstractFileReferenceAnchor >> fileName [
 	<MSEProperty: #fileName type: #String>
