@@ -137,7 +137,11 @@ FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
 		ifTrue: [ #() ]
 		ifFalse: [ importer functionsNamed: name ].
 	methods := importer methodsNamed: name.
-	possible := functions , methods.
+	possible := functions , methods
+		reject: [ :each | 
+			each minimumArgumentCount > aNode values size
+				or: [ each isVariadic not
+						and: [ aNode values size > each parameters size ] ] ].
 	invocation := self invoke: possible from: aNode.
 	(possible collect: [ :each | each declaredType ]) asSet
 		ifNotEmpty: [ :types | 
