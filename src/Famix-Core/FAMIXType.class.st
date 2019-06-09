@@ -148,14 +148,6 @@ FAMIXType >> container: aContainerEntity [
 ]
 
 { #category : #accessing }
-FAMIXType >> gtBlueprintFor: aView [
-	<gtView>
-	^ aView mondrian
-		title: 'Blueprint';
-		painting: [ :m | self paintBlueprintWith: m ]
-]
-
-{ #category : #accessing }
 FAMIXType >> incomingReferences [
 	<MSEProperty: #incomingReferences type: #FAMIXReference opposite: #target> <multivalued> <derived>
 	<MSEComment: 'References to this entity by other entities.'>
