@@ -36,8 +36,8 @@ FAMIXCPPVariableImportingVisitor >> createParameter: declarator from: specifiers
 	(decl isKindOf: CPPInitDeclaratorNode)
 		ifTrue: [ decl := decl declarator ].
 	(decl isKindOf: CPPDeclaratorNode)
-		ifFalse: [ ^ self ].
-	(self enclosingMethodOrFunctionFor: decl)
+		ifFalse: [ ^ nil ].
+	^ (self enclosingMethodOrFunctionFor: decl)
 		ifNotNil: [ :method | 
 			| variable |
 			variable := FAMIXParameter new.
@@ -48,7 +48,8 @@ FAMIXCPPVariableImportingVisitor >> createParameter: declarator from: specifiers
 			self addEntity: variable.
 			self model add: variable.
 			(self typeFromSpecifiers: specifiers in: decl)
-				ifNotNil: [ :type | variable declaredType: type ] ]
+				ifNotNil: [ :type | variable declaredType: type ].
+			variable ]
 ]
 
 { #category : #private }
@@ -244,10 +245,13 @@ FAMIXCPPVariableImportingVisitor >> visitMemberDeclaration: aNode [
 
 { #category : #visiting }
 FAMIXCPPVariableImportingVisitor >> visitParameterDeclaration: aNode [
-	self
+	(self
 		createParameter: aNode declarator
 		from: aNode specifiers
-		in: aNode.
+		in: aNode)
+		ifNotNil: [ :var | 
+			aNode initializer notNil
+				ifTrue: [ var beOptional ] ].
 	super visitParameterDeclaration: aNode
 ]
 

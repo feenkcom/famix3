@@ -252,6 +252,8 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 			self storeAST: aNode into: method.
 			method signature: (self signatureFor: aNode declarator).
 			self addEntity: method ].
+	aNode declarator ellipsises notEmpty
+		ifTrue: [ method beVariadic ].
 	owner notNil
 		ifTrue: [ method
 				implementation:
