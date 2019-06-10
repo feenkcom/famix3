@@ -241,6 +241,11 @@ FAMIXCPPVariableImportingVisitor >> visitMemberDeclaration: aNode [
 			entity isType
 				ifFalse: [ (self typeFromSpecifiers: aNode specifiers in: aNode)
 						ifNotNil: [ :type | entity declaredType: type ] ] ].
+	aNode isTypedef
+		ifTrue: [ (aNode attributeNamed: #entity)
+				ifNotNil: [ :alias | 
+					(self typeDefTypeFor: aNode specifiers second in: aNode)
+						ifNotNil: [ :type | alias aliasedType: type ] ] ].
 	super visitMemberDeclaration: aNode
 ]
 
