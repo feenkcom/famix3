@@ -238,8 +238,9 @@ FAMIXCPPVariableImportingVisitor >> visitLambdaExpression: aNode [
 FAMIXCPPVariableImportingVisitor >> visitMemberDeclaration: aNode [
 	(aNode attributeNamed: #entity)
 		ifNotNil: [ :entity | 
-			(self typeFromSpecifiers: aNode specifiers in: aNode)
-				ifNotNil: [ :type | entity declaredType: type ] ].
+			entity isType
+				ifFalse: [ (self typeFromSpecifiers: aNode specifiers in: aNode)
+						ifNotNil: [ :type | entity declaredType: type ] ] ].
 	super visitMemberDeclaration: aNode
 ]
 
@@ -278,7 +279,7 @@ FAMIXCPPVariableImportingVisitor >> visitSimpleDeclaration: aNode [
 										createGlobalNamed: aNode specifiers last source
 										from: (aNode specifiers allButLast: 1)
 										in: aNode ] ] ] ].
-	aNode isSimpleTypedef
+	aNode isTypedef
 		ifTrue: [ (aNode attributeNamed: #entity)
 				ifNotNil: [ :alias | 
 					(self typeDefTypeFor: aNode specifiers second in: aNode)

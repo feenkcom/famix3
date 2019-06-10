@@ -90,10 +90,22 @@ FAMIXCPPDeclarationImportingVisitor >> methodNameFrom: aNode [
 FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: class in: aNode [
 	(declaration isKindOf: CPPMemberDeclarationNode)
 		ifFalse: [ ^ self ].
+	(declaration isFriendDeclaration or: [ declaration isTypedef ])
+		ifTrue: [ ^ self ].
+	declaration isTypedef
+		ifTrue: [ | type |
+			type := importer
+				createAliasTypeNamed: declaration typedefName
+				for: declaration.
+			declaration attributeNamed: #entity put: type.
+			^ self addEntity: type ].
 	declaration declarators isEmpty
 		ifTrue: [ | attribute |
 			declaration specifiers isEmpty
 				ifTrue: [ ^ self ].
+			(declaration isEnumSpecifier or: [ declaration isClassSpecifier ])
+				ifTrue: [ (declaration specifiers last isKindOf: CPPClassTypeNode)
+						ifFalse: [ ^ self ] ].
 			attribute := FAMIXAttribute new
 				name: declaration specifiers last source;
 				sourceAnchor: (importer sourceAnchorFor: declaration).
@@ -276,6 +288,16 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 ]
 
 { #category : #visiting }
+FAMIXCPPDeclarationImportingVisitor >> visitMemberDeclaration: aNode [
+	aNode isTypedef
+		ifTrue: [ | type |
+			type := importer createAliasTypeNamed: aNode typedefName for: aNode.
+			aNode attributeNamed: #entity put: type.
+			self addEntity: type ].
+	super visitMemberDeclaration: aNode
+]
+
+{ #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 	| namespace |
 	namespace := importer
@@ -288,11 +310,9 @@ FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitSimpleDeclaration: aNode [
-	aNode isSimpleTypedef
+	aNode isTypedef
 		ifTrue: [ | type |
-			type := importer
-				createAliasTypeNamed: aNode specifiers last source
-				for: aNode.
+			type := importer createAliasTypeNamed: aNode typedefName for: aNode.
 			aNode attributeNamed: #entity put: type.
 			self addEntity: type ].
 	super visitSimpleDeclaration: aNode
