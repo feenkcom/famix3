@@ -35,6 +35,14 @@ FAMIXCPPImportingVisitor >> enclosingEntityFor: aNode [
 ]
 
 { #category : #private }
+FAMIXCPPImportingVisitor >> enclosingMethodFor: aNode [
+	^ (self enclosingMethodOrFunctionFor: aNode)
+		ifNotNil: [ :entity | 
+			entity isMethod
+				ifTrue: [ entity ] ]
+]
+
+{ #category : #private }
 FAMIXCPPImportingVisitor >> enclosingMethodOrFunctionFor: aNode [
 	| current |
 	current := aNode.
