@@ -125,6 +125,7 @@ FAMIXCPPReferencesImportingVisitor >> processDirective: anInterval in: aNode [
 { #category : #visiting }
 FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
 	| expression hasReceiver possible name methods functions invocation |
+	super visitCallExpression: aNode.
 	expression := aNode expression.
 	[ expression isKindOf: CPPMemberExpressionNode ]
 		whileTrue: [ expression := expression id ].
@@ -133,11 +134,18 @@ FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
 		ifTrue: [ expression := expression identifier templateIdentifier ].
 	name := expression source.
 	hasReceiver := aNode expression isKindOf: CPPMemberExpressionNode.
-	functions := hasReceiver
-		ifTrue: [ #() ]
-		ifFalse: [ importer functionsNamed: name ].
-	methods := importer methodsNamed: name.
-	possible := functions , methods
+	hasReceiver
+		ifTrue: [ possible := importer methodsNamed: name.
+			(aNode expression expression attributeNamed: #type)
+				ifNotNil: [ :type | 
+					possible := possible
+						select: [ :each | 
+							each parentType == type
+								or: [ (type inheritsFrom: each parentType)
+										or: [ each parentType inheritsFrom: type ] ] ] ] ]
+		ifFalse: [ possible := (importer functionsNamed: name)
+				, (importer methodsNamed: name) ].
+	possible := possible
 		reject: [ :each | 
 			each minimumArgumentCount > aNode values size
 				or: [ each isVariadic not
@@ -148,8 +156,7 @@ FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
 			types size = 1
 				ifTrue: [ aNode attributeNamed: #type put: types anyOne ] ].
 	hasReceiver
-		ifTrue: [ invocation receiverSourceCode: aNode expression expression source ].
-	super visitCallExpression: aNode
+		ifTrue: [ invocation receiverSourceCode: aNode expression expression source ]
 ]
 
 { #category : #visiting }
