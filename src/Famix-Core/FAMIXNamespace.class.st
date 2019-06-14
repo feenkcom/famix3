@@ -17,17 +17,6 @@ FAMIXNamespace class >> annotation [
 	<package: #FAMIX>
 ]
 
-{ #category : #accessing }
-FAMIXNamespace >> gtChildrenFor: aView [
-	<gtView>
-	^ aView tree
-		title: 'Children';
-		priority: 2;
-		items: [{self}];
-		itemFormat: #name;
-		children: [ :each | each structuralChildren sorted: [:entity1 :entity2 | entity1 name < entity2 name] ]
-]
-
 { #category : #'moosechef-scoping-filtering' }
 FAMIXNamespace >> namespaceScope [
 
