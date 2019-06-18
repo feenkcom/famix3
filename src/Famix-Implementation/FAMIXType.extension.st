@@ -24,7 +24,7 @@ FAMIXType >> allSubclassesWithoutAliasesDo: aBlock [
 { #category : #'*Famix-Implementation' }
 FAMIXType >> allSuperclassesDo: aBlock [
 	self allSuperclassesWithoutAliasesDo: aBlock.
-	self mooseModel sourceLanguage isC
+	self sourceLanguage isC
 		ifTrue: [ self typeAliases do: [ :each | each allSuperclassesWithoutAliasesDo: aBlock ] ]
 ]
 

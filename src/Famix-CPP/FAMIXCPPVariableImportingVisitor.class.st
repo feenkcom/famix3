@@ -30,29 +30,6 @@ FAMIXCPPVariableImportingVisitor >> createGlobalNamed: name from: specifiers in:
 ]
 
 { #category : #private }
-FAMIXCPPVariableImportingVisitor >> createParameter: declarator from: specifiers in: aNode [
-	| decl |
-	decl := declarator.
-	(decl isKindOf: CPPInitDeclaratorNode)
-		ifTrue: [ decl := decl declarator ].
-	(decl isKindOf: CPPDeclaratorNode)
-		ifFalse: [ ^ nil ].
-	^ (self enclosingMethodOrFunctionFor: decl)
-		ifNotNil: [ :method | 
-			| variable |
-			variable := FAMIXParameter new.
-			self storeAST: aNode into: variable.
-			variable name: decl id source.
-			variable sourceAnchor: (importer sourceAnchorFor: aNode).
-			method addParameter: variable.
-			self addEntity: variable.
-			self model add: variable.
-			(self typeFromSpecifiers: specifiers in: decl)
-				ifNotNil: [ :type | variable declaredType: type ].
-			variable ]
-]
-
-{ #category : #private }
 FAMIXCPPVariableImportingVisitor >> createTemp: declarator from: specifiers in: aNode [
 	| decl |
 	decl := declarator.
@@ -238,20 +215,23 @@ FAMIXCPPVariableImportingVisitor >> visitLambdaExpression: aNode [
 FAMIXCPPVariableImportingVisitor >> visitMemberDeclaration: aNode [
 	(aNode attributeNamed: #entity)
 		ifNotNil: [ :entity | 
-			(self typeFromSpecifiers: aNode specifiers in: aNode)
-				ifNotNil: [ :type | entity declaredType: type ] ].
+			entity isType
+				ifFalse: [ (self typeFromSpecifiers: aNode specifiers in: aNode)
+						ifNotNil: [ :type | entity declaredType: type ] ] ].
+	aNode isTypedef
+		ifTrue: [ (aNode attributeNamed: #entity)
+				ifNotNil: [ :alias | 
+					(self typeDefTypeFor: aNode specifiers second in: aNode)
+						ifNotNil: [ :type | alias aliasedType: type ] ] ].
 	super visitMemberDeclaration: aNode
 ]
 
 { #category : #visiting }
 FAMIXCPPVariableImportingVisitor >> visitParameterDeclaration: aNode [
-	(self
-		createParameter: aNode declarator
-		from: aNode specifiers
-		in: aNode)
-		ifNotNil: [ :var | 
-			aNode initializer notNil
-				ifTrue: [ var beOptional ] ].
+	(aNode attributeNamed: #entity)
+		ifNotNil: [ :entity | 
+			(self typeFromSpecifiers: aNode specifiers in: aNode)
+				ifNotNil: [ :type | entity declaredType: type ] ].
 	super visitParameterDeclaration: aNode
 ]
 
@@ -278,7 +258,7 @@ FAMIXCPPVariableImportingVisitor >> visitSimpleDeclaration: aNode [
 										createGlobalNamed: aNode specifiers last source
 										from: (aNode specifiers allButLast: 1)
 										in: aNode ] ] ] ].
-	aNode isSimpleTypedef
+	aNode isTypedef
 		ifTrue: [ (aNode attributeNamed: #entity)
 				ifNotNil: [ :alias | 
 					(self typeDefTypeFor: aNode specifiers second in: aNode)

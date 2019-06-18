@@ -72,7 +72,8 @@ MooseObjectQueryResult >> within: aFAMIXEntity [
 { #category : #filtering }
 MooseObjectQueryResult >> withinClass: aFAMIXClass [ 
 	
-	^ self newObjectResultWith: (storage select: [ :obj | aFAMIXClass == obj typeScope ])
+	^ self newObjectResultWith: (storage select: [ :obj | obj notNil and: [
+	aFAMIXClass == obj typeScope ]])
 ]
 
 { #category : #filtering }

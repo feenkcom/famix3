@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #private }
-FAMIXCPPDeclarationImportingVisitor >> addArgumentsTo: declarator to: function [
+FAMIXCPPDeclarationImportingVisitor >> addParametersTo: declarator to: function [
 	declarator declarations
 		do: [ :each | 
 			| name param |
@@ -20,6 +20,11 @@ FAMIXCPPDeclarationImportingVisitor >> addArgumentsTo: declarator to: function [
 						ifTrue: [ decl id source ]
 						ifFalse: [ decl source ] ].
 			param := FAMIXParameter new name: name.
+			self storeAST: each into: param.
+			each attributeNamed: #entity put: param.
+			param sourceAnchor: (importer sourceAnchorFor: each).
+			each initializer notNil
+				ifTrue: [ param beOptional ].
 			self addEntity: param.
 			function addParameter: param ]
 ]
@@ -90,10 +95,22 @@ FAMIXCPPDeclarationImportingVisitor >> methodNameFrom: aNode [
 FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: class in: aNode [
 	(declaration isKindOf: CPPMemberDeclarationNode)
 		ifFalse: [ ^ self ].
+	(declaration isFriendDeclaration or: [ declaration isTypedef ])
+		ifTrue: [ ^ self ].
+	declaration isTypedef
+		ifTrue: [ | type |
+			type := importer
+				createAliasTypeNamed: declaration typedefName
+				for: declaration.
+			declaration attributeNamed: #entity put: type.
+			^ self addEntity: type ].
 	declaration declarators isEmpty
 		ifTrue: [ | attribute |
 			declaration specifiers isEmpty
 				ifTrue: [ ^ self ].
+			(declaration isEnumSpecifier or: [ declaration isClassSpecifier ])
+				ifTrue: [ (declaration specifiers last isKindOf: CPPClassTypeNode)
+						ifFalse: [ ^ self ] ].
 			attribute := FAMIXAttribute new
 				name: declaration specifiers last source;
 				sourceAnchor: (importer sourceAnchorFor: declaration).
@@ -109,7 +126,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 						and: [ declarator leftParens last startPosition
 								> declarator id startPosition ])
 						ifTrue: [ | name method |
-							name := declarator id source.
+							name := importer removeNamespaceFrom: declarator id source.
 							method := importer createMethodNamed: name in: nil for: nil.
 							method signature: (self signatureFor: declarator).
 							method
@@ -120,7 +137,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 							self addEntity: method.
 							self addEntity: method declaration.
 							self addPropertiesTo: method basedOn: declaration.
-							self addArgumentsTo: declarator to: method.
+							self addParametersTo: declarator to: method.
 							declaration attributeNamed: #entity put: method.
 							^ class addMethod: method ]
 						ifFalse: [ | attribute |
@@ -249,6 +266,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 		ifTrue: [ method := owner isNil
 				ifTrue: [ importer createFunctionNamed: methodName for: aNode ]
 				ifFalse: [ importer createMethodNamed: methodName in: owner for: aNode ].
+			self addParametersTo: aNode declarator to: method.
 			self storeAST: aNode into: method.
 			method signature: (self signatureFor: aNode declarator).
 			self addEntity: method ].
@@ -276,6 +294,16 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 ]
 
 { #category : #visiting }
+FAMIXCPPDeclarationImportingVisitor >> visitMemberDeclaration: aNode [
+	aNode isTypedef
+		ifTrue: [ | type |
+			type := importer createAliasTypeNamed: aNode typedefName for: aNode.
+			aNode attributeNamed: #entity put: type.
+			self addEntity: type ].
+	super visitMemberDeclaration: aNode
+]
+
+{ #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 	| namespace |
 	namespace := importer
@@ -288,11 +316,9 @@ FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitSimpleDeclaration: aNode [
-	aNode isSimpleTypedef
+	aNode isTypedef
 		ifTrue: [ | type |
-			type := importer
-				createAliasTypeNamed: aNode specifiers last source
-				for: aNode.
+			type := importer createAliasTypeNamed: aNode typedefName for: aNode.
 			aNode attributeNamed: #entity put: type.
 			self addEntity: type ].
 	super visitSimpleDeclaration: aNode

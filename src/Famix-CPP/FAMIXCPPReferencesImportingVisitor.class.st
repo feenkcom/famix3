@@ -1,6 +1,10 @@
 Class {
 	#name : #FAMIXCPPReferencesImportingVisitor,
 	#superclass : #FAMIXCPPImportingVisitor,
+	#classVars : [
+		'GetterPatterns',
+		'SetterPatterns'
+	],
 	#category : #'Famix-CPP'
 }
 
@@ -63,6 +67,33 @@ FAMIXCPPReferencesImportingVisitor >> findVariableNamed: aString in: anEntity [
 ]
 
 { #category : #private }
+FAMIXCPPReferencesImportingVisitor >> getterPatterns [
+	^ GetterPatterns
+		ifNil: [ GetterPatterns := OrderedCollection new.
+			GetterPatterns
+				addAll:
+					(CPPParser
+						parseAll: '{ if (`a`) `b` return `var{beToken}`; }'
+						startingAt: CPPParser startingStateForstatement).
+			GetterPatterns
+				addAll:
+					(CPPParser
+						parseAll: '{  return `var{beToken}`; }'
+						startingAt: CPPParser startingStateForstatement).
+			GetterPatterns
+				addAll:
+					(CPPParser
+						parseAll: '{ if (`a`) `b` return this->`var{beToken}`; }'
+						startingAt: CPPParser startingStateForstatement).
+			GetterPatterns
+				addAll:
+					(CPPParser
+						parseAll: '{  return this->`var{beToken}`; }'
+						startingAt: CPPParser startingStateForstatement).
+			GetterPatterns ]
+]
+
+{ #category : #private }
 FAMIXCPPReferencesImportingVisitor >> includedFilename: aString [
 	^ ('/includes/' , aString) asFileReference
 ]
@@ -80,6 +111,53 @@ FAMIXCPPReferencesImportingVisitor >> invoke: possible from: aNode [
 	self addEntity: invocation.
 	self model add: invocation.
 	^ invocation
+]
+
+{ #category : #private }
+FAMIXCPPReferencesImportingVisitor >> isGetter: aFunction [
+	| entity |
+	entity := aFunction attributeNamed: #entity.
+	(entity isKindOf: FAMIXMethod)
+		ifFalse: [ ^ false ].
+	aFunction declarator declarations isEmpty
+		ifFalse: [ ^ false ].
+	self getterPatterns
+		do: [ :each | 
+			| context name |
+			context := Dictionary new.
+			(each match: aFunction body inContext: context)
+				ifTrue: [ name := (context at: (SmaCCPatternToken value: '`var{beToken}`'))
+						source.
+					(entity parentType attributes
+						anySatisfy: [ :attr | attr name = name ])
+						ifTrue: [ ^ true ] ] ].
+	^ false
+]
+
+{ #category : #private }
+FAMIXCPPReferencesImportingVisitor >> isSetter: aFunction [
+	| entity |
+	entity := aFunction attributeNamed: #entity.
+	(entity isKindOf: FAMIXMethod)
+		ifFalse: [ ^ false ].
+	aFunction declarator declarations size = 1
+		ifFalse: [ ^ false ].
+	self setterPatterns
+		do: [ :each | 
+			| context name |
+			context := Dictionary new.
+			(each match: aFunction body inContext: context)
+				ifTrue: [ name := (context at: (SmaCCPatternToken value: '`var{beToken}`'))
+						source.
+					(entity parentType attributes
+						anySatisfy: [ :attr | attr name = name ])
+						ifTrue: [ (aFunction declarator declarations first source
+								indexOfSubCollection:
+									(context
+										at: (SmaCCPatternNode onToken: (SmaCCPatternToken value: '`value`')))
+										source) = 0
+								ifFalse: [ ^ true ] ] ] ].
+	^ false
 ]
 
 { #category : #private }
@@ -122,9 +200,22 @@ FAMIXCPPReferencesImportingVisitor >> processDirective: anInterval in: aNode [
 			self model add: include ]
 ]
 
+{ #category : #private }
+FAMIXCPPReferencesImportingVisitor >> setterPatterns [
+	^ SetterPatterns
+		ifNil: [ SetterPatterns := OrderedCollection new.
+			SetterPatterns
+				addAll:
+					(CPPParser
+						parseAll: '{ `var{beToken}` = `value`;  }'
+						startingAt: CPPParser startingStateForstatement).
+			SetterPatterns ]
+]
+
 { #category : #visiting }
 FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
-	| expression hasReceiver possible name methods functions invocation |
+	| expression hasReceiver possible name invocation receiverType |
+	super visitCallExpression: aNode.
 	expression := aNode expression.
 	[ expression isKindOf: CPPMemberExpressionNode ]
 		whileTrue: [ expression := expression id ].
@@ -133,11 +224,21 @@ FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
 		ifTrue: [ expression := expression identifier templateIdentifier ].
 	name := expression source.
 	hasReceiver := aNode expression isKindOf: CPPMemberExpressionNode.
-	functions := hasReceiver
-		ifTrue: [ #() ]
-		ifFalse: [ importer functionsNamed: name ].
-	methods := importer methodsNamed: name.
-	possible := functions , methods
+	hasReceiver
+		ifTrue: [ possible := importer methodsNamed: name.
+			receiverType := aNode expression expression attributeNamed: #type ]
+		ifFalse: [ possible := (importer functionsNamed: name)
+				, (importer methodsNamed: name).
+			receiverType := (self enclosingMethodFor: aNode)
+				ifNotNil: [ :entity | entity parentType ] ].
+	receiverType notNil
+		ifTrue: [ possible := possible
+				select: [ :each | 
+					each isMethod not
+						or: [ each parentType == receiverType
+								or: [ (receiverType inheritsFrom: each parentType)
+										or: [ each parentType inheritsFrom: receiverType ] ] ] ] ].
+	possible := possible
 		reject: [ :each | 
 			each minimumArgumentCount > aNode values size
 				or: [ each isVariadic not
@@ -148,8 +249,18 @@ FAMIXCPPReferencesImportingVisitor >> visitCallExpression: aNode [
 			types size = 1
 				ifTrue: [ aNode attributeNamed: #type put: types anyOne ] ].
 	hasReceiver
-		ifTrue: [ invocation receiverSourceCode: aNode expression expression source ].
-	super visitCallExpression: aNode
+		ifTrue: [ invocation receiverSourceCode: aNode expression expression source ]
+]
+
+{ #category : #visiting }
+FAMIXCPPReferencesImportingVisitor >> visitFunctionDefinition: aNode [
+	(self enclosingMethodFor: aNode)
+		ifNotNil: [ :method | 
+			(self isGetter: aNode)
+				ifTrue: [ method kind: #getter ].
+			(self isSetter: aNode)
+				ifTrue: [ method kind: #setter ] ].
+	super visitFunctionDefinition: aNode
 ]
 
 { #category : #visiting }
@@ -214,6 +325,13 @@ FAMIXCPPReferencesImportingVisitor >> visitSimpleDeclaration: aNode [
 					possible := functions , methods.
 					self invoke: possible from: aNode ] ].
 	super visitSimpleDeclaration: aNode
+]
+
+{ #category : #visiting }
+FAMIXCPPReferencesImportingVisitor >> visitThisExpression: aNode [
+	super visitThisExpression: aNode.
+	(self enclosingMethodFor: aNode)
+		ifNotNil: [ :method | aNode attributeNamed: #type put: method parentType ]
 ]
 
 { #category : #visiting }
