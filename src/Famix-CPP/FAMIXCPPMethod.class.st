@@ -24,6 +24,13 @@ FAMIXCPPMethod >> declaration: aCPPMethodDeclaration [
 ]
 
 { #category : #accessing }
+FAMIXCPPMethod >> hasEmptyBody [
+	^ self accesses isEmpty and: [
+		self outgoingInvocations isEmpty and: [ 
+			self gtASTNode children size = 1 ]]
+]
+
+{ #category : #accessing }
 FAMIXCPPMethod >> implementation [
 	<MSEProperty: #implementation type: #FAMIXCPPMethodImplementation
 	opposite: #method>
@@ -37,6 +44,21 @@ FAMIXCPPMethod >> implementation: aCPPMethodImplementation [
 	implementation := aCPPMethodImplementation.
 	implementation notNil
 		ifTrue: [ implementation method: self ]
+]
+
+{ #category : #accessing }
+FAMIXCPPMethod >> isCopyConstructor [
+	^ self isConstructor and: [ self parameters size = 1 and: [self parameters anyOne declaredType = self parentType ]]
+]
+
+{ #category : #accessing }
+FAMIXCPPMethod >> isDestructor [
+	^ self name = ('~', self parentType name)
+]
+
+{ #category : #accessing }
+FAMIXCPPMethod >> isEqualityOperator [
+	^ self name = 'operator='
 ]
 
 { #category : #accessing }
