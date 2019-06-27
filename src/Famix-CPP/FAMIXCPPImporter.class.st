@@ -14,7 +14,8 @@ Class {
 		'functions',
 		'methods',
 		'includeASTNodes',
-		'parameterizedTypes'
+		'parameterizedTypes',
+		'unknownVariables'
 	],
 	#category : #'Famix-CPP'
 }
@@ -256,6 +257,13 @@ FAMIXCPPImporter >> ensureUnionNamed: aString [
 				add: (FAMIXCPPUnion new name: (self removeNamespaceFrom: aString)) ]
 ]
 
+{ #category : #model }
+FAMIXCPPImporter >> ensureUnknownVariableNamed: aString [
+	^ unknownVariables
+		at: aString
+		ifAbsentPut: [ model add: (FAMIXUnknownVariable new name: aString) ]
+]
+
 { #category : #importing }
 FAMIXCPPImporter >> finishImport [
 	asts := OrderedCollection new.
@@ -356,7 +364,8 @@ FAMIXCPPImporter >> initialize [
 	methods := Dictionary new.
 	asts := OrderedCollection new.
 	includeASTNodes := true.
-	parameterizedTypes := Dictionary new
+	parameterizedTypes := Dictionary new.
+	unknownVariables := Dictionary new
 ]
 
 { #category : #private }

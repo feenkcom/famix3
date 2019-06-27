@@ -10,24 +10,23 @@ Class {
 
 { #category : #private }
 FAMIXCPPReferencesImportingVisitor >> access: aNode from: method [
-	| name index entity |
+	| name index entity var access |
 	name := aNode source.
 	index := name lastIndexOf: $:.
 	index > 0
 		ifTrue: [ entity := self lookupClass: (name first: index - 1) from: aNode.
 			name := name allButFirst: index + 1 ]
 		ifFalse: [ entity := method ].
-	(self findVariableNamed: name in: entity)
-		ifNotNil: [ :var | 
-			| access |
-			aNode attributeNamed: #type put: var declaredType.
-			access := FAMIXAccess new.
-			self storeAST: aNode into: access.
-			access sourceAnchor: (importer sourceAnchorFor: aNode).
-			access accessor: method.
-			access variable: var.
-			self addEntity: access.
-			self model add: access ]
+	var := (self findVariableNamed: name in: entity)
+		ifNil: [ importer ensureUnknownVariableNamed: name ].
+	aNode attributeNamed: #type put: var declaredType.
+	access := FAMIXAccess new.
+	self storeAST: aNode into: access.
+	access sourceAnchor: (importer sourceAnchorFor: aNode).
+	access accessor: method.
+	access variable: var.
+	self addEntity: access.
+	self model add: access
 ]
 
 { #category : #private }
@@ -161,6 +160,27 @@ FAMIXCPPReferencesImportingVisitor >> isSetter: aFunction [
 ]
 
 { #category : #private }
+FAMIXCPPReferencesImportingVisitor >> isVariableDefinition: aNode [
+	(aNode isKindOf: CPPExpressionStatementNode)
+		ifTrue: [ (aNode expression isKindOf: CPPBinaryExpressionNode)
+				ifTrue: [ | source |
+					source := aNode expression operator source.
+					^ (#('*' '&') includes: source)
+						or: [ source = '>'
+								and:
+									[ (aNode source occurrencesOf: $<) = (aNode source occurrencesOf: $>) ] ] ].
+			(aNode expression isKindOf: CPPAssignmentExpressionNode)
+				ifTrue: [ (aNode expression lhs isKindOf: CPPBinaryExpressionNode)
+						ifTrue: [ | source |
+							source := aNode expression lhs operator source.
+							^ (#('*' '&') includes: source)
+								or: [ source = '>'
+										and:
+											[ (aNode source occurrencesOf: $<) = (aNode source occurrencesOf: $>) ] ] ] ] ].
+	^ false
+]
+
+{ #category : #private }
 FAMIXCPPReferencesImportingVisitor >> localFilename: aString from: aNode [
 	| currentDirectory name |
 	currentDirectory := aNode topParent filename asFileReference parent.
@@ -280,8 +300,13 @@ FAMIXCPPReferencesImportingVisitor >> visitIdentifierExpression: aNode [
 	((parent isKindOf: CPPMemberExpressionNode)
 		and: [ parent id == aNode ])
 		ifTrue: [ ^ self ].
+	(aNode parentOfType: CPPStatementNode)
+		ifNil: [ ^ self ]
+		ifNotNil: [ :stmt | 
+			(self isVariableDefinition: stmt)
+				ifTrue: [ ^ self ] ].
 	(self enclosingMethodOrFunctionFor: aNode)
-		ifNotNil: [ :method | self access: aNode from: method ]
+		ifNotNil: [ :method | self access: aNode identifier from: method ]
 ]
 
 { #category : #visiting }
