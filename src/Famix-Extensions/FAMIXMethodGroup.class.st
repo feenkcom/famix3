@@ -29,7 +29,7 @@ FAMIXMethodGroup >> allMethods [
 { #category : #navigation }
 FAMIXMethodGroup >> allPackages [
 
-	^ FAMIXPackageGroup withAll: (self entities collectAsSet: [:m | m packageScope])
+	^ FAMIXPackageGroup withAll: ((self entities collectAsSet: [:m | m packageScope]) reject: #isNil)
 ]
 
 { #category : #metrics }

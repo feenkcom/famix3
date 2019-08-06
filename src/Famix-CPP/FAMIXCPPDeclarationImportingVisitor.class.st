@@ -289,6 +289,9 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 			((identifier isKindOf: CPPIdentifierNode)
 				and: [ method isKindOf: FAMIXMethod ])
 				ifTrue: [ method isConstructor: true ] ].
+	aNode virtualSpecifierTokens notEmpty
+		ifTrue: [ method modifiers
+				addAll: (aNode virtualSpecifierTokens collect: #value) asSet ].
 	aNode attributeNamed: #entity put: method.
 	self push: method around: [ super visitFunctionDefinition: aNode ]
 ]
