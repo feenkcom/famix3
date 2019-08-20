@@ -138,6 +138,9 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 							self addEntity: method declaration.
 							self addPropertiesTo: method basedOn: declaration.
 							self addParametersTo: declarator to: method.
+							declarator parent virtualSpecifierTokens notEmpty
+								ifTrue: [ method modifiers
+										addAll: (declarator parent virtualSpecifierTokens collect: #value) asSet ].
 							declaration attributeNamed: #entity put: method.
 							^ class addMethod: method ]
 						ifFalse: [ | attribute |
