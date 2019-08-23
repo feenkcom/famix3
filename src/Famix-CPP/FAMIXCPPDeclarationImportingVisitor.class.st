@@ -10,6 +10,11 @@ Class {
 
 { #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> addParametersTo: declarator to: function [
+	| stream |
+	stream := WriteStream on: String new.
+	stream
+		nextPutAll: function name;
+		nextPut: $(.
 	declarator declarations
 		do: [ :each | 
 			| name param |
@@ -19,6 +24,8 @@ FAMIXCPPDeclarationImportingVisitor >> addParametersTo: declarator to: function 
 					(decl isKindOf: CPPDeclaratorNode)
 						ifTrue: [ decl id source ]
 						ifFalse: [ decl source ] ].
+			stream
+				nextPutAll: (self normalizeTypeSource: each source forVariable: name).
 			param := FAMIXParameter new name: name.
 			self storeAST: each into: param.
 			each attributeNamed: #entity put: param.
@@ -27,6 +34,9 @@ FAMIXCPPDeclarationImportingVisitor >> addParametersTo: declarator to: function 
 				ifTrue: [ param beOptional ].
 			self addEntity: param.
 			function addParameter: param ]
+		separatedBy: [ stream nextPutAll: ', ' ].
+	stream nextPut: $).
+	function signature: stream contents
 ]
 
 { #category : #private }
@@ -92,6 +102,49 @@ FAMIXCPPDeclarationImportingVisitor >> methodNameFrom: aNode [
 ]
 
 { #category : #private }
+FAMIXCPPDeclarationImportingVisitor >> normalizeTypeSource: parameterSource forVariable: aString [
+	| source index nextIndex inStream outStream lastWasLetter afterEquals |
+	(aString notEmpty and: [ aString first isLetter not ])
+		ifTrue: [ source := parameterSource ]
+		ifFalse: [ index := 0.
+			[ (nextIndex := parameterSource
+				indexOfSubCollection: aString
+				startingAt: index + 1
+				ifAbsent: [ 0 ]) > 0 ] whileTrue: [ index := nextIndex ].
+			source := index > 0
+				ifTrue: [ (parameterSource first: index - 1)
+						,
+							(parameterSource
+								copyFrom: index + aString size
+								to: parameterSource size) ]
+				ifFalse: [ parameterSource ].
+			source isEmpty
+				ifTrue: [ source := parameterSource ] ].
+	inStream := source readStream.
+	outStream := WriteStream on: String new.
+	lastWasLetter := false.
+	afterEquals := false.
+	[ inStream atEnd ]
+		whileFalse: [ | char |
+			char := inStream next.
+			afterEquals
+				ifTrue: [ (char = $, or: [ char = $) ])
+						ifTrue: [ outStream nextPut: char.
+							afterEquals := false ] ]
+				ifFalse: [ char == $=
+						ifTrue: [ afterEquals := true ]
+						ifFalse: [ char isSeparator
+								ifTrue: [ lastWasLetter
+										ifTrue: [ inStream peek
+												ifNotNil: [ :c | 
+													c isLetter
+														ifTrue: [ outStream nextPut: $  ] ] ] ]
+								ifFalse: [ outStream nextPut: char ] ] ].
+			lastWasLetter := char isLetter ].
+	^ outStream contents
+]
+
+{ #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: class in: aNode [
 	(declaration isKindOf: CPPMemberDeclarationNode)
 		ifFalse: [ ^ self ].
@@ -128,7 +181,6 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 						ifTrue: [ | name method |
 							name := importer removeNamespaceFrom: declarator id source.
 							method := importer createMethodNamed: name in: nil for: nil.
-							method signature: (self signatureFor: declarator).
 							method
 								declaration:
 									(FAMIXCPPMethodDeclaration new
@@ -138,6 +190,9 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 							self addEntity: method declaration.
 							self addPropertiesTo: method basedOn: declaration.
 							self addParametersTo: declarator to: method.
+							declarator parent virtualSpecifierTokens notEmpty
+								ifTrue: [ method modifiers
+										addAll: (declarator parent virtualSpecifierTokens collect: #value) asSet ].
 							declaration attributeNamed: #entity put: method.
 							^ class addMethod: method ]
 						ifFalse: [ | attribute |
@@ -268,7 +323,6 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 				ifFalse: [ importer createMethodNamed: methodName in: owner for: aNode ].
 			self addParametersTo: aNode declarator to: method.
 			self storeAST: aNode into: method.
-			method signature: (self signatureFor: aNode declarator).
 			self addEntity: method ].
 	aNode declarator ellipsises notEmpty
 		ifTrue: [ method beVariadic ].
