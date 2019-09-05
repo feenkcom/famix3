@@ -382,11 +382,12 @@ FAMIXCPPDeclarationImportingVisitor >> visitMemberDeclaration: aNode [
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 	| namespace |
-	namespace := importer
-		ensureNamespace: aNode name source
-		in: (self enclosingNamespaceEntityFor: aNode).
+	namespace := self enclosingNamespaceEntityFor: aNode.
+	aNode names
+		do: [ :each | 
+			namespace := importer ensureNamespace: each source in: namespace.
+			self addEntity: namespace ].
 	aNode attributeNamed: #entity put: namespace.
-	self addEntity: namespace.
 	super visitOriginalNamespaceDefinition: aNode
 ]
 

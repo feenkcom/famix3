@@ -431,8 +431,16 @@ FAMIXCPPImporter >> namespaceNameFor: aNode [
 		parentOfType:
 			{CPPOriginalNamespaceDefinitionNode.
 			CPPClassSpecifierNode}) notNil ]
-		whileTrue: [ current name notNil
-				ifTrue: [ name := current name source
+		whileTrue: [ | parentName |
+			parentName := (current isKindOf: CPPOriginalNamespaceDefinitionNode)
+				ifTrue: [ String
+						streamContents: [ :stream | 
+							current names
+								do: [ :each | stream nextPutAll: each source ]
+								separatedBy: [ stream nextPutAll: '::' ] ] ]
+				ifFalse: [ current name ifNotNil: [ :token | token source ] ].
+			parentName notNil
+				ifTrue: [ name := parentName
 						,
 							(name isEmpty
 								ifTrue: [ '' ]
