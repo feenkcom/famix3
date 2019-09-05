@@ -66,6 +66,17 @@ FAMIXCPPImporter >> createFunctionNamed: aString for: aNode [
 ]
 
 { #category : #model }
+FAMIXCPPImporter >> createLambdaNamed: aString in: outerMethod for: aNode [
+	| lambda |
+	lambda := self ensureLambdaNamed: aString.
+	outerMethod notNil
+		ifTrue: [ lambda outerMethod: outerMethod ].
+	aNode notNil
+		ifTrue: [ lambda sourceAnchor: (self sourceAnchorFor: aNode) ].
+	^ lambda
+]
+
+{ #category : #model }
 FAMIXCPPImporter >> createMethodNamed: aString in: anObject for: aNode [
 	| method |
 	method := self ensureMethodNamed: aString.
@@ -184,6 +195,11 @@ FAMIXCPPImporter >> ensureFolderNamed: aFileReference [
 { #category : #model }
 FAMIXCPPImporter >> ensureFunctionNamed: aString [
 	^ model add: (FAMIXFunction new name: aString)
+]
+
+{ #category : #model }
+FAMIXCPPImporter >> ensureLambdaNamed: aString [
+	^ model add: (FAMIXCPPLambda new name: aString)
 ]
 
 { #category : #model }

@@ -61,6 +61,21 @@ FAMIXCPPMethod >> isEqualityOperator [
 	^ self name = 'operator='
 ]
 
+{ #category : #'as yet unclassified' }
+FAMIXCPPMethod >> lambdas [
+	<MSEProperty: #lambdas type: #FAMIXCPPLambda opposite: #outerMethod>
+	<multivalued>
+	<derived>
+	^ self privateState
+		attributeAt: #lambdas
+		ifAbsentPut: [ FMMultivalueLink on: self opposite: #outerMethod: ]
+]
+
+{ #category : #'as yet unclassified' }
+FAMIXCPPMethod >> lambdas: aCollection [
+	self lambdas value: aCollection
+]
+
 { #category : #accessing }
 FAMIXCPPMethod >> sourceAnchor [
 	^ super sourceAnchor

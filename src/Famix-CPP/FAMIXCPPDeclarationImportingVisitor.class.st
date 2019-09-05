@@ -351,6 +351,25 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 ]
 
 { #category : #visiting }
+FAMIXCPPDeclarationImportingVisitor >> visitLambdaExpression: aLambdaExpressionNode [
+	aLambdaExpressionNode rightParens notEmpty
+		ifTrue: [ | name lambda |
+			name := aLambdaExpressionNode completeSource
+				ifNotNil: [ :value | 
+					(value
+						copyFrom: aLambdaExpressionNode startPosition
+						to: aLambdaExpressionNode rightParens first stopPosition)
+						asString ].
+			lambda := importer
+				createLambdaNamed: name
+				in: self currentMethod
+				for: aLambdaExpressionNode.
+			self storeAST: aLambdaExpressionNode into: lambda.
+			aLambdaExpressionNode attributeNamed: #entity put: lambda ].
+	super visitLambdaExpression: aLambdaExpressionNode
+]
+
+{ #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitMemberDeclaration: aNode [
 	aNode isTypedef
 		ifTrue: [ | type |
