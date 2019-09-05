@@ -1,6 +1,6 @@
 Class {
 	#name : #FAMIXCPPLambda,
-	#superclass : #FAMIXCPPMethod,
+	#superclass : #FAMIXBehaviouralEntity,
 	#instVars : [
 		'outerMethod'
 	],
