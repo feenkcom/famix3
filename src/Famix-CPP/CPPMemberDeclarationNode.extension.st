@@ -13,6 +13,12 @@ CPPMemberDeclarationNode >> isEnumSpecifier [
 ]
 
 { #category : #'*Famix-CPP' }
+CPPMemberDeclarationNode >> isForwardDeclaration [
+	^ specifiers
+		anySatisfy: [ :each | each isKindOf: CPPElaboratedTypeSpecifierNode ]
+]
+
+{ #category : #'*Famix-CPP' }
 CPPMemberDeclarationNode >> isFriendDeclaration [
 	^ specifiers
 		anySatisfy: [ :each | 
