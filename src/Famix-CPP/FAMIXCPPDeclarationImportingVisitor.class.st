@@ -56,6 +56,22 @@ FAMIXCPPDeclarationImportingVisitor >> addPropertiesTo: anEntity basedOn: declar
 		ifTrue: [ anEntity isPublic: true ]
 ]
 
+{ #category : #visiting }
+FAMIXCPPDeclarationImportingVisitor >> createTypeAliasFor: aNode [
+	| type |
+	type := importer
+		createAliasTypeNamed: (self typedefNameFor: aNode)
+		for: aNode.
+	self currentType
+		ifNotNil: [ :parentType | 
+			parentType addType: type.
+			type container: parentType ]
+		ifNil: [ (self enclosingNamespaceEntityFor: aNode)
+				ifNotNil: [ :entity | type container: entity ] ].
+	aNode attributeNamed: #entity put: type.
+	self addEntity: type
+]
+
 { #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> currentEnum [
 	stack
@@ -151,12 +167,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 	(declaration isFriendDeclaration or: [ declaration isTypedef ])
 		ifTrue: [ ^ self ].
 	declaration isTypedef
-		ifTrue: [ | type |
-			type := importer
-				createAliasTypeNamed: declaration typedefName
-				for: declaration.
-			declaration attributeNamed: #entity put: type.
-			^ self addEntity: type ].
+		ifTrue: [ ^ self createTypeAliasFor: declaration ].
 	declaration declarators isEmpty
 		ifTrue: [ | attribute |
 			declaration specifiers isEmpty
@@ -236,6 +247,15 @@ FAMIXCPPDeclarationImportingVisitor >> templateTypeNameFrom: aNode [
 					(each isKindOf: CPPElaboratedTypeSpecifierNode)
 						ifTrue: [ ^ each name source ] ] ].
 	^ nil
+]
+
+{ #category : #visiting }
+FAMIXCPPDeclarationImportingVisitor >> typedefNameFor: aNode [
+	^ aNode typedefName
+		ifNotNil: [ :name | 
+			((importer namespaceNameFor: aNode)
+				ifEmpty: [ '' ]
+				ifNotEmpty: [ :s | s , '::' ]) , name ]
 ]
 
 { #category : #visiting }
@@ -372,10 +392,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitLambdaExpression: aLambdaExpressionN
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitMemberDeclaration: aNode [
 	aNode isTypedef
-		ifTrue: [ | type |
-			type := importer createAliasTypeNamed: aNode typedefName for: aNode.
-			aNode attributeNamed: #entity put: type.
-			self addEntity: type ].
+		ifTrue: [ self createTypeAliasFor: aNode ].
 	super visitMemberDeclaration: aNode
 ]
 
@@ -394,10 +411,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitSimpleDeclaration: aNode [
 	aNode isTypedef
-		ifTrue: [ | type |
-			type := importer createAliasTypeNamed: aNode typedefName for: aNode.
-			aNode attributeNamed: #entity put: type.
-			self addEntity: type ].
+		ifTrue: [ self createTypeAliasFor: aNode ].
 	super visitSimpleDeclaration: aNode
 ]
 
