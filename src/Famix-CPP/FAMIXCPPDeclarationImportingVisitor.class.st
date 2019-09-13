@@ -164,7 +164,8 @@ FAMIXCPPDeclarationImportingVisitor >> normalizeTypeSource: parameterSource forV
 FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: class in: aNode [
 	(declaration isKindOf: CPPMemberDeclarationNode)
 		ifFalse: [ ^ self ].
-	(declaration isFriendDeclaration or: [ declaration isTypedef ])
+	(declaration isFriendDeclaration
+		or: [ declaration isForwardDeclaration or: [ declaration isTypedef ] ])
 		ifTrue: [ ^ self ].
 	declaration isTypedef
 		ifTrue: [ ^ self createTypeAliasFor: declaration ].
