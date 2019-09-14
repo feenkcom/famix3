@@ -278,9 +278,12 @@ FAMIXCPPDeclarationImportingVisitor >> visitClassSpecifier: aNode [
 									self addEntity: paramType.
 									type addType: paramType ] ]
 						ifFalse: [ type := importer createClassNamed: name for: aNode ] ] ].
-	self currentType ifNotNil: [ :parentType | parentType addType: type ].
-	(self enclosingNamespaceEntityFor: aNode)
-		ifNotNil: [ :entity | type container: entity ].
+	self currentType
+		ifNotNil: [ :parentType | 
+			parentType addType: type.
+			type container: parentType ]
+		ifNil: [ (self enclosingNamespaceEntityFor: aNode)
+				ifNotNil: [ :entity | type container: entity ] ].
 	self storeAST: aNode into: type.
 	aNode attributeNamed: #entity put: type.
 	self addEntity: type.
