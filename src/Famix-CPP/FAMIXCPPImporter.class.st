@@ -438,7 +438,10 @@ FAMIXCPPImporter >> namespaceNameFor: aNode [
 							current names
 								do: [ :each | stream nextPutAll: each source ]
 								separatedBy: [ stream nextPutAll: '::' ] ] ]
-				ifFalse: [ current name ifNotNil: [ :token | token source ] ].
+				ifFalse: [ current name
+						ifNotNil: [ :token | 
+							(current nameSpecifier ifNil: [ '' ] ifNotNil: [ :ns | ns source ])
+								, token source ] ].
 			parentName notNil
 				ifTrue: [ name := parentName
 						,

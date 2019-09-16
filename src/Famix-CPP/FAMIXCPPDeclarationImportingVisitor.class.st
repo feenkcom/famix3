@@ -278,7 +278,10 @@ FAMIXCPPDeclarationImportingVisitor >> visitClassSpecifier: aNode [
 									self addEntity: paramType.
 									type addType: paramType ] ]
 						ifFalse: [ type := importer createClassNamed: name for: aNode ] ] ].
-	self currentType
+	(((aNode nameSpecifier notNil
+		and: [ aNode nameSpecifier type notNil ])
+		ifTrue: [ self lookupClass: aNode nameSpecifier type source from: aNode ])
+		ifNil: [ self currentType ])
 		ifNotNil: [ :parentType | 
 			parentType addType: type.
 			type container: parentType ]
@@ -328,7 +331,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 				ifTrue: [ aNode specifiers isEmpty
 						ifTrue: [ aNode declarator id identifier nameSpecifier source ]
 						ifFalse: [ aNode specifiers last source ] ]
-				ifFalse: [ name first: (name indexOf: $:) - 1 ].
+				ifFalse: [ name first: index - 2 ].
 			owner := self lookupClass: className from: aNode.
 			owner notNil
 				ifTrue: [ method := owner methods
