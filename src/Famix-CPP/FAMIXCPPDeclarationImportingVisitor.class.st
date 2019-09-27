@@ -238,8 +238,8 @@ FAMIXCPPDeclarationImportingVisitor >> signatureFor: declarator [
 
 { #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> templateTypeNameFrom: aNode [
-	(aNode isKindOf: CPPTypenameTypeParameterNode)
-		ifTrue: [ ^ aNode name source ].
+	(aNode isKindOf: CPPTypeParameterNode)
+		ifTrue: [ ^ aNode name ifNotNil: [ :name | name source ] ].
 	(aNode isKindOf: CPPParameterDeclarationNode)
 		ifTrue: [ aNode declarator notNil
 				ifTrue: [ ^ aNode declarator source ].
