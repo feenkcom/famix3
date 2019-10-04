@@ -301,7 +301,7 @@ FMMSEParser >> pos [
 { #category : #running }
 FMMSEParser >> run [
 	UIManager default
-		displayProgress: 'Parsing ' , self stream localName
+		displayProgress: 'Parsing ' ", self stream localName"
 		from: 1
 		to: self stream size
 		during: [ :bar | 
