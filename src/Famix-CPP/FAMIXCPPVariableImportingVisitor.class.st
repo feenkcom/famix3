@@ -68,6 +68,16 @@ FAMIXCPPVariableImportingVisitor >> createTempNamed: varName as: typeName in: aN
 ]
 
 { #category : #private }
+FAMIXCPPVariableImportingVisitor >> entityFor: aNode [
+	| current |
+	current := aNode.
+	[ current notNil ]
+		whileTrue: [ (current attributeNamed: #entity) ifNotNil: [ :entity | ^ entity ].
+			current := current parent ].
+	^ nil
+]
+
+{ #category : #private }
 FAMIXCPPVariableImportingVisitor >> typeDefTypeFor: specifier in: aNode [
 	(specifier attributeNamed: #entity)
 		ifNotNil: [ :entity | 
@@ -95,6 +105,32 @@ FAMIXCPPVariableImportingVisitor >> visitAssignmentExpression: aNode [
 						as: aNode lhs left source , '>'
 						in: aNode ] ].
 	super visitAssignmentExpression: aNode
+]
+
+{ #category : #visiting }
+FAMIXCPPVariableImportingVisitor >> visitAttribute: anAttributeNode [
+	| type annotation |
+	type := importer ensureAnnotationNamed: anAttributeNode name source.
+	annotation := FAMIXAnnotationInstance new.
+	annotation annotationType: type.
+	self addEntity: annotation.
+	importer model add: annotation.
+	(self entityFor: anAttributeNode)
+		ifNotNil: [ :entity | annotation annotatedEntity: entity ].
+	self storeAST: anAttributeNode into: annotation.
+	anAttributeNode attributeNamed: #entity put: anAttributeNode.
+	annotation sourceAnchor: (importer sourceAnchorFor: anAttributeNode).
+	anAttributeNode arguments
+		do: [ :each | 
+			| attribute |
+			attribute := FAMIXAnnotationInstanceAttribute new.
+			attribute value: each source.
+			attribute parentAnnotationInstance: annotation.
+			self addEntity: attribute.
+			importer model add: attribute.
+			self storeAST: each into: attribute.
+			each attributeNamed: #entity put: attribute.
+			attribute sourceAnchor: (importer sourceAnchorFor: each) ]
 ]
 
 { #category : #visiting }

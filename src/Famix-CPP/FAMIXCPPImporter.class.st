@@ -15,7 +15,8 @@ Class {
 		'methods',
 		'includeASTNodes',
 		'parameterizedTypes',
-		'unknownVariables'
+		'unknownVariables',
+		'annotations'
 	],
 	#category : #'Famix-CPP'
 }
@@ -132,6 +133,13 @@ FAMIXCPPImporter >> ensureAliasTypeNamed: aString [
 		at: aString
 		ifAbsentPut: [ model
 				add: (FAMIXTypeAlias new name: (self removeNamespaceFrom: aString)) ]
+]
+
+{ #category : #model }
+FAMIXCPPImporter >> ensureAnnotationNamed: aString [
+	^ annotations
+		at: aString
+		ifAbsentPut: [ model add: (FAMIXAnnotationType new name: aString) ]
 ]
 
 { #category : #model }
@@ -381,7 +389,8 @@ FAMIXCPPImporter >> initialize [
 	asts := OrderedCollection new.
 	includeASTNodes := true.
 	parameterizedTypes := Dictionary new.
-	unknownVariables := Dictionary new
+	unknownVariables := Dictionary new.
+	annotations := Dictionary new
 ]
 
 { #category : #private }
