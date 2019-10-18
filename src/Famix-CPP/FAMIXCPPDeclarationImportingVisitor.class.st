@@ -370,9 +370,15 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 			((identifier isKindOf: CPPIdentifierNode)
 				and: [ method isKindOf: FAMIXMethod ])
 				ifTrue: [ method isConstructor: true ] ].
+	aNode specifiers
+		do: [ :each | 
+			((each isKindOf: CPPDeclSpecifierNode)
+				and: [ each source ~= 'typedef' ])
+				ifTrue: [ method modifiers add: each source ] ].
 	aNode virtualSpecifierTokens notEmpty
 		ifTrue: [ method modifiers
-				addAll: (aNode virtualSpecifierTokens collect: #value) asSet ].
+				addAll:
+					(aNode virtualSpecifierTokens collect: [ :each | each value ]) asSet ].
 	aNode attributeNamed: #entity put: method.
 	self push: method around: [ super visitFunctionDefinition: aNode ]
 ]
