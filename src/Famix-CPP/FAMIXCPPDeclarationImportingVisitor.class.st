@@ -9,6 +9,16 @@ Class {
 }
 
 { #category : #private }
+FAMIXCPPDeclarationImportingVisitor >> addModifiersFrom: declaration to: method [
+	declaration specifiers
+		do: [ :each | 
+			(((each isKindOf: CPPDeclSpecifierNode)
+				and: [ each source ~= 'typedef' ])
+				or: [ (each isKindOf: CPPClassTypeNode) and: [ each source = 'final' ] ])
+				ifTrue: [ method modifiers add: each source ] ]
+]
+
+{ #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> addParametersTo: declarator to: function [
 	| stream |
 	stream := WriteStream on: String new.
@@ -197,6 +207,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 								declaration:
 									(FAMIXCPPMethodDeclaration new
 										sourceAnchor: (importer sourceAnchorFor: declaration)).
+							self addModifiersFrom: declaration to: method.
 							self storeAST: declaration into: method.
 							self addEntity: method.
 							self addEntity: method declaration.
@@ -370,9 +381,10 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 			((identifier isKindOf: CPPIdentifierNode)
 				and: [ method isKindOf: FAMIXMethod ])
 				ifTrue: [ method isConstructor: true ] ].
+	self addModifiersFrom: aNode to: method.
 	aNode virtualSpecifierTokens notEmpty
 		ifTrue: [ method modifiers
-				addAll: (aNode virtualSpecifierTokens collect: #value) asSet ].
+				addAll: (aNode virtualSpecifierTokens collect: [ :each | each value ]) asSet ].
 	aNode attributeNamed: #entity put: method.
 	self push: method around: [ super visitFunctionDefinition: aNode ]
 ]
