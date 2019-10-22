@@ -25,6 +25,12 @@ MooseAbstractGroup >> allModules [
 ]
 
 { #category : #'*Famix-C' }
+MooseAbstractGroup >> allStructs [
+	<navigation: 'All structs'>
+	^ self allWithType: FAMIXCPPStruct
+]
+
+{ #category : #'*Famix-C' }
 MooseAbstractGroup >> allTypeAliases [
 	<navigation: 'All type aliases'>
 	^ self allWithType: FAMIXTypeAlias
