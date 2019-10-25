@@ -3,10 +3,19 @@ Class {
 	#superclass : #FAMIXCPPImportingVisitor,
 	#instVars : [
 		'stack',
-		'templateTypes'
+		'templateTypes',
+		'cyclomaticComplexity'
 	],
 	#category : #'Famix-CPP'
 }
+
+{ #category : #visiting }
+FAMIXCPPDeclarationImportingVisitor >> acceptNode: aSmaCCParseNode [
+	aSmaCCParseNode notNil
+		ifTrue: [ cyclomaticComplexity := cyclomaticComplexity
+				+ aSmaCCParseNode additionalCyclomaticComplexityEdges ].
+	^ super acceptNode: aSmaCCParseNode
+]
 
 { #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> addModifiersFrom: declaration to: method [
@@ -113,7 +122,8 @@ FAMIXCPPDeclarationImportingVisitor >> currentType [
 { #category : #'initialize-release' }
 FAMIXCPPDeclarationImportingVisitor >> initialize [
 	super initialize.
-	stack := OrderedCollection new
+	stack := OrderedCollection new.
+	cyclomaticComplexity := 0
 ]
 
 { #category : #private }
@@ -333,7 +343,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitEnumSpecifier: aNode [
 
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
-	| name methodName index owner className method identifier |
+	| name methodName index owner className method identifier oldComplexity |
 	name := aNode declarator id source.
 	index := name lastIndexOf: $:.
 	index > 0
@@ -386,14 +396,18 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 		ifTrue: [ method modifiers
 				addAll: (aNode virtualSpecifierTokens collect: [ :each | each value ]) asSet ].
 	aNode attributeNamed: #entity put: method.
-	self push: method around: [ super visitFunctionDefinition: aNode ]
+	oldComplexity := cyclomaticComplexity.
+	cyclomaticComplexity := 1.
+	self push: method around: [ super visitFunctionDefinition: aNode ].
+	method cyclomaticComplexity: cyclomaticComplexity.
+	cyclomaticComplexity := oldComplexity
 ]
 
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitLambdaExpression: aLambdaExpressionNode [
+	| name lambda oldComplexity |
 	aLambdaExpressionNode rightParens notEmpty
-		ifTrue: [ | name lambda |
-			name := aLambdaExpressionNode completeSource
+		ifTrue: [ name := aLambdaExpressionNode completeSource
 				ifNotNil: [ :value | 
 					(value
 						copyFrom: aLambdaExpressionNode startPosition
@@ -405,7 +419,12 @@ FAMIXCPPDeclarationImportingVisitor >> visitLambdaExpression: aLambdaExpressionN
 				for: aLambdaExpressionNode.
 			self storeAST: aLambdaExpressionNode into: lambda.
 			aLambdaExpressionNode attributeNamed: #entity put: lambda ].
-	super visitLambdaExpression: aLambdaExpressionNode
+	oldComplexity := cyclomaticComplexity.
+	cyclomaticComplexity := 1.
+	super visitLambdaExpression: aLambdaExpressionNode.
+	lambda notNil
+		ifTrue: [ lambda cyclomaticComplexity: cyclomaticComplexity ].
+	cyclomaticComplexity := oldComplexity
 ]
 
 { #category : #visiting }
