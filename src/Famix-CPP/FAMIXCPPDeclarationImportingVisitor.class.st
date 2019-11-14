@@ -219,6 +219,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 										sourceAnchor: (importer sourceAnchorFor: declaration)).
 							self addModifiersFrom: declaration to: method.
 							self storeAST: declaration into: method.
+							self storeAST: declaration into: method declaration.
 							self addEntity: method.
 							self addEntity: method declaration.
 							self addPropertiesTo: method basedOn: declaration.
