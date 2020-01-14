@@ -289,6 +289,24 @@ FAMIXCPPImporter >> ensureUnknownVariableNamed: aString [
 ]
 
 { #category : #importing }
+FAMIXCPPImporter >> filesOfType: anExtensionPattern in: aDirectory excluding: exclusionPatterns do: aBlock [
+	(aDirectory filesMatching: anExtensionPattern)
+		do: [ :each | 
+			(exclusionPatterns
+				noneSatisfy: [ :pattern | pattern match: each basename ])
+				ifTrue: [ aBlock value: each ] ].
+	aDirectory directories
+		do: [ :each | 
+			(exclusionPatterns
+				noneSatisfy: [ :pattern | pattern match: each basename ])
+				ifTrue: [ self
+						filesOfType: anExtensionPattern
+						in: each
+						excluding: exclusionPatterns
+						do: aBlock ] ]
+]
+
+{ #category : #importing }
 FAMIXCPPImporter >> finishImport [
 	asts := OrderedCollection new.
 	currentFile := nil
@@ -322,8 +340,13 @@ FAMIXCPPImporter >> importDeclarationsFrom: anAST [
 
 { #category : #importing }
 FAMIXCPPImporter >> importFrom: aDirectory [
+	self importFrom: aDirectory excluding: #()
+]
+
+{ #category : #importing }
+FAMIXCPPImporter >> importFrom: aDirectory excluding: patternCollection [
 	model rootFolder: aDirectory asFileReference.
-	self parseFilesIn: aDirectory.
+	self parseFilesIn: aDirectory excluding: patternCollection.
 	self importDeclarations.
 	self importVariables.
 	self importReferences.
@@ -471,12 +494,14 @@ FAMIXCPPImporter >> parseFile: aFileReference [
 ]
 
 { #category : #importing }
-FAMIXCPPImporter >> parseFilesIn: aDirectory [
+FAMIXCPPImporter >> parseFilesIn: aDirectory excluding: patternCollection [
 	#('*.h' '*.cpp' '*.c')
 		do: [ :each | 
-			(aDirectory asFileReference allChildrenMatching: each)
-				do: [ :fn | asts add: (self parseFile: fn) ]
-				displayingProgress: [ :fn | 'Parsing ' , fn pathString ] ]
+			self
+				filesOfType: each
+				in: aDirectory asFileReference
+				excluding: patternCollection
+				do: [ :fn | asts add: (self parseFile: fn) ] ]
 ]
 
 { #category : #private }
