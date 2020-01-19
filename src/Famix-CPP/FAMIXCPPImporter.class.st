@@ -16,7 +16,8 @@ Class {
 		'includeASTNodes',
 		'parameterizedTypes',
 		'unknownVariables',
-		'annotations'
+		'annotations',
+		'importPaths'
 	],
 	#category : #'Famix-CPP'
 }
@@ -345,12 +346,24 @@ FAMIXCPPImporter >> importFrom: aDirectory [
 
 { #category : #importing }
 FAMIXCPPImporter >> importFrom: aDirectory excluding: patternCollection [
+	self importPaths isEmpty
+		ifTrue: [ self importPaths: {aDirectory asFileReference} ].
 	model rootFolder: aDirectory asFileReference.
 	self parseFilesIn: aDirectory excluding: patternCollection.
 	self importDeclarations.
 	self importVariables.
 	self importReferences.
 	self finishImport
+]
+
+{ #category : #accessing }
+FAMIXCPPImporter >> importPaths [
+	^ importPaths ifNil: [ #() ]
+]
+
+{ #category : #accessing }
+FAMIXCPPImporter >> importPaths: aCollection [
+	importPaths := aCollection
 ]
 
 { #category : #importing }

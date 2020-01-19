@@ -94,6 +94,14 @@ FAMIXCPPReferencesImportingVisitor >> getterPatterns [
 
 { #category : #private }
 FAMIXCPPReferencesImportingVisitor >> includedFilename: aString [
+	| parts |
+	parts := aString substrings: '/'.
+	importer importPaths
+		do: [ :each | 
+			| name |
+			name := parts inject: each into: [ :sum :part | sum / part ].
+			name exists
+				ifTrue: [ ^ name ] ].
 	^ ('/includes/' , aString) asFileReference
 ]
 
