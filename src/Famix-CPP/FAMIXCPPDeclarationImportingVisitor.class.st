@@ -217,6 +217,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 								declaration:
 									(FAMIXCPPMethodDeclaration new
 										sourceAnchor: (importer sourceAnchorFor: declaration)).
+							self model add: method declaration.
 							self addModifiersFrom: declaration to: method.
 							self storeAST: declaration into: method.
 							self storeAST: declaration into: method declaration.
@@ -380,6 +381,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 				implementation:
 					(FAMIXCPPMethodImplementation new
 						sourceAnchor: (importer sourceAnchorFor: aNode)).
+			self model add: method implementation.
 			self storeAST: aNode into: method implementation.
 			self addEntity: method implementation ].
 	aNode specifiers isEmpty
