@@ -286,9 +286,9 @@ FAMIXCPPDeclarationImportingVisitor >> typedefNameFor: aNode [
 FAMIXCPPDeclarationImportingVisitor >> visitClassSpecifier: aNode [
 	| name type |
 	name := self nameFor: aNode.
-	aNode structToken notNil
+	aNode isStructure
 		ifTrue: [ type := importer createStructNamed: name for: aNode ]
-		ifFalse: [ aNode unionToken notNil
+		ifFalse: [ aNode isUnion
 				ifTrue: [ type := importer createUnionNamed: name for: aNode ]
 				ifFalse: [ templateTypes notNil
 						ifTrue: [ type := importer createTemplateClassNamed: name for: aNode.
