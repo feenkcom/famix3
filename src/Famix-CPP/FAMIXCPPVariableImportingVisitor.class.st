@@ -273,31 +273,35 @@ FAMIXCPPVariableImportingVisitor >> visitParameterDeclaration: aNode [
 
 { #category : #visiting }
 FAMIXCPPVariableImportingVisitor >> visitSimpleDeclaration: aNode [
-	aNode specifiers notEmpty
-		ifTrue: [ | isMethod |
-			isMethod := (aNode parentOfType: CPPFunctionDefinitionNode) notNil.
-			aNode declarators notEmpty
-				ifTrue: [ aNode declarators
-						do: [ :each | 
-							isMethod
-								ifTrue: [ self createTemp: each from: aNode specifiers in: aNode ]
-								ifFalse: [ self createGlobal: each from: aNode specifiers in: aNode ] ] ]
-				ifFalse: [ (aNode specifiers size = 2
-						and: [ aNode specifiers
-								allSatisfy: [ :each | each isKindOf: CPPClassTypeNode ] ])
-						ifTrue: [ isMethod
-								ifTrue: [ self
-										createTempNamed: aNode specifiers last source
-										as: aNode specifiers first source
-										in: aNode ]
-								ifFalse: [ self
-										createGlobalNamed: aNode specifiers last source
-										from: (aNode specifiers allButLast: 1)
-										in: aNode ] ] ] ].
-	aNode isTypedef
-		ifTrue: [ (aNode attributeNamed: #entity)
-				ifNotNil: [ :alias | 
-					(self typeDefTypeFor: aNode specifiers second in: aNode)
-						ifNotNil: [ :type | alias aliasedType: type ] ] ].
+	aNode isExternalFunction
+		ifTrue: [ (self typeFromSpecifiers: aNode specifiers in: aNode)
+				ifNotNil: [ :type | (aNode attributeNamed: #entity) declaredType: type ] ]
+		ifFalse: [ aNode specifiers notEmpty
+				ifTrue: [ | isMethod |
+					isMethod := (aNode parentOfType: CPPFunctionDefinitionNode)
+						notNil.
+					aNode declarators notEmpty
+						ifTrue: [ aNode declarators
+								do: [ :each | 
+									isMethod
+										ifTrue: [ self createTemp: each from: aNode specifiers in: aNode ]
+										ifFalse: [ self createGlobal: each from: aNode specifiers in: aNode ] ] ]
+						ifFalse: [ (aNode specifiers size = 2
+								and: [ aNode specifiers
+										allSatisfy: [ :each | each isKindOf: CPPClassTypeNode ] ])
+								ifTrue: [ isMethod
+										ifTrue: [ self
+												createTempNamed: aNode specifiers last source
+												as: aNode specifiers first source
+												in: aNode ]
+										ifFalse: [ self
+												createGlobalNamed: aNode specifiers last source
+												from: (aNode specifiers allButLast: 1)
+												in: aNode ] ] ] ].
+			aNode isTypedef
+				ifTrue: [ (aNode attributeNamed: #entity)
+						ifNotNil: [ :alias | 
+							(self typeDefTypeFor: aNode specifiers second in: aNode)
+								ifNotNil: [ :type | alias aliasedType: type ] ] ] ].
 	super visitSimpleDeclaration: aNode
 ]

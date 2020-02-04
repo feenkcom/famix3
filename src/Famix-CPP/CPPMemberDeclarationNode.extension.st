@@ -40,7 +40,8 @@ CPPMemberDeclarationNode >> isTypedef [
 	typeNode := self specifiers second.
 	^ (typeNode isKindOf: CPPClassTypeNode)
 		or: [ (typeNode isKindOf: CPPClassSpecifierNode)
-				or: [ typeNode isKindOf: CPPEnumSpecifierNode ] ]
+				or: [ (typeNode isKindOf: CPPEnumSpecifierNode)
+						or: [ typeNode isKindOf: CPPElaboratedTypeSpecifierNode ] ] ]
 ]
 
 { #category : #'*Famix-CPP' }

@@ -453,6 +453,13 @@ FAMIXCPPDeclarationImportingVisitor >> visitOriginalNamespaceDefinition: aNode [
 FAMIXCPPDeclarationImportingVisitor >> visitSimpleDeclaration: aNode [
 	aNode isTypedef
 		ifTrue: [ self createTypeAliasFor: aNode ].
+	aNode isExternalFunction
+		ifTrue: [ | method |
+			method := importer createFunctionNamed: aNode declarators first declarator id source for: aNode.
+			self addParametersTo: aNode declarators first declarator to: method.
+			self storeAST: aNode into: method.
+			self addEntity: method.
+			aNode attributeNamed: #entity put: method ].
 	super visitSimpleDeclaration: aNode
 ]
 
