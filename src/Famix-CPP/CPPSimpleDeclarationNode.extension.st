@@ -1,6 +1,14 @@
 Extension { #name : #CPPSimpleDeclarationNode }
 
 { #category : #'*Famix-CPP' }
+CPPSimpleDeclarationNode >> isExternalFunction [
+	declarators size = 1
+		ifFalse: [ ^ false ].
+	^ declarators first declarator leftParens notEmpty
+		and: [ (self parentOfType: CPPFunctionDefinitionNode) isNil ]
+]
+
+{ #category : #'*Famix-CPP' }
 CPPSimpleDeclarationNode >> isTypedef [
 	| typeNode |
 	self specifiers size >= 2
@@ -13,7 +21,8 @@ CPPSimpleDeclarationNode >> isTypedef [
 	typeNode := self specifiers second.
 	^ (typeNode isKindOf: CPPClassTypeNode)
 		or: [ (typeNode isKindOf: CPPClassSpecifierNode)
-				or: [ typeNode isKindOf: CPPEnumSpecifierNode ] ]
+				or: [ (typeNode isKindOf: CPPEnumSpecifierNode)
+						or: [ typeNode isKindOf: CPPElaboratedTypeSpecifierNode ] ] ]
 ]
 
 { #category : #'*Famix-CPP' }
