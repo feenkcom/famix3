@@ -99,8 +99,12 @@ FAMIXCPPReferencesImportingVisitor >> includedFilename: aString [
 	importer importPaths
 		do: [ :each | 
 			| name |
-			name := parts inject: each into: [ :sum :part | sum / part ].
-			name exists
+			name := parts
+				inject: each asFileReference
+				into: [ :sum :part | 
+					(sum notNil and: [ sum isDirectory ])
+						ifTrue: [ sum / part ] ].
+			(name notNil and: [ name isFile ])
 				ifTrue: [ ^ name ] ].
 	^ ('/includes/' , aString) asFileReference
 ]
