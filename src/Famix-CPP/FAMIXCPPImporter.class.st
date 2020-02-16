@@ -11,6 +11,7 @@ Class {
 		'enums',
 		'structs',
 		'unions',
+		'aliases',
 		'functions',
 		'methods',
 		'includeASTNodes',
@@ -130,7 +131,7 @@ FAMIXCPPImporter >> declarationVisitor [
 
 { #category : #model }
 FAMIXCPPImporter >> ensureAliasTypeNamed: aString [
-	^ classes
+	^ aliases
 		at: aString
 		ifAbsentPut: [ model
 				add: (FAMIXTypeAlias new name: (self removeNamespaceFrom: aString)) ]
@@ -418,6 +419,7 @@ FAMIXCPPImporter >> initialize [
 	enums := Dictionary new.
 	structs := Dictionary new.
 	unions := Dictionary new.
+	aliases := Dictionary new.
 	files := Dictionary new.
 	folders := Dictionary new.
 	functions := Dictionary new.
