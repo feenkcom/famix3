@@ -137,6 +137,31 @@ FMMetaRepository >> elementsFromPackageNamed: aString [
 	^ self elements select: [:el | el packageName = aString]
 ]
 
+{ #category : #accessing }
+FMMetaRepository >> gtClassesFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Classes';
+		items: [ self classes sorted: [:x :y | x fullName < y fullName] ];
+		itemFormat: [ :each | 
+			each isAbstract 
+				ifTrue: [ each fullName asRopedText italic ]
+				ifFalse: [ each fullName asRopedText ] ]
+]
+
+{ #category : #accessing }
+FMMetaRepository >> gtHierarchiesFor: aView [
+	<gtView>
+	^ aView tree
+		title: 'Hierarchies';
+		items: [ (self classes select: [ :each | each superclass = FM3 object ]) sorted: [:x :y | x fullName < y fullName] ];
+		children: [ :c | c subclasses sorted: [:x :y | x fullName < y fullName] ];
+		itemFormat: [ :each | 
+			each isAbstract 
+				ifTrue: [ each fullName asRopedText italic ]
+				ifFalse: [ each fullName asRopedText ] ]
+]
+
 { #category : #ui }
 FMMetaRepository >> gtInspectorClassesIn: composite [
 	<gtInspectorPresentationOrder: 0>
@@ -202,6 +227,15 @@ FMMetaRepository >> gtInspectorPropertiesIn: composite [
 							icon: GLMUIThemeExtraIcons glamorousBrowse 
 							on: $b
 							entitled: 'Browse implementation'
+]
+
+{ #category : #accessing }
+FMMetaRepository >> gtPackagesFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Packages';
+		items: [ self packages sorted: [:x :y | x fullName < y fullName] ];
+		itemFormat: [ :each | each fullName ]
 ]
 
 { #category : #ui }

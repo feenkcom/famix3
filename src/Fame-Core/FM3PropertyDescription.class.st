@@ -83,6 +83,15 @@ FM3PropertyDescription >> gtInspectorSourceIn: composite [
 		self compiledMethod ifNotNil: [ :c | c asRingDefinition gtInspectorSourceIn: composite ] ]
 ]
 
+{ #category : #accessing }
+FM3PropertyDescription >> gtSourceFor: composite [
+	<gtView>
+	self hasImplementingSelector ifFalse: [ ^ composite empty].
+	^ self compiledMethod 
+		ifNil: [ composite view ]
+		ifNotNil: [ :c | c asRingDefinition gtSourceFor: composite ]
+]
+
 { #category : #ui }
 FM3PropertyDescription >> gtTypeString [
 	^ String streamContents: [ :s | 
