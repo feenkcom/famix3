@@ -398,6 +398,42 @@ FM3MetaDescription >> gtInspectorRelationsIn: composite [
 			entitled: 'Inspect'
 ]
 
+{ #category : #accessing }
+FM3MetaDescription >> gtPropertiesFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Properties' translated;
+		items: [ self allPrimitiveAttributes sorted: [:attribute1 :attribute2 | attribute1 name < attribute2 name] ];
+		column: 'Name' evaluated: [:each | each name ];
+		column: 'Type' evaluated: [:each | each gtTypeString];
+		column: 'Derived?' format: [ :each | each isDerived ] width: 50
+]
+
+{ #category : #accessing }
+FM3MetaDescription >> gtRelationsFor: aView [
+	<gtView>
+	^ aView columnedList 
+			title: 'Relations' translated; 
+			items: [ self allComplexAttributes sorted: [ :attribute1 :attribute2 | attribute1 name < attribute2 name ]]; 
+			column: 'Name' format: [ :each | each name ];
+			column: 'Type' format: [ :each | each gtTypeString ]; 
+			column: 'Opposite' format: [ :each | each opposite ifNil: [ '' ] ifNotNil: [ :opposite | opposite name ] ]; 
+			column: 'Derived?' format: [ :each | each isDerived ] width: 50; 
+			column: 'Container?' format: [ :each | each isContainer ] width: 50; 
+			column: 'IsTarget?' format: [ :each | each isTarget ] width: 50;
+			column: 'IsSource?' format: [ :each | each isSource ] width: 50
+			"selectionPopulate: #selection
+			on: $o
+			entitled: 'Open opposite'
+			with: [ :list | list selection opposite ]; morphicSelectionAct: [ :list | 
+				Smalltalk tools browser
+					openOnClass: list selection mmClass implementingClass
+					selector: list selection implementingSelector ]
+			icon: GLMUIThemeExtraIcons glamorousBrowse
+			on: $b
+			entitled: 'Browse implementation'; "
+]
+
 { #category : #testing }
 FM3MetaDescription >> hasImplementingClass [
 	^ implementingClass notNil
