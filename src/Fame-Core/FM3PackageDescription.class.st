@@ -63,6 +63,31 @@ FM3PackageDescription >> extensions: elementCollection [
 	extensions value: elementCollection
 ]
 
+{ #category : #accessing }
+FM3PackageDescription >> gtClassesFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Classes';
+		items: [ self classes sorted: [:x :y | x fullName < y fullName] ];
+		itemFormat: [ :each | 
+			each isAbstract 
+				ifTrue: [ each fullName asRopedText italic ]
+				ifFalse: [ each fullName asRopedText ] ]
+]
+
+{ #category : #accessing }
+FM3PackageDescription >> gtHierarchiesFor: aView [
+	<gtView>
+	^ aView tree
+		title: 'Hierarchies';
+		items: [ (self classes select: [ :each | each superclass = FM3 object ]) sorted: [:x :y | x fullName < y fullName] ];
+		children: [ :c | c subclasses sorted: [:x :y | x fullName < y fullName] ];
+		itemFormat: [ :each | 
+			each isAbstract 
+				ifTrue: [ each fullName asRopedText italic ]
+				ifFalse: [ each fullName asRopedText ] ]
+]
+
 { #category : #ui }
 FM3PackageDescription >> gtInspectorClassesIn: composite [
 	<gtInspectorPresentationOrder: 0>
