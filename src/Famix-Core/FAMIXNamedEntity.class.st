@@ -228,6 +228,17 @@ FAMIXNamedEntity >> packageScope [
 ]
 
 { #category : #accessing }
+FAMIXNamedEntity >> parentPackage [
+	"Package containing the entity in the code structure (if applicable)"
+
+	<MSEProperty: #parentPackage type: #FAMIXPackage opposite: #childNamedEntities>
+	<MSEComment: 'Package containing the entity in the code structure (if applicable)'>
+	<container>
+
+	^ parentPackage
+]
+
+{ #category : #accessing }
 FAMIXNamedEntity >> parentPackage: aPackage [
 	parentPackage := FMMultivalueLink on: self
 					update: #childNamedEntities
