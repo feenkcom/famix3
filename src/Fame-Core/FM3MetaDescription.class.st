@@ -434,6 +434,45 @@ FM3MetaDescription >> gtRelationsFor: aView [
 			entitled: 'Browse implementation'; "
 ]
 
+{ #category : #accessing }
+FM3MetaDescription >> gtTreeFor: aView [
+	<gtView>
+	^ aView mondrian
+		title: 'Tree';
+		painting: [ :m |
+		m nodes 
+			umlClassShapeWithName: [:each | each name asRopedText ];
+			with: (self withAllSuperclasses, self allSubclasses) forEach: [:each | 
+				m nodes 
+					stencil: [:a | | pane |
+						pane := BrHorizontalPane new
+							vFitContent; hFitContent;
+							addChild: (BrLabel new 
+								text: (a name, ':'); look: BrGlamorousLabelLook;
+								when: BlClickEvent do: [:e | e target phlow spawnObject: a]);
+							addChild: (BrLabel new 
+								text: a type name; look: (BrGlamorousLabelLook new foreground: Color gray);
+								when: BlClickEvent do: [:e | e target phlow spawnObject: a type]).
+						a hasOpposite ifTrue: [
+							pane addChild: (BrLabel new 
+								text: '(', a opposite name, ')'; look: (BrGlamorousLabelLook new foreground: Color gray);
+								when: BlClickEvent do: [:e | e target phlow spawnObject: a opposite])].
+						pane ];
+					with: (each attributes sorted: [:a :b | a name < b name]).
+					m layout vertical ].
+				m edges 
+					stencil: [:each | 
+						BlLineElement new 
+						border: (BlBorder paint: (Color gray alpha: 0.5) width: 1);
+						fromHead: (BlArrowheadTriangle new
+							scale: 4;
+							border: (BlBorder paint: (Color gray alpha: 0.5)))];
+	fromCenterBottom;
+	toCenterTop;
+	connectFrom: #superclass.
+m layout tree levelDistance: 30.]
+]
+
 { #category : #testing }
 FM3MetaDescription >> hasImplementingClass [
 	^ implementingClass notNil
