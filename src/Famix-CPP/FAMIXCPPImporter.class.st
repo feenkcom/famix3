@@ -162,8 +162,12 @@ FAMIXCPPImporter >> ensureEnumNamed: aString [
 
 { #category : #model }
 FAMIXCPPImporter >> ensureFileNamed: aFileReference [
+	| filename |
+	filename := aFileReference pathString.
+	DiskStore activeClass isCaseSensitive
+		ifFalse: [ filename := filename asUppercase ].
 	^ files
-		at: aFileReference pathString
+		at: filename
 		ifAbsentPut: [ | file |
 			file := FAMIXCFile new.
 			file name: aFileReference basename.
