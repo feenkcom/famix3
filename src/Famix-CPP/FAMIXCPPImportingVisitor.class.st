@@ -187,8 +187,9 @@ FAMIXCPPImportingVisitor >> typeFromSpecifiers: specifiers in: aNode [
 								ifTrue: [ ^ self primitiveTypeNamed: each name source in: nil ].
 							(each isKindOf: CPPClassTypeNode)
 								ifTrue: [ | source |
-									typeArgs := (each name isKindOf: CPPTemplateIdentifierNode)
-										ifTrue: [ each name arguments ].
+									typeArgs isNil
+										ifTrue: [ typeArgs := (each name isKindOf: CPPTemplateIdentifierNode)
+												ifTrue: [ each name arguments ] ].
 									source := each source.
 									(stream position = 0 or: [ source beginsWith: '::' ])
 										ifTrue: [ stream nextPutAll: source ] ] ] ])
