@@ -52,6 +52,7 @@ FAMIXCPPDeclarationImportingVisitor >> addParametersTo: declarator to: function 
 			each initializer notNil
 				ifTrue: [ param beOptional ].
 			self addEntity: param.
+			self model add: param.
 			function addParameter: param ]
 		separatedBy: [ stream nextPutAll: ', ' ].
 	stream nextPut: $).
@@ -201,6 +202,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 				sourceAnchor: (importer sourceAnchorFor: declaration).
 			self addPropertiesTo: attribute basedOn: declaration.
 			self addEntity: attribute.
+			self model add: attribute.
 			self storeAST: declaration into: attribute.
 			declaration attributeNamed: #entity put: attribute.
 			^ class addAttribute: attribute ].
@@ -237,6 +239,7 @@ FAMIXCPPDeclarationImportingVisitor >> processDeclaration: declaration for: clas
 							self storeAST: declaration into: attribute.
 							self addPropertiesTo: attribute basedOn: declaration.
 							self addEntity: attribute.
+							self model add: attribute.
 							declaration attributeNamed: #entity put: attribute.
 							^ class addAttribute: attribute ] ] ]
 ]

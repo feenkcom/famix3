@@ -114,7 +114,7 @@ FAMIXCPPVariableImportingVisitor >> visitAttribute: anAttributeNode [
 	annotation := FAMIXAnnotationInstance new.
 	annotation annotationType: type.
 	self addEntity: annotation.
-	importer model add: annotation.
+	self model add: annotation.
 	(self entityFor: anAttributeNode)
 		ifNotNil: [ :entity | annotation annotatedEntity: entity ].
 	self storeAST: anAttributeNode into: annotation.
@@ -127,7 +127,7 @@ FAMIXCPPVariableImportingVisitor >> visitAttribute: anAttributeNode [
 			attribute value: each source.
 			attribute parentAnnotationInstance: annotation.
 			self addEntity: attribute.
-			importer model add: attribute.
+			self model add: attribute.
 			self storeAST: each into: attribute.
 			each attributeNamed: #entity put: attribute.
 			attribute sourceAnchor: (importer sourceAnchorFor: each) ]
