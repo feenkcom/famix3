@@ -290,7 +290,17 @@ FAMIXCPPDeclarationImportingVisitor >> visitClassSpecifier: aNode [
 	| name type |
 	name := self nameFor: aNode.
 	aNode isStructure
-		ifTrue: [ type := importer createStructNamed: name for: aNode ]
+		ifTrue: [ templateTypes notNil
+				ifTrue: [ type := importer createTemplateStructNamed: name for: aNode.
+					templateTypes
+						do: [ :each | 
+							| paramType |
+							paramType := FAMIXParameterType new.
+							paramType name: each.
+							self model add: paramType.
+							self addEntity: paramType.
+							type addType: paramType ] ]
+				ifFalse: [ type := importer createStructNamed: name for: aNode ] ]
 		ifFalse: [ aNode isUnion
 				ifTrue: [ type := importer createUnionNamed: name for: aNode ]
 				ifFalse: [ templateTypes notNil

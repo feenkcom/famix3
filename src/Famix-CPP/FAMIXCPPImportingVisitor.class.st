@@ -194,12 +194,19 @@ FAMIXCPPImportingVisitor >> typeFromSpecifiers: specifiers in: aNode [
 									(stream position = 0 or: [ source beginsWith: '::' ])
 										ifTrue: [ stream nextPutAll: source ] ] ] ])
 		in: aNode.
-	(typeArgs notNil and: [ type isKindOf: FAMIXParameterizableClass ])
-		ifTrue: [ type := importer
-				ensureParameterizedTypeFor: type
-				with:
-					((typeArgs collect: [ :each | self typeArgumentFor: each ])
-						reject: [ :each | each isNil ]) ].
+	typeArgs notNil
+		ifTrue: [ (type isKindOf: FAMIXParameterizableClass)
+				ifTrue: [ type := importer
+						ensureParameterizedTypeFor: type
+						with:
+							((typeArgs collect: [ :each | self typeArgumentFor: each ])
+								reject: [ :each | each isNil ]) ]
+				ifFalse: [ (type isKindOf: FAMIXParameterizableCPPStruct)
+						ifTrue: [ type := importer
+								ensureParameterizedStructFor: type
+								with:
+									((typeArgs collect: [ :each | self typeArgumentFor: each ])
+										reject: [ :each | each isNil ]) ] ] ].
 	^ type
 ]
 
