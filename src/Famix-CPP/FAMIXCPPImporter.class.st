@@ -140,7 +140,7 @@ FAMIXCPPImporter >> declarationVisitor [
 { #category : #model }
 FAMIXCPPImporter >> ensureAliasTypeNamed: aString [
 	^ aliases
-		at: aString
+		at: aString trim
 		ifAbsentPut: [ model
 				add: (FAMIXTypeAlias new name: (self removeNamespaceFrom: aString)) ]
 ]
@@ -154,16 +154,18 @@ FAMIXCPPImporter >> ensureAnnotationNamed: aString [
 
 { #category : #model }
 FAMIXCPPImporter >> ensureClassNamed: aString [
+	| string |
+	string := self removeConst: aString.
 	^ classes
-		at: aString
-		ifAbsentPut: [ model
-				add: (FAMIXClass new name: (self removeNamespaceFrom: aString)) ]
+		at: string
+		ifAbsentPut:
+			[ model add: (FAMIXClass new name: (self removeNamespaceFrom: string)) ]
 ]
 
 { #category : #model }
 FAMIXCPPImporter >> ensureEnumNamed: aString [
 	^ enums
-		at: aString
+		at: aString trim
 		ifAbsentPut:
 			[ model add: (FAMIXEnum new name: (self removeNamespaceFrom: aString)) ]
 ]
@@ -267,7 +269,7 @@ FAMIXCPPImporter >> ensureParameterizedTypeFor: aParameterableType with: typeArg
 	^ parameterizedTypes
 		at:
 			{aParameterableType.
-			typeArgs}
+			typeArgs asArray}
 		ifAbsentPut: [ | type |
 			type := FAMIXParameterizedType new
 				parameterizableClass: aParameterableType;
@@ -285,38 +287,46 @@ FAMIXCPPImporter >> ensurePrimitiveTypeNamed: aString [
 
 { #category : #model }
 FAMIXCPPImporter >> ensureStructNamed: aString [
+	| string |
+	string := self removeConst: aString.
 	^ structs
-		at: aString
+		at: string
 		ifAbsentPut: [ model
-				add: (FAMIXCPPStruct new name: (self removeNamespaceFrom: aString)) ]
+				add: (FAMIXCPPStruct new name: (self removeNamespaceFrom: string)) ]
 ]
 
 { #category : #model }
 FAMIXCPPImporter >> ensureTemplateClassNamed: aString [
+	| string |
+	string := self removeConst: aString.
 	^ classes
-		at: aString
+		at: string
 		ifAbsentPut: [ model
 				add:
 					(FAMIXParameterizableClass new
-						name: (self removeNamespaceFrom: aString)) ]
+						name: (self removeNamespaceFrom: string)) ]
 ]
 
 { #category : #model }
 FAMIXCPPImporter >> ensureTemplateStructNamed: aString [
+	| string |
+	string := self removeConst: aString.
 	^ structs
-		at: aString
+		at: string
 		ifAbsentPut: [ model
 				add:
 					(FAMIXParameterizableCPPStruct new
-						name: (self removeNamespaceFrom: aString)) ]
+						name: (self removeNamespaceFrom: string)) ]
 ]
 
 { #category : #model }
 FAMIXCPPImporter >> ensureUnionNamed: aString [
+	| string |
+	string := self removeConst: aString.
 	^ unions
-		at: aString
+		at: string
 		ifAbsentPut: [ model
-				add: (FAMIXCPPUnion new name: (self removeNamespaceFrom: aString)) ]
+				add: (FAMIXCPPUnion new name: (self removeNamespaceFrom: string)) ]
 ]
 
 { #category : #model }
@@ -577,6 +587,17 @@ FAMIXCPPImporter >> referencesVisitor [
 ]
 
 { #category : #private }
+FAMIXCPPImporter >> removeConst: aString [
+	| string |
+	string := aString trim.
+	string size > 6
+		ifFalse: [ ^ string ].
+	((string beginsWith: 'const') and: [ (string at: 6) isSeparator ])
+		ifTrue: [ string := (string allButFirst: 6) trim ].
+	^ string
+]
+
+{ #category : #private }
 FAMIXCPPImporter >> removeGenericsFrom: aString [
 	((aString includes: $<)
 		or: [ (aString includes: $ ) or: [ aString beginsWith: '::' ] ])
@@ -597,9 +618,9 @@ FAMIXCPPImporter >> removeGenericsFrom: aString [
 FAMIXCPPImporter >> removeNamespaceFrom: aString [
 	| index |
 	index := aString lastIndexOf: $:.
-	^ index > 0
+	^ (index > 0
 		ifTrue: [ aString allButFirst: index ]
-		ifFalse: [ aString ]
+		ifFalse: [ aString ]) trim
 ]
 
 { #category : #model }

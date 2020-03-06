@@ -83,7 +83,7 @@ FAMIXCPPVariableImportingVisitor >> typeDefTypeFor: specifier in: aNode [
 		ifNotNil: [ :entity | 
 			entity isType
 				ifTrue: [ ^ entity ] ].
-	^ self typeNamed: aNode specifiers second source in: aNode
+	^ self typeArgumentFor: aNode specifiers second
 ]
 
 { #category : #visiting }
