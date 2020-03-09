@@ -109,6 +109,14 @@ FAMIXCPPImporter >> createTemplateClassNamed: aString for: aNode [
 ]
 
 { #category : #model }
+FAMIXCPPImporter >> createTemplateStructNamed: aString for: aNode [
+	| struct |
+	struct := self ensureTemplateStructNamed: aString.
+	struct sourceAnchor: (self sourceAnchorFor: aNode).
+	^ struct
+]
+
+{ #category : #model }
 FAMIXCPPImporter >> createUnionNamed: aString for: aNode [
 	| union |
 	union := self ensureUnionNamed: aString.
@@ -241,6 +249,20 @@ FAMIXCPPImporter >> ensureNamespace: aString in: aNamespace [
 ]
 
 { #category : #model }
+FAMIXCPPImporter >> ensureParameterizedStructFor: aParameterableType with: typeArgs [
+	^ parameterizedTypes
+		at:
+			{aParameterableType.
+			typeArgs}
+		ifAbsentPut: [ | type |
+			type := FAMIXParameterizedStruct new
+				parameterizableStruct: aParameterableType;
+				name: aParameterableType name;
+				arguments: typeArgs.
+			model add: type ]
+]
+
+{ #category : #model }
 FAMIXCPPImporter >> ensureParameterizedTypeFor: aParameterableType with: typeArgs [
 	^ parameterizedTypes
 		at:
@@ -276,6 +298,16 @@ FAMIXCPPImporter >> ensureTemplateClassNamed: aString [
 		ifAbsentPut: [ model
 				add:
 					(FAMIXParameterizableClass new
+						name: (self removeNamespaceFrom: aString)) ]
+]
+
+{ #category : #model }
+FAMIXCPPImporter >> ensureTemplateStructNamed: aString [
+	^ structs
+		at: aString
+		ifAbsentPut: [ model
+				add:
+					(FAMIXParameterizableCPPStruct new
 						name: (self removeNamespaceFrom: aString)) ]
 ]
 

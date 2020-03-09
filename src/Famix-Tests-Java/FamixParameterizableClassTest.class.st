@@ -6,6 +6,7 @@ Class {
 
 { #category : #tests }
 FamixParameterizableClassTest >> testParameterTypes [
+	<gtExample>
 	| model aParameterizableClass |
 	MooseModel resetMeta.
 	model := MooseModel new.
@@ -36,5 +37,6 @@ FamixParameterizableClassTest >> testParameterTypes [
 		assert: aParameterizableClass parameters first
 		equals: (model allParameterTypes entityNamed: #ParameterizableClassB::C).
 	aParameterizableClass := model allParameterizableClasses entityNamed: #ParameterizableClassC.
-	self assert: aParameterizableClass parameters isEmpty
+	self assert: aParameterizableClass parameters isEmpty.
+	^ aParameterizableClass
 ]
