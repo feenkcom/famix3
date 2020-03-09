@@ -25,7 +25,8 @@ FamixParameterizedTypeTest >> setUp [
 		(FAMIX.Type (id: 5) (name ''TypeC''))		
 		(FAMIX.ParameterizedType (id: 6) (parameterizableClass (ref: 3)) (arguments (ref: 4)))
 		(FAMIX.ParameterizedType (id: 7) (parameterizableClass (ref: 3)) (arguments (ref: 4) (ref: 5)))
-		
+		(FAMIX.ParameterizedType (id: 20) (parameterizableClass (ref: 3)) (arguments (ref: 4) (ref: 4)))
+			
 		(FAMIX.Attribute (id: 8) (name ''attributeA1'') (parentType (ref: 2)) (declaredType (ref: 6)))
 		(FAMIX.Attribute (id: 9) (name ''attributeA2'') (parentType (ref: 2)) (declaredType (ref: 7)))
 
@@ -103,14 +104,6 @@ FamixParameterizedTypeTest >> testArgumentTypes [
 ]
 
 { #category : #tests }
-FamixParameterizedTypeTest >> testArguments [
-	| parameterizableType |
-	parameterizableType := model allParameterizedTypes entityNamed: #'ParameterizableClassA<TypeB,TypeC>'.
-	self assert: parameterizableType arguments notEmpty.
-	self assert: parameterizableType arguments size equals: 2
-]
-
-{ #category : #tests }
 FamixParameterizedTypeTest >> testArgumentsConstruction [
 	| parameterizableType argument1 argument2 |
 	parameterizableType := FAMIXParameterizedType new.
@@ -127,8 +120,8 @@ FamixParameterizedTypeTest >> testArgumentsConstruction [
 
 { #category : #tests }
 FamixParameterizedTypeTest >> testModelSize [
-	self assert: model entities size equals: 18.
-	self assert: model allParameterizedTypes size equals: 2
+	self assert: model entities size equals: 19.
+	self assert: model allParameterizedTypes size equals: 3
 ]
 
 { #category : #tests }
@@ -141,5 +134,21 @@ FamixParameterizedTypeTest >> testMooseName [
 
 { #category : #tests }
 FamixParameterizedTypeTest >> testParameterizableClass [
-	self assert: model allParameterizableClasses anyOne parameterizedTypes size = 2
+	self assert: model allParameterizableClasses anyOne parameterizedTypes size = 3
+]
+
+{ #category : #tests }
+FamixParameterizedTypeTest >> testTwoDistinctArguments [
+	| parameterizableType |
+	parameterizableType := model allParameterizedTypes entityNamed: #'ParameterizableClassA<TypeB,TypeC>'.
+	self assert: parameterizableType arguments notEmpty.
+	self assert: parameterizableType arguments size equals: 2.
+]
+
+{ #category : #tests }
+FamixParameterizedTypeTest >> testTwoEqualArguments [
+	| parameterizableType |
+	parameterizableType := model allParameterizedTypes entityNamed: #'ParameterizableClassA<TypeB,TypeB>'.
+	self assert: parameterizableType arguments notEmpty.
+	self assert: parameterizableType arguments size equals: 2.
 ]
