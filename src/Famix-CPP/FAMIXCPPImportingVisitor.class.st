@@ -15,6 +15,29 @@ FAMIXCPPImportingVisitor >> addEntity: anEntity [
 ]
 
 { #category : #private }
+FAMIXCPPImportingVisitor >> addTypeParameters: aString to: aType in: aNode [
+	| parts types current |
+	((aType isKindOf: FAMIXParameterizableClass)
+		or: [ aType isKindOf: FAMIXParameterizableCPPStruct ])
+		ifFalse: [ ^ aType ].
+	(aString occurrencesOf: $<) = (aString occurrencesOf: $>)
+		ifFalse: [ ^ aType ].
+	parts := (aString
+		copyFrom: (aString indexOf: $<) + 1
+		to: (aString lastIndexOf: $>) - 1) substrings: ','.
+	types := OrderedCollection new.
+	current := ''.
+	parts
+		do: [ :each | 
+			current := current , each.
+			(current occurrencesOf: $<) = (current occurrencesOf: $>)
+				ifTrue: [ types add: (self typeNamed: current in: aNode).
+					current := '' ]
+				ifFalse: [ current := current , ',' ] ].
+	^ importer ensureParameterizedTypeFor: aType with: types
+]
+
+{ #category : #private }
 FAMIXCPPImportingVisitor >> enclosingClassEntityFor: aNode [
 	| current |
 	current := aNode.
@@ -150,12 +173,36 @@ FAMIXCPPImportingVisitor >> storeAST: aNode into: anEntity [
 { #category : #private }
 FAMIXCPPImportingVisitor >> typeArgumentFor: aNode [
 	((aNode isKindOf: CPPTypeIdentifierNode)
-		and: [ aNode declarator isKindOf: CPPPtrAbstractDeclaratorNode ])
+		and: [ aNode declarator isNil
+				or: [ aNode declarator isKindOf: CPPPtrAbstractDeclaratorNode ] ])
 		ifTrue: [ ^ self typeFromSpecifiers: aNode specifiers in: aNode ].
 	(aNode isKindOf: CPPCallExpressionNode)
 		ifTrue: [ ^ self typeNamed: aNode expression source in: aNode ].
 	(aNode isKindOf: CPPLiteralNode)
 		ifTrue: [ ^ nil ].
+	(aNode isKindOf: CPPIdentifierExpressionNode)
+		ifTrue: [ (aNode identifier isKindOf: CPPTemplateIdentifierNode)
+				ifTrue: [ (self typeNamed: aNode source in: aNode)
+						ifNotNil: [ :type | 
+							(type isKindOf: FAMIXParameterizableClass)
+								ifTrue: [ ^ importer
+										ensureParameterizedTypeFor: type
+										with:
+											((aNode identifier arguments
+												collect: [ :each | self typeArgumentFor: each ])
+												reject: [ :each | each isNil ]) ] ] ].
+			((aNode identifier isKindOf: CPPQualifiedIdentifierNode)
+				and: [ aNode identifier templateIdentifier
+						isKindOf: CPPTemplateIdentifierNode ])
+				ifTrue: [ (self typeNamed: aNode source in: aNode)
+						ifNotNil: [ :type | 
+							(type isKindOf: FAMIXParameterizableClass)
+								ifTrue: [ ^ importer
+										ensureParameterizedTypeFor: type
+										with:
+											((aNode identifier templateIdentifier arguments
+												collect: [ :each | self typeArgumentFor: each ])
+												reject: [ :each | each isNil ]) ] ] ] ].
 	^ self typeNamed: aNode source in: aNode
 ]
 
@@ -212,13 +259,14 @@ FAMIXCPPImportingVisitor >> typeFromSpecifiers: specifiers in: aNode [
 
 { #category : #private }
 FAMIXCPPImportingVisitor >> typeNamed: aString in: aNode [
-	| type index name |
+	| type index name string |
 	aString isEmpty
 		ifTrue: [ ^ nil ].
-	index := aString indexOf: $<.
+	string := aString trim.
+	index := string indexOf: $<.
 	name := index > 0
-		ifTrue: [ aString first: index - 1 ]
-		ifFalse: [ aString ].
+		ifTrue: [ string first: index - 1 ]
+		ifFalse: [ string ].
 	type := importer
 		lookupType: name
 		from: aNode
@@ -229,6 +277,11 @@ FAMIXCPPImportingVisitor >> typeNamed: aString in: aNode [
 				ifTrue: [ importer ensureTemplateClassNamed: name ]
 				ifFalse: [ importer ensureClassNamed: name ].
 			type isStub: true ].
+	index > 0
+		ifTrue: [ type := self
+				addTypeParameters: (string allButFirst: index - 1)
+				to: (importer ensureTemplateClassNamed: name)
+				in: aNode ].
 	^ type
 ]
 
