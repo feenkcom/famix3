@@ -263,6 +263,27 @@ FAMIXCPPDeclarationImportingVisitor >> signatureFor: declarator [
 ]
 
 { #category : #private }
+FAMIXCPPDeclarationImportingVisitor >> signatureOf: declarator [
+	| stream |
+	stream := WriteStream on: String new.
+	stream nextPut: $(.
+	declarator declarations
+		do: [ :each | 
+			| name |
+			name := each declarator
+				ifNil: [ each specifiers last source ]
+				ifNotNil: [ :decl | 
+					(decl isKindOf: CPPDeclaratorNode)
+						ifTrue: [ decl id source ]
+						ifFalse: [ decl source ] ].
+			stream
+				nextPutAll: (self normalizeTypeSource: each source forVariable: name) ]
+		separatedBy: [ stream nextPutAll: ', ' ].
+	stream nextPut: $).
+	^ stream contents
+]
+
+{ #category : #private }
 FAMIXCPPDeclarationImportingVisitor >> templateTypeNameFrom: aNode [
 	(aNode isKindOf: CPPTypeParameterNode)
 		ifTrue: [ ^ aNode name ifNotNil: [ :name | name source ] ].
@@ -358,7 +379,7 @@ FAMIXCPPDeclarationImportingVisitor >> visitEnumSpecifier: aNode [
 
 { #category : #visiting }
 FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
-	| name methodName index owner className method identifier oldComplexity |
+	| name methodName index owner className method identifier oldComplexity potential |
 	name := aNode declarator id source.
 	index := name lastIndexOf: $:.
 	index > 0
@@ -370,12 +391,20 @@ FAMIXCPPDeclarationImportingVisitor >> visitFunctionDefinition: aNode [
 				ifFalse: [ name first: index - 2 ].
 			owner := self lookupClass: className from: aNode.
 			owner notNil
-				ifTrue: [ method := owner methods
-						detect: [ :each | 
+				ifTrue: [ potential := owner methods
+						select: [ :each | 
 							each name = methodName
 								and: [ each implementation isNil
-										and: [ each parameters size = aNode declarator declarations size ] ] ]
-						ifNone: [  ] ] ]
+										and: [ each parameters size = aNode declarator declarations size ] ] ].
+					potential size = 1
+						ifTrue: [ method := potential first ]
+						ifFalse: [ potential notEmpty
+								ifTrue: [ | signature |
+									signature := methodName
+										, (self signatureOf: aNode declarator).
+									method := potential
+										detect: [ :each | each signature endsWith: signature ]
+										ifNone: [  ] ] ] ] ]
 		ifFalse: [ methodName := name.
 			owner := stack isEmpty
 				ifTrue: [ nil ]
