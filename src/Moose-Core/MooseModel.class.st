@@ -381,8 +381,6 @@ MooseModel >> importFromMSEStream: aStream [
 	repository := self class importFrom: aStream.
 	self silentlyAddAll: repository elements.
 	self entityStorage forRuntime.
-	self name: (aStream localName famixRemoveSuffix: '.mse').
-	((aStream respondsTo: #isFileStream) and: [ aStream isFileStream ]) ifTrue: [ self rootFolder: aStream fullName asFileReference parent ]
 ]
 
 { #category : #actions }
@@ -392,6 +390,14 @@ MooseModel >> importFromMSEStream: aStream filteredBy: anImportingContext [
 	repository := self class importFrom: aStream filteredBy: anImportingContext.
 	repository elements do: [ :e | self add: e ].
 	self entityStorage forRuntime
+]
+
+{ #category : #actions }
+MooseModel >> importMSEFromFile: aFileReference [
+	aFileReference asFileReference readStreamDo: [:s |
+		self importFromMSEStream: s.
+		self name: aFileReference basenameWithoutExtension.
+		self rootFolder: aFileReference asFileReference parent ].
 ]
 
 { #category : #testing }
