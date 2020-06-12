@@ -12,7 +12,8 @@ Class {
 GtPhpArrayCreation >> children [
 	| result |
 	result := super children.
-	result addAll: elements.	^ result
+	result addAll: elements.
+	^ result
 ]
 
 { #category : #initialization }

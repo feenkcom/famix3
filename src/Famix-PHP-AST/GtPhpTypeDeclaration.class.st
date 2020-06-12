@@ -14,7 +14,8 @@ GtPhpTypeDeclaration >> children [
 	| result |
 	result := super children.
 	block ifNotNil: [ :x | result add: x ].
-	result addAll: interfaces.	className ifNotNil: [ :x | result add: x ].
+	result addAll: interfaces.
+	className ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

@@ -12,7 +12,8 @@ Class {
 GtPhpTraitPrecedence >> children [
 	| result |
 	result := super children.
-	result addAll: trList.	methodReference ifNotNil: [ :x | result add: x ].
+	result addAll: trList.
+	methodReference ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

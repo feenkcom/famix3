@@ -12,7 +12,8 @@ Class {
 GtPhpFunctionInvocation >> children [
 	| result |
 	result := super children.
-	result addAll: parameters.	functionName ifNotNil: [ :x | result add: x ].
+	result addAll: parameters.
+	functionName ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

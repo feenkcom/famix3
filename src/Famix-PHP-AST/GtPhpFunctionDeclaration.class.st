@@ -18,7 +18,8 @@ GtPhpFunctionDeclaration >> children [
 	functionBody ifNotNil: [ :x | result add: x ].
 	returnType ifNotNil: [ :x | result add: x ].
 	functionName ifNotNil: [ :x | result add: x ].
-	result addAll: formalParameters.	^ result
+	result addAll: formalParameters.
+	^ result
 ]
 
 { #category : #initialization }

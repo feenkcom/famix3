@@ -11,7 +11,8 @@ Class {
 GtPhpList >> children [
 	| result |
 	result := super children.
-	result addAll: variables.	^ result
+	result addAll: variables.
+	^ result
 ]
 
 { #category : #initialization }

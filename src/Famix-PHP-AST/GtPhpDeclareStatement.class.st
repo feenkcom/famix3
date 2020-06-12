@@ -13,7 +13,9 @@ Class {
 GtPhpDeclareStatement >> children [
 	| result |
 	result := super children.
-	result addAll: directiveNames.	result addAll: directiveValues.	body ifNotNil: [ :x | result add: x ].
+	result addAll: directiveNames.
+	result addAll: directiveValues.
+	body ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

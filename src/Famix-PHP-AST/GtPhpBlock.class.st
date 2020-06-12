@@ -12,7 +12,8 @@ Class {
 GtPhpBlock >> children [
 	| result |
 	result := super children.
-	result addAll: statements.	^ result
+	result addAll: statements.
+	^ result
 ]
 
 { #category : #initialization }
