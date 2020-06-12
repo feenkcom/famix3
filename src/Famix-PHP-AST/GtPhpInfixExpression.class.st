@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpInfixExpression,
 	#superclass : #GtPhpExpression,
+	#traits : 'TGtPhpInfixExpression',
+	#classTraits : 'TGtPhpInfixExpression classTrait',
 	#instVars : [
 		'right',
 		'left',
