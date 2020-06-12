@@ -13,7 +13,8 @@ Class {
 GtPhpSwitchCase >> children [
 	| result |
 	result := super children.
-	result addAll: actions.	value ifNotNil: [ :x | result add: x ].
+	result addAll: actions.
+	value ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

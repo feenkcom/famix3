@@ -15,7 +15,8 @@ GtPhpClassInstanceCreation >> children [
 	result := super children.
 	className ifNotNil: [ :x | result add: x ].
 	anonymousClassDeclaration ifNotNil: [ :x | result add: x ].
-	result addAll: constructorParameters.	^ result
+	result addAll: constructorParameters.
+	^ result
 ]
 
 { #category : #accessing }

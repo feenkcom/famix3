@@ -14,7 +14,8 @@ GtPhpCatchClause >> children [
 	| result |
 	result := super children.
 	body ifNotNil: [ :x | result add: x ].
-	result addAll: classNames.	variable ifNotNil: [ :x | result add: x ].
+	result addAll: classNames.
+	variable ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

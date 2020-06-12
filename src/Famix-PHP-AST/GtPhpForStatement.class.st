@@ -14,8 +14,11 @@ Class {
 GtPhpForStatement >> children [
 	| result |
 	result := super children.
-	result addAll: increasements.	result addAll: conditions.	body ifNotNil: [ :x | result add: x ].
-	result addAll: initializations.	^ result
+	result addAll: increasements.
+	result addAll: conditions.
+	body ifNotNil: [ :x | result add: x ].
+	result addAll: initializations.
+	^ result
 ]
 
 { #category : #accessing }

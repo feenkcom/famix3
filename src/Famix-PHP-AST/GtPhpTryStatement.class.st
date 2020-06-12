@@ -15,7 +15,8 @@ GtPhpTryStatement >> children [
 	result := super children.
 	finallyClause ifNotNil: [ :x | result add: x ].
 	tryStatement ifNotNil: [ :x | result add: x ].
-	result addAll: catchClauses.	^ result
+	result addAll: catchClauses.
+	^ result
 ]
 
 { #category : #initialization }

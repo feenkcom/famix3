@@ -16,9 +16,11 @@ Class {
 GtPhpLambdaFunctionDeclaration >> children [
 	| result |
 	result := super children.
-	result addAll: lexicalVariables.	returnType ifNotNil: [ :x | result add: x ].
+	result addAll: lexicalVariables.
+	returnType ifNotNil: [ :x | result add: x ].
 	functionBody ifNotNil: [ :x | result add: x ].
-	result addAll: formalParameters.	^ result
+	result addAll: formalParameters.
+	^ result
 ]
 
 { #category : #initialization }

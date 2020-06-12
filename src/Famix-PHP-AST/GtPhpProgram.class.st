@@ -17,7 +17,11 @@ Class {
 GtPhpProgram >> children [
 	| result |
 	result := super children.
-	result addAll: comments.	result addAll: statements.	result addAll: useStatements.	result addAll: namespaceDeclarations.	commentMapper ifNotNil: [ :x | result add: x ].
+	result addAll: comments.
+	result addAll: statements.
+	result addAll: useStatements.
+	result addAll: namespaceDeclarations.
+	commentMapper ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

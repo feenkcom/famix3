@@ -15,7 +15,8 @@ Class {
 GtPhpArrowFunctionDeclaration >> children [
 	| result |
 	result := super children.
-	result addAll: formalParameters.	returnType ifNotNil: [ :x | result add: x ].
+	result addAll: formalParameters.
+	returnType ifNotNil: [ :x | result add: x ].
 	body ifNotNil: [ :x | result add: x ].
 	^ result
 ]

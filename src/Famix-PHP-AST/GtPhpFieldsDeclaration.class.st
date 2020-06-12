@@ -12,7 +12,8 @@ Class {
 GtPhpFieldsDeclaration >> children [
 	| result |
 	result := super children.
-	result addAll: fields.	fieldsType ifNotNil: [ :x | result add: x ].
+	result addAll: fields.
+	fieldsType ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 

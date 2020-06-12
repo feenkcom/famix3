@@ -12,7 +12,9 @@ Class {
 GtPhpConstantDeclaration >> children [
 	| result |
 	result := super children.
-	result addAll: names.	result addAll: initializers.	^ result
+	result addAll: names.
+	result addAll: initializers.
+	^ result
 ]
 
 { #category : #initialization }

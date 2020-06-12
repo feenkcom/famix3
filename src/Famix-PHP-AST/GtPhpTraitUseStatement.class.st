@@ -12,7 +12,9 @@ Class {
 GtPhpTraitUseStatement >> children [
 	| result |
 	result := super children.
-	result addAll: traitNameList.	result addAll: tsList.	^ result
+	result addAll: traitNameList.
+	result addAll: tsList.
+	^ result
 ]
 
 { #category : #accessing }

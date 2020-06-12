@@ -11,7 +11,8 @@ Class {
 GtPhpStaticStatement >> children [
 	| result |
 	result := super children.
-	result addAll: expressions.	^ result
+	result addAll: expressions.
+	^ result
 ]
 
 { #category : #initialization }

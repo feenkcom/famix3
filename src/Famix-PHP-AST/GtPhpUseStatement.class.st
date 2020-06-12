@@ -16,7 +16,8 @@ GtPhpUseStatement >> children [
 	result := super children.
 	emptyPart ifNotNil: [ :x | result add: x ].
 	namespace ifNotNil: [ :x | result add: x ].
-	result addAll: parts.	^ result
+	result addAll: parts.
+	^ result
 ]
 
 { #category : #initialization }

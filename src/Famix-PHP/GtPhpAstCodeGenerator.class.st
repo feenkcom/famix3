@@ -48,13 +48,15 @@ GtPhpAstCodeGenerator >> addTraitUsageIfNecessaryToASTNodeClass: aFAMIXClass in:
 
 { #category : #private }
 GtPhpAstCodeGenerator >> applyCustomRefactoringsIn: namespace [
-"	{#GtPhpListVariable -> #GtPhpList . 
-	#GtPhpInstanceOfExpression -> #GtPhpInstanceofExpression} do: [ :tuple |
-		(RBRenameClassRefactoring
-				model: namespace
-				rename: tuple key
-				to: tuple value) primitiveExecute ].
-"
+	{
+		#GtPhpListVariable -> #GtPhpList ". 
+		#GtPhpInstanceOfExpression -> #GtPhpInstanceofExpression"
+	} do: [ :tuple |
+		(RBRenameClassRefactoring new
+			model: namespace;
+			className: tuple key newName: tuple value;
+			yourself) primitiveExecute ].
+
 	{{#GtPhpNamespaceDeclaration. (#body -> #block)}.
 	{#GtPhpNamespaceDeclaration. (#name -> #namespaceName)}.
 	{#GtPhpTypeDeclaration. (#name -> #className)}.
@@ -120,7 +122,8 @@ GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: anRBN
 						tab; 
 						nextPutAll: 'result addAll: '; 
 						nextPutAll: (self instVarNameForAttribute: attribute); 
-						nextPutAll: '.' ]
+						nextPutAll: '.';
+						cr ]
 					ifFalse: [ s 
 						tab; 
 						nextPutAll: (self instVarNameForAttribute: attribute); 
@@ -173,7 +176,9 @@ GtPhpAstCodeGenerator >> generateFromPDTCoreModel: aModel [
 GtPhpAstCodeGenerator >> generateImportMethodForASTNodeClass: aClass in: namespace [
 	| methodSource bodySource attributes lists |
 	attributes := aClass attributes reject: #hasClassScope.
-	lists := attributes select: [ :each | each declaredType isParameterizedType and: [ each declaredType name includesSubstring: 'List' ] ].
+	lists := attributes select: [ :each |
+		each declaredType isParameterizedType and: [ 
+			each declaredType name includesSubstring: 'List' ] ].
 	bodySource := String streamContents: [ :s |
 		lists size = 1 ifTrue: [
 			s
@@ -225,13 +230,19 @@ GtPhpAstCodeGenerator >> generateImportMethodForASTNodeClass: aClass in: namespa
 GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: anRBNamespace [
 	| methodSource attributes lists |
 	attributes := aClass attributes reject: #hasClassScope.
-	lists := attributes select: [ :each | each declaredType isParameterizedType and: [ each declaredType name includesSubstring: 'List' ] ].
+	lists := attributes select: [ :each | 
+		each declaredType isParameterizedType and: [ 
+			each declaredType name includesSubstring: 'List' ] ].
 	lists isEmpty ifTrue: [ ^ self ].
 	methodSource := String streamContents: [ :s |
 		s 
 			nextPutAll: 'initialize'; cr;
 			tab; nextPutAll: 'super initialize.'; cr.
-		lists do: [ :listAttribute | s tab; nextPutAll: (self instVarNameForAttribute: listAttribute), ' := OrderedCollection new.'; cr ].
+		lists do: [ :listAttribute | 
+			s 
+				tab; 
+				nextPutAll: (self instVarNameForAttribute: listAttribute), ' := OrderedCollection new.'; 
+				cr ].
 	].
 	(GtRBSilentlyAddMethodRefactoring 
 		model: anRBNamespace

@@ -13,7 +13,8 @@ Class {
 GtPhpNamespaceName >> children [
 	| result |
 	result := super children.
-	result addAll: segments.	^ result
+	result addAll: segments.
+	^ result
 ]
 
 { #category : #initialization }

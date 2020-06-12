@@ -15,7 +15,8 @@ GtPhpAnonymousClassDeclaration >> children [
 	result := super children.
 	superClass ifNotNil: [ :x | result add: x ].
 	body ifNotNil: [ :x | result add: x ].
-	result addAll: interfaces.	^ result
+	result addAll: interfaces.
+	^ result
 ]
 
 { #category : #initialization }
