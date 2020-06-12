@@ -1,7 +1,7 @@
 Class {
 	#name : #FAMIXPHPSourceLanguage,
 	#superclass : #FAMIXSourceLanguage,
-	#category : #'Famix-PHP'
+	#category : #'Famix-PHP-Model'
 }
 
 { #category : #meta }
