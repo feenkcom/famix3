@@ -48,13 +48,15 @@ GtPhpAstCodeGenerator >> addTraitUsageIfNecessaryToASTNodeClass: aFAMIXClass in:
 
 { #category : #private }
 GtPhpAstCodeGenerator >> applyCustomRefactoringsIn: namespace [
-"	{#GtPhpListVariable -> #GtPhpList . 
-	#GtPhpInstanceOfExpression -> #GtPhpInstanceofExpression} do: [ :tuple |
-		(RBRenameClassRefactoring
-				model: namespace
-				rename: tuple key
-				to: tuple value) primitiveExecute ].
-"
+	{
+		#GtPhpListVariable -> #GtPhpList ". 
+		#GtPhpInstanceOfExpression -> #GtPhpInstanceofExpression"
+	} do: [ :tuple |
+		(RBRenameClassRefactoring new
+			model: namespace;
+			className: tuple key newName: tuple value;
+			yourself) primitiveExecute ].
+
 	{{#GtPhpNamespaceDeclaration. (#body -> #block)}.
 	{#GtPhpNamespaceDeclaration. (#name -> #namespaceName)}.
 	{#GtPhpTypeDeclaration. (#name -> #className)}.

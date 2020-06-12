@@ -1,5 +1,5 @@
 Class {
-	#name : #GtPhpListVariable,
+	#name : #GtPhpList,
 	#superclass : #GtPhpVariableBase,
 	#instVars : [
 		'variables'
@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpListVariable >> children [
+GtPhpList >> children [
 	| result |
 	result := super children.
 	result addAll: variables.	^ result
 ]
 
 { #category : #initialization }
-GtPhpListVariable >> initialize [
+GtPhpList >> initialize [
 	super initialize.
 	variables := OrderedCollection new.
 
