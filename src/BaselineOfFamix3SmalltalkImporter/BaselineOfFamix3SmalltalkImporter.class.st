@@ -9,7 +9,7 @@ BaselineOfFamix3SmalltalkImporter >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec baseline: 'Famix3' with: [
-				spec repository: 'github://feenkcom/famix3:v0.7.32/src' ].
+				spec repository: 'github://feenkcom/famix3:v0.7.33/src' ].
 		spec 
 			package: 'Moose-SmalltalkImporter' with: [
 				spec requires: #('Famix3' ). ];
