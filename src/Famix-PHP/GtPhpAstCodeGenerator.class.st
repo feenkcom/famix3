@@ -77,8 +77,8 @@ GtPhpAstCodeGenerator >> applyCustomRefactoringsIn: namespace [
 				classVariable: false) primitiveExecute ]
 ]
 
-{ #category : #private }
-GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: namespace [
+{ #category : #'private - generation' }
+GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: anRBNamespace [
 	| methodSource attributes lists relevantAttributes |
 	attributes := aClass attributes reject: #hasClassScope.
 	relevantAttributes := attributes select: [ :each | 
@@ -111,10 +111,25 @@ GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: names
 		s tab; nextPutAll: '^ result'
 	].
 	(GtRBSilentlyAddMethodRefactoring 
-		model: namespace
+		model: anRBNamespace
 		addMethod: methodSource
 		toClass: (self pharoClassName: aClass name) asSymbol
 		inProtocols: #(#accessing)) primitiveExecute
+]
+
+{ #category : #'private - generation' }
+GtPhpAstCodeGenerator >> generateClassFromASTNodeClass: aFAMIXClass in: anRBNamespace [
+	(GtRBAddClassWithVarsRefactoring
+		model: anRBNamespace
+		addClass: (self pharoClassName: aFAMIXClass name)
+		superclass: (self pharoClassName: aFAMIXClass superclass name)
+		subclasses: {}
+		category: #'Famix-PHP-AST')
+			instanceVariableNames:
+				(aFAMIXClass attributes
+					reject: #hasClassScope
+					thenCollect: [ :attribute | self instVarNameForAttribute: attribute ]);
+			primitiveExecute.
 ]
 
 { #category : #public }
@@ -125,26 +140,16 @@ GtPhpAstCodeGenerator >> generateFromPDTCoreModel: aModel [
 	namespace := RBNamespace onEnvironment: RBBrowserEnvironment new.
 	astNodeRoot withSubclassHierarchy
 		do: [ :each | 
-			(each name beginsWith: '?')
-				ifFalse: [ (GtRBAddClassWithVarsRefactoring
-						model: namespace
-						addClass: (self pharoClassName: each name)
-						superclass: (self pharoClassName: each superclass name)
-						subclasses: {}
-						category: #'Famix-PHP-AST')
-						instanceVariableNames:
-							(each attributes
-								reject: #hasClassScope
-								thenCollect: [ :attribute | self instVarNameForAttribute: attribute ]);
-						primitiveExecute.
-					self generateInitializeMethodForASTNodeClass: each in: namespace.
-					self generateChildrenMethodForASTNodeClass: each in: namespace ] ]
+			(each name beginsWith: '?') ifFalse: [ 
+				self generateClassFromASTNodeClass: each in: namespace.
+				self generateInitializeMethodForASTNodeClass: each in: namespace.
+				self generateChildrenMethodForASTNodeClass: each in: namespace ] ]
 		displayingProgress: 'Generating AST classes'.
 	self applyCustomRefactoringsIn: namespace.
 	^ namespace changes
 ]
 
-{ #category : #private }
+{ #category : #'private - generation' }
 GtPhpAstCodeGenerator >> generateImportMethodForASTNodeClass: aClass in: namespace [
 	| methodSource bodySource attributes lists |
 	attributes := aClass attributes reject: #hasClassScope.
@@ -196,8 +201,8 @@ GtPhpAstCodeGenerator >> generateImportMethodForASTNodeClass: aClass in: namespa
 	] 
 ]
 
-{ #category : #private }
-GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: namespace [
+{ #category : #'private - generation' }
+GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: anRBNamespace [
 	| methodSource attributes lists |
 	attributes := aClass attributes reject: #hasClassScope.
 	lists := attributes select: [ :each | each declaredType isParameterizedType and: [ each declaredType name includesSubstring: 'List' ] ].
@@ -209,7 +214,7 @@ GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: nam
 		lists do: [ :listAttribute | s tab; nextPutAll: (self instVarNameForAttribute: listAttribute), ' := OrderedCollection new.'; cr ].
 	].
 	(GtRBSilentlyAddMethodRefactoring 
-		model: namespace
+		model: anRBNamespace
 		addMethod: methodSource
 		toClass: (self pharoClassName: aClass name) asSymbol
 		inProtocols: #(#initialization)) primitiveExecute
