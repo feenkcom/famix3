@@ -110,7 +110,7 @@ GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: names
 			].
 		s tab; nextPutAll: '^ result'
 	].
-	(RBSilentlyAddMethodRefactoring 
+	(GtRBSilentlyAddMethodRefactoring 
 		model: namespace
 		addMethod: methodSource
 		toClass: (self pharoClassName: aClass name) asSymbol
@@ -126,7 +126,7 @@ GtPhpAstCodeGenerator >> generateFromPDTCoreModel: aModel [
 	astNodeRoot withSubclassHierarchy
 		do: [ :each | 
 			(each name beginsWith: '?')
-				ifFalse: [ (RBAddClassWithVarsRefactoring
+				ifFalse: [ (GtRBAddClassWithVarsRefactoring
 						model: namespace
 						addClass: (self pharoClassName: each name)
 						superclass: (self pharoClassName: each superclass name)
@@ -188,7 +188,7 @@ GtPhpAstCodeGenerator >> generateImportMethodForASTNodeClass: aClass in: namespa
 			s tab; nextPutAll: 'super importFrom: anElement.'; cr.
 			s nextPutAll: bodySource
 		].
-		(RBSilentlyAddMethodRefactoring 
+		(GtRBSilentlyAddMethodRefactoring 
 			model: namespace
 			addMethod: methodSource
 			toClass: (self pharoClassName: aClass name) asSymbol
@@ -208,7 +208,7 @@ GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: nam
 			tab; nextPutAll: 'super initialize.'; cr.
 		lists do: [ :listAttribute | s tab; nextPutAll: (self instVarNameForAttribute: listAttribute), ' := OrderedCollection new.'; cr ].
 	].
-	(RBSilentlyAddMethodRefactoring 
+	(GtRBSilentlyAddMethodRefactoring 
 		model: namespace
 		addMethod: methodSource
 		toClass: (self pharoClassName: aClass name) asSymbol
