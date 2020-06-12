@@ -27,6 +27,25 @@ Class {
 	#category : #'Famix-PHP-Generator'
 }
 
+{ #category : #'private - generation' }
+GtPhpAstCodeGenerator >> addTraitUsageIfNecessaryToASTNodeClass: aFAMIXClass in: anRBNamespace [
+	| className traitName trait |
+	className := self pharoClassName: aFAMIXClass name.
+	traitName := 'T', className.
+	
+	trait := Smalltalk globals
+		at: traitName asSymbol
+		ifAbsent: [ ^ self ].
+	trait isTrait
+		ifFalse: [ ^ self  ]. 
+	
+	(GtRBAddTraitUsageToClassByNameTransformation 
+		traitName: traitName 
+		inClassNamed: className)
+			model: anRBNamespace;
+			primitiveExecute.
+]
+
 { #category : #private }
 GtPhpAstCodeGenerator >> applyCustomRefactoringsIn: namespace [
 "	{#GtPhpListVariable -> #GtPhpList . 
@@ -142,6 +161,7 @@ GtPhpAstCodeGenerator >> generateFromPDTCoreModel: aModel [
 		do: [ :each | 
 			(each name beginsWith: '?') ifFalse: [ 
 				self generateClassFromASTNodeClass: each in: namespace.
+				self addTraitUsageIfNecessaryToASTNodeClass: each in: namespace.
 				self generateInitializeMethodForASTNodeClass: each in: namespace.
 				self generateChildrenMethodForASTNodeClass: each in: namespace ] ]
 		displayingProgress: 'Generating AST classes'.
