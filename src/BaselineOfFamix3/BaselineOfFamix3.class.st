@@ -33,6 +33,12 @@ BaselineOfFamix3 >> baseline: spec [
 					spec requires: #('Famix-Core' ). ];
 				package: 'Famix-CSharp' with: [
 					spec requires: #('Famix-Core' ). ];
+				package: 'Famix-PHP' with: [
+					spec requires: #('Famix-Core' ). ];
+				package: 'Famix-PHP-AST' with: [
+					spec requires: #('Famix-PHP' ). ];
+				package: 'Famix-PHP-Symfony' with: [
+					spec requires: #('Famix-PHP' ). ];
 				package: 'Famix-Smalltalk' with: [
 					spec requires: #('Famix-Core' 'Famix-Extensions'). ];
 				package: 'Famix-SourceAnchor' with: [
