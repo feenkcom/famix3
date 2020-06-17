@@ -15,6 +15,11 @@ GtPhpBackTickExpression >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpBackTickExpression >> expressions [
+	^ expressions
+]
+
 { #category : #initialization }
 GtPhpBackTickExpression >> initialize [
 	super initialize.

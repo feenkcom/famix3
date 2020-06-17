@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpForStatement >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpForStatement >> children [
 	| result |
 	result := super children.
@@ -22,10 +27,25 @@ GtPhpForStatement >> children [
 ]
 
 { #category : #accessing }
+GtPhpForStatement >> conditions [
+	^ conditions
+]
+
+{ #category : #accessing }
 GtPhpForStatement >> initialize [
 	super initialize.
 	increasements := OrderedCollection new.
 	conditions := OrderedCollection new.
 	initializations := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpForStatement >> initializers [
+	^ initializations
+]
+
+{ #category : #accessing }
+GtPhpForStatement >> updaters [
+	^ increasements
 ]

@@ -9,9 +9,19 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpArrayAccess >> arrayType [
+	^ type
+]
+
+{ #category : #accessing }
 GtPhpArrayAccess >> children [
 	| result |
 	result := super children.
 	index ifNotNil: [ :x | result add: x ].
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpArrayAccess >> index [
+	^ index
 ]

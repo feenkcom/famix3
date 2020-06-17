@@ -24,3 +24,13 @@ GtPhpConstantDeclaration >> initialize [
 	initializers := OrderedCollection new.
 
 ]
+
+{ #category : #accessing }
+GtPhpConstantDeclaration >> initializers [
+	^ initializers
+]
+
+{ #category : #accessing }
+GtPhpConstantDeclaration >> names [
+	^ names
+]

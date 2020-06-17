@@ -15,3 +15,13 @@ GtPhpClassDeclaration >> children [
 	superClassName ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpClassDeclaration >> modifier [
+	^ modifier
+]
+
+{ #category : #accessing }
+GtPhpClassDeclaration >> superClass [
+	^ superClassName
+]

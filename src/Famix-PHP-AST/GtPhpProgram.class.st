@@ -25,6 +25,16 @@ GtPhpProgram >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpProgram >> commentMapper [
+	^ commentMapper
+]
+
+{ #category : #accessing }
+GtPhpProgram >> comments [
+	^ comments
+]
+
 { #category : #initialization }
 GtPhpProgram >> initialize [
 	super initialize.
@@ -33,4 +43,29 @@ GtPhpProgram >> initialize [
 	useStatements := OrderedCollection new.
 	namespaceDeclarations := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpProgram >> lineEndTable [
+	^ lineEndTable
+]
+
+{ #category : #accessing }
+GtPhpProgram >> namespaceDeclarations [
+	^ namespaceDeclarations
+]
+
+{ #category : #accessing }
+GtPhpProgram >> sourceModule [
+	^ sourceModule
+]
+
+{ #category : #accessing }
+GtPhpProgram >> statements [
+	^ statements
+]
+
+{ #category : #accessing }
+GtPhpProgram >> useStatements [
+	^ useStatements
 ]

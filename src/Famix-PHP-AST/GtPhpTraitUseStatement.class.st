@@ -24,3 +24,13 @@ GtPhpTraitUseStatement >> initialize [
 	tsList := OrderedCollection new.
 
 ]
+
+{ #category : #accessing }
+GtPhpTraitUseStatement >> traitList [
+	^ traitNameList
+]
+
+{ #category : #accessing }
+GtPhpTraitUseStatement >> tsList [
+	^ tsList
+]

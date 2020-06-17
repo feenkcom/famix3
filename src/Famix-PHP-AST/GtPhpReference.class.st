@@ -14,3 +14,8 @@ GtPhpReference >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpReference >> expression [
+	^ expression
+]

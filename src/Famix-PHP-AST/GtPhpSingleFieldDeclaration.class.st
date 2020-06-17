@@ -16,3 +16,13 @@ GtPhpSingleFieldDeclaration >> children [
 	name ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpSingleFieldDeclaration >> name [
+	^ name
+]
+
+{ #category : #accessing }
+GtPhpSingleFieldDeclaration >> value [
+	^ value
+]

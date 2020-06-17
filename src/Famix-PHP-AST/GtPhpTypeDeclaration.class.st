@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpTypeDeclaration >> body [
+	^ block
+]
+
+{ #category : #accessing }
 GtPhpTypeDeclaration >> children [
 	| result |
 	result := super children.
@@ -26,4 +31,14 @@ GtPhpTypeDeclaration >> initialize [
 	super initialize.
 	interfaces := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpTypeDeclaration >> interfaces [
+	^ interfaces
+]
+
+{ #category : #accessing }
+GtPhpTypeDeclaration >> name [
+	^ className
 ]

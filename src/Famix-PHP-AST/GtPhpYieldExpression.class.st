@@ -17,3 +17,18 @@ GtPhpYieldExpression >> children [
 	key ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpYieldExpression >> expression [
+	^ expression
+]
+
+{ #category : #accessing }
+GtPhpYieldExpression >> key [
+	^ key
+]
+
+{ #category : #accessing }
+GtPhpYieldExpression >> operator [
+	^ operator
+]

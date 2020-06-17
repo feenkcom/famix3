@@ -14,3 +14,8 @@ GtPhpStaticFieldAccess >> children [
 	field ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpStaticFieldAccess >> field [
+	^ field
+]

@@ -15,6 +15,11 @@ GtPhpStaticStatement >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpStaticStatement >> expressions [
+	^ expressions
+]
+
 { #category : #initialization }
 GtPhpStaticStatement >> initialize [
 	super initialize.

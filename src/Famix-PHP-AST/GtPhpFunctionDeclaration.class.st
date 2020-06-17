@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpFunctionDeclaration >> body [
+	^ functionBody
+]
+
+{ #category : #accessing }
 GtPhpFunctionDeclaration >> children [
 	| result |
 	result := super children.
@@ -24,9 +29,29 @@ GtPhpFunctionDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> formalParameters [
+	^ formalParameters
+]
+
 { #category : #initialization }
 GtPhpFunctionDeclaration >> initialize [
 	super initialize.
 	formalParameters := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> isReference [
+	^ isReference
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> name [
+	^ functionName
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> returnType [
+	^ returnType
 ]

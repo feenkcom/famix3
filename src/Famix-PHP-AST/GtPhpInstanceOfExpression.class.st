@@ -16,3 +16,13 @@ GtPhpInstanceOfExpression >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpInstanceOfExpression >> className [
+	^ className
+]
+
+{ #category : #accessing }
+GtPhpInstanceOfExpression >> expression [
+	^ expression
+]

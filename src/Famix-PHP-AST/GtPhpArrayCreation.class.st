@@ -16,6 +16,16 @@ GtPhpArrayCreation >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpArrayCreation >> elements [
+	^ elements
+]
+
+{ #category : #accessing }
+GtPhpArrayCreation >> hasArrayKey [
+	^ hasArrayKey
+]
+
 { #category : #initialization }
 GtPhpArrayCreation >> initialize [
 	super initialize.

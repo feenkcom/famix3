@@ -14,3 +14,8 @@ GtPhpReturnType >> children [
 	returnType ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpReturnType >> returnType [
+	^ returnType
+]

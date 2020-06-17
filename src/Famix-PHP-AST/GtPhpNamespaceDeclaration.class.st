@@ -9,10 +9,20 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpNamespaceDeclaration >> body [
+	^ block
+]
+
+{ #category : #accessing }
 GtPhpNamespaceDeclaration >> children [
 	| result |
 	result := super children.
 	namespaceName ifNotNil: [ :x | result add: x ].
 	block ifNotNil: [ :x | result add: x ].
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpNamespaceDeclaration >> name [
+	^ namespaceName
 ]

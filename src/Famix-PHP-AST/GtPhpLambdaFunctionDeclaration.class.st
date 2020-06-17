@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> body [
+	^ functionBody
+]
+
+{ #category : #accessing }
 GtPhpLambdaFunctionDeclaration >> children [
 	| result |
 	result := super children.
@@ -23,10 +28,35 @@ GtPhpLambdaFunctionDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> formalParameters [
+	^ formalParameters
+]
+
 { #category : #initialization }
 GtPhpLambdaFunctionDeclaration >> initialize [
 	super initialize.
 	lexicalVariables := OrderedCollection new.
 	formalParameters := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> isReference [
+	^ isReference
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> isStatic [
+	^ isStatic
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> lexicalVariables [
+	^ lexicalVariables
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> returnType [
+	^ returnType
 ]

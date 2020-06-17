@@ -14,3 +14,8 @@ GtPhpParenthesisExpression >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpParenthesisExpression >> expression [
+	^ expression
+]

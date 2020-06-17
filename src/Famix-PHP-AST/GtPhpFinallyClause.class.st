@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpFinallyClause >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpFinallyClause >> children [
 	| result |
 	result := super children.

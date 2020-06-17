@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpClassInstanceCreation >> anonymousClassDeclaration [
+	^ anonymousClassDeclaration
+]
+
+{ #category : #accessing }
 GtPhpClassInstanceCreation >> children [
 	| result |
 	result := super children.
@@ -17,6 +22,16 @@ GtPhpClassInstanceCreation >> children [
 	anonymousClassDeclaration ifNotNil: [ :x | result add: x ].
 	result addAll: constructorParameters.
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpClassInstanceCreation >> className [
+	^ className
+]
+
+{ #category : #accessing }
+GtPhpClassInstanceCreation >> ctorParams [
+	^ constructorParameters
 ]
 
 { #category : #accessing }

@@ -17,6 +17,16 @@ GtPhpFieldsDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpFieldsDeclaration >> fields [
+	^ fields
+]
+
+{ #category : #accessing }
+GtPhpFieldsDeclaration >> fieldsType [
+	^ fieldsType
+]
+
 { #category : #initialization }
 GtPhpFieldsDeclaration >> initialize [
 	super initialize.

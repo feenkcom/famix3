@@ -14,3 +14,8 @@ GtPhpTraitPrecedenceStatement >> children [
 	precedence ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpTraitPrecedenceStatement >> precedence [
+	^ precedence
+]

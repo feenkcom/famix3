@@ -15,6 +15,11 @@ GtPhpEchoStatement >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpEchoStatement >> expressions [
+	^ expressions
+]
+
 { #category : #initialization }
 GtPhpEchoStatement >> initialize [
 	super initialize.

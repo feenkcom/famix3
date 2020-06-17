@@ -14,3 +14,8 @@ GtPhpCloneExpression >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpCloneExpression >> expression [
+	^ expression
+]

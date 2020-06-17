@@ -14,3 +14,8 @@ GtPhpArraySpreadElement >> children [
 	value ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpArraySpreadElement >> value [
+	^ value
+]

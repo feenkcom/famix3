@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpDeclareStatement >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpDeclareStatement >> children [
 	| result |
 	result := super children.
@@ -17,6 +22,16 @@ GtPhpDeclareStatement >> children [
 	result addAll: directiveValues.
 	body ifNotNil: [ :x | result add: x ].
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpDeclareStatement >> directiveNames [
+	^ directiveNames
+]
+
+{ #category : #accessing }
+GtPhpDeclareStatement >> directiveValues [
+	^ directiveValues
 ]
 
 { #category : #initialization }

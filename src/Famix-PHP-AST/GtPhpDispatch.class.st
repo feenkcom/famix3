@@ -14,3 +14,8 @@ GtPhpDispatch >> children [
 	dispatcher ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpDispatch >> dispatcher [
+	^ dispatcher
+]

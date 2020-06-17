@@ -18,3 +18,13 @@ GtPhpMethodDeclaration >> children [
 	comment ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpMethodDeclaration >> comment [
+	^ comment
+]
+
+{ #category : #accessing }
+GtPhpMethodDeclaration >> function [
+	^ functionDeclaration
+]

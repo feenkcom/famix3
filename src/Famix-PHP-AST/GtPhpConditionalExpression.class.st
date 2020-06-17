@@ -19,3 +19,23 @@ GtPhpConditionalExpression >> children [
 	ifTrue ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpConditionalExpression >> condition [
+	^ condition
+]
+
+{ #category : #accessing }
+GtPhpConditionalExpression >> ifFalse [
+	^ ifFalse
+]
+
+{ #category : #accessing }
+GtPhpConditionalExpression >> ifTrue [
+	^ ifTrue
+]
+
+{ #category : #accessing }
+GtPhpConditionalExpression >> operatorType [
+	^ operatorType
+]

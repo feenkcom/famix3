@@ -15,6 +15,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpASTNode >> ast [
+	^ ast
+]
+
+{ #category : #accessing }
 GtPhpASTNode >> children [
 	| result |
 	result := super children.
@@ -25,6 +30,11 @@ GtPhpASTNode >> children [
 ]
 
 { #category : #accessing }
+GtPhpASTNode >> flags [
+	^ flags
+]
+
+{ #category : #accessing }
 GtPhpASTNode >> length [
 	^ length
 ]
@@ -32,6 +42,26 @@ GtPhpASTNode >> length [
 { #category : #accessing }
 GtPhpASTNode >> length: anObject [
 	length := anObject
+]
+
+{ #category : #accessing }
+GtPhpASTNode >> location [
+	^ location
+]
+
+{ #category : #accessing }
+GtPhpASTNode >> parent [
+	^ parent
+]
+
+{ #category : #accessing }
+GtPhpASTNode >> property1 [
+	^ property1
+]
+
+{ #category : #accessing }
+GtPhpASTNode >> property2 [
+	^ property2
 ]
 
 { #category : #accessing }

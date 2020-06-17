@@ -18,3 +18,18 @@ GtPhpIfStatement >> children [
 	trueStatement ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpIfStatement >> condition [
+	^ condition
+]
+
+{ #category : #accessing }
+GtPhpIfStatement >> falseStatement [
+	^ falseStatement
+]
+
+{ #category : #accessing }
+GtPhpIfStatement >> trueStatement [
+	^ trueStatement
+]

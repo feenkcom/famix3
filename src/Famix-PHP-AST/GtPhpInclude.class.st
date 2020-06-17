@@ -15,3 +15,13 @@ GtPhpInclude >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpInclude >> expression [
+	^ expression
+]
+
+{ #category : #accessing }
+GtPhpInclude >> includeType [
+	^ includeType
+]

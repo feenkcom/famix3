@@ -14,3 +14,8 @@ GtPhpMethodInvocation >> children [
 	property ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpMethodInvocation >> method [
+	^ property
+]

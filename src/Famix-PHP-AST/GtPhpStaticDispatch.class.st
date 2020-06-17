@@ -14,3 +14,8 @@ GtPhpStaticDispatch >> children [
 	className ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpStaticDispatch >> className [
+	^ className
+]

@@ -15,3 +15,13 @@ GtPhpUnaryOperation >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpUnaryOperation >> expression [
+	^ expression
+]
+
+{ #category : #accessing }
+GtPhpUnaryOperation >> operator [
+	^ operator
+]

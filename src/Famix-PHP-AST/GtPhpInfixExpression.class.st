@@ -19,3 +19,18 @@ GtPhpInfixExpression >> children [
 	left ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpInfixExpression >> left [
+	^ left
+]
+
+{ #category : #accessing }
+GtPhpInfixExpression >> operator [
+	^ operator
+]
+
+{ #category : #accessing }
+GtPhpInfixExpression >> right [
+	^ right
+]

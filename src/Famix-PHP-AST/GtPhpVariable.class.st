@@ -15,3 +15,13 @@ GtPhpVariable >> children [
 	identifier ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpVariable >> isDollared [
+	^ isDollared
+]
+
+{ #category : #accessing }
+GtPhpVariable >> name [
+	^ identifier
+]
