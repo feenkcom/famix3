@@ -98,6 +98,32 @@ GtPhpAstCodeGenerator >> applyCustomRefactoringsIn: namespace [
 				classVariable: false) primitiveExecute ]
 ]
 
+{ #category : #accesssing }
+GtPhpAstCodeGenerator >> attributeNamesForASTNodeClass: aFAMIXClass [
+	^ aFAMIXClass attributes
+			reject: #hasClassScope
+			thenCollect: [ :attribute | self instVarNameForAttribute: attribute ]
+]
+
+{ #category : #'private - generation' }
+GtPhpAstCodeGenerator >> generateAccessorMethodsForASTNodeClass: aFAMIXClass in: anRBNamespace [
+	(self attributeNamesForASTNodeClass: aFAMIXClass) do: [ :anAttributeName | 
+		| methodSource |
+		methodSource := String streamContents: [ :s |
+			s nextPutAll: anAttributeName; cr.
+			s 
+				tab; 
+				nextPutAll: '^ ';
+				nextPutAll: anAttributeName
+		].
+	
+		(GtRBSilentlyAddMethodRefactoring 
+			model: anRBNamespace
+			addMethod: methodSource
+			toClass: (self pharoClassName: aFAMIXClass name) asSymbol
+			inProtocols: #(#accessing-attributes)) primitiveExecute ].
+]
+
 { #category : #'private - generation' }
 GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: anRBNamespace [
 	| methodSource attributes lists relevantAttributes |
@@ -147,10 +173,7 @@ GtPhpAstCodeGenerator >> generateClassFromASTNodeClass: aFAMIXClass in: anRBName
 		superclass: (self pharoClassName: aFAMIXClass superclass name)
 		subclasses: {}
 		category: #'Famix-PHP-AST')
-			instanceVariableNames:
-				(aFAMIXClass attributes
-					reject: #hasClassScope
-					thenCollect: [ :attribute | self instVarNameForAttribute: attribute ]);
+			instanceVariableNames: (self attributeNamesForASTNodeClass: aFAMIXClass);
 			primitiveExecute.
 ]
 
@@ -165,6 +188,7 @@ GtPhpAstCodeGenerator >> generateFromPDTCoreModel: aModel [
 			(each name beginsWith: '?') ifFalse: [ 
 				self generateClassFromASTNodeClass: each in: namespace.
 				self addTraitUsageIfNecessaryToASTNodeClass: each in: namespace.
+				self generateAccessorMethodsForASTNodeClass: each in: namespace.
 				self generateInitializeMethodForASTNodeClass: each in: namespace.
 				self generateChildrenMethodForASTNodeClass: each in: namespace ] ]
 		displayingProgress: 'Generating AST classes'.
@@ -251,7 +275,7 @@ GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: anR
 		inProtocols: #(#initialization)) primitiveExecute
 ]
 
-{ #category : #private }
+{ #category : #accesssing }
 GtPhpAstCodeGenerator >> instVarNameForAttribute: attribute [
 	"fNamespaceDeclaration should be namespaceDeclaration"
 	^ ((attribute name beginsWith: 'f') and: [attribute name size > 1 and: [attribute name second isUppercase ]]) 
@@ -259,12 +283,12 @@ GtPhpAstCodeGenerator >> instVarNameForAttribute: attribute [
 		ifFalse: [ attribute name ]
 ]
 
-{ #category : #private }
+{ #category : #accesssing }
 GtPhpAstCodeGenerator >> pharoClassName: aString [
 	^ ('GtPhp', aString) asSymbol
 ]
 
-{ #category : #private }
+{ #category : #accesssing }
 GtPhpAstCodeGenerator >> xmlTagFromAttribute: attribute [
 	^ (self instVarNameForAttribute: attribute) capitalized
 ]

@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFunctionDeclaration,
 	#superclass : #GtPhpStatement,
+	#traits : 'TGtPhpFunctionDeclaration',
+	#classTraits : 'TGtPhpFunctionDeclaration classTrait',
 	#instVars : [
 		'returnType',
 		'isReference',

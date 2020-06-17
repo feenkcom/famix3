@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpMethodDeclaration,
 	#superclass : #GtPhpBodyDeclaration,
+	#traits : 'TGtPhpMethodDeclaration',
+	#classTraits : 'TGtPhpMethodDeclaration classTrait',
 	#instVars : [
 		'comment',
 		'functionDeclaration'

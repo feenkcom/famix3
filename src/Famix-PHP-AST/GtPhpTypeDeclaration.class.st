@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpTypeDeclaration,
 	#superclass : #GtPhpStatement,
+	#traits : 'TGtPhpTypeDeclaration',
+	#classTraits : 'TGtPhpTypeDeclaration classTrait',
 	#instVars : [
 		'interfaces',
 		'className',
