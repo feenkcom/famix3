@@ -24,6 +24,9 @@ https://github.com/eclipse/pdt/tree/master/plugins/org.eclipse.php.core
 Class {
 	#name : #GtPhpAstCodeGenerator,
 	#superclass : #Object,
+	#instVars : [
+		'variablesRenames'
+	],
 	#category : #'Famix-PHP-Generator'
 }
 
@@ -57,37 +60,13 @@ GtPhpAstCodeGenerator >> applyCustomRefactoringsIn: namespace [
 			className: tuple key newName: tuple value;
 			yourself) primitiveExecute ].
 
-	{{#GtPhpNamespaceDeclaration. (#body -> #block)}.
-	{#GtPhpNamespaceDeclaration. (#name -> #namespaceName)}.
-	{#GtPhpTypeDeclaration. (#name -> #className)}.
-	{#GtPhpTypeDeclaration. (#body -> #block)}.
-	{#GtPhpClassDeclaration. (#superClass -> #superClassName)}.
-	{#GtPhpMethodDeclaration. (#function -> #functionDeclaration)}.
-	{#GtPhpFunctionDeclaration. (#body -> #functionBody)}.
-	{#GtPhpFunctionDeclaration. (#name -> #functionName)}.
-	{#GtPhpVariable. (#name -> #identifier)} .
-	{#GtPhpScalar. (#stringValue -> #value)}. 
-	{#GtPhpScalar. (#scalarType -> #type)}.
-	{#GtPhpFormalParameter. (#parameterType -> #type)}.
-	{#GtPhpAssignment. (#rightHandSide -> #value)} . 
-	{#GtPhpAssignment. (#leftHandSide -> #variableBase)}.
-	{#GtPhpMethodInvocation. (#method -> #property)}.
-	{#GtPhpCastExpression. (#castingType -> #castType)}.
-	{#GtPhpArrayAccess. (#arrayType -> #type)}.
-	{#GtPhpClassInstanceCreation. (#ctorParams -> #constructorParameters)}.
-	{#GtPhpFieldAccess. (#field -> #property)}.
-	{#GtPhpLambdaFunctionDeclaration. (#body-> #functionBody)}.
-	{#GtPhpForStatement. (#initializers -> #initializations)}.
-	{#GtPhpTraitUseStatement. (#traitList -> #traitNameList)}.
-	{#GtPhpQuote. (#quoteType -> #type)}.
-	{#GtPhpForStatement. (#updaters -> #increasements)}
-	}
-		do: [ :tuple | 
-			(RBRenameInstanceVariableRefactoring
-				model: namespace
-				rename: tuple second key
-				to: tuple second value
-				in: tuple first) primitiveExecute ].
+	self variablesRenames do: [ :tuple | 
+		(RBRenameInstanceVariableRefactoring
+			model: namespace
+			rename: tuple second key
+			to: tuple second value
+			in: tuple first) primitiveExecute ].
+	
 	{{#GtPhpASTNode . #start}.
 	{#GtPhpASTNode . #length}}
 		do: [ :tuple | 
@@ -108,19 +87,27 @@ GtPhpAstCodeGenerator >> attributeNamesForASTNodeClass: aFAMIXClass [
 { #category : #'private - generation' }
 GtPhpAstCodeGenerator >> generateAccessorMethodsForASTNodeClass: aFAMIXClass in: anRBNamespace [
 	(self attributeNamesForASTNodeClass: aFAMIXClass) do: [ :anAttributeName | 
-		| methodSource |
+		| className methodSource actualAttributeName |
+		actualAttributeName := anAttributeName.
+		className := (self pharoClassName: aFAMIXClass name) asSymbol.
+		self variablesRenames 
+			detect: [ :tuple | (tuple first = className) and: [ 
+				tuple second key = anAttributeName ] ]
+			ifFound: [ :tuple | 
+				actualAttributeName := tuple second value ].
+		
 		methodSource := String streamContents: [ :s |
-			s nextPutAll: anAttributeName; cr.
+			s nextPutAll: actualAttributeName; cr.
 			s 
 				tab; 
 				nextPutAll: '^ ';
-				nextPutAll: anAttributeName
+				nextPutAll: actualAttributeName
 		].
 	
 		(GtRBSilentlyAddMethodRefactoring 
 			model: anRBNamespace
 			addMethod: methodSource
-			toClass: (self pharoClassName: aFAMIXClass name) asSymbol
+			toClass: className
 			inProtocols: #(#accessing-attributes)) primitiveExecute ].
 ]
 
@@ -286,6 +273,37 @@ GtPhpAstCodeGenerator >> instVarNameForAttribute: attribute [
 { #category : #accesssing }
 GtPhpAstCodeGenerator >> pharoClassName: aString [
 	^ ('GtPhp', aString) asSymbol
+]
+
+{ #category : #accesssing }
+GtPhpAstCodeGenerator >> variablesRenames [
+	^ variablesRenames ifNil: [ variablesRenames := {
+	{#GtPhpNamespaceDeclaration. (#body -> #block)}.
+	{#GtPhpNamespaceDeclaration. (#name -> #namespaceName)}.
+	{#GtPhpTypeDeclaration. (#name -> #className)}.
+	{#GtPhpTypeDeclaration. (#body -> #block)}.
+	{#GtPhpClassDeclaration. (#superClass -> #superClassName)}.
+	{#GtPhpMethodDeclaration. (#function -> #functionDeclaration)}.
+	{#GtPhpFunctionDeclaration. (#body -> #functionBody)}.
+	{#GtPhpFunctionDeclaration. (#name -> #functionName)}.
+	{#GtPhpVariable. (#name -> #identifier)} .
+	{#GtPhpScalar. (#stringValue -> #value)}. 
+	{#GtPhpScalar. (#scalarType -> #type)}.
+	{#GtPhpFormalParameter. (#parameterType -> #type)}.
+	{#GtPhpAssignment. (#rightHandSide -> #value)} . 
+	{#GtPhpAssignment. (#leftHandSide -> #variableBase)}.
+	{#GtPhpMethodInvocation. (#method -> #property)}.
+	{#GtPhpCastExpression. (#castingType -> #castType)}.
+	{#GtPhpArrayAccess. (#arrayType -> #type)}.
+	{#GtPhpClassInstanceCreation. (#ctorParams -> #constructorParameters)}.
+	{#GtPhpFieldAccess. (#field -> #property)}.
+	{#GtPhpLambdaFunctionDeclaration. (#body-> #functionBody)}.
+	{#GtPhpForStatement. (#initializers -> #initializations)}.
+	{#GtPhpTraitUseStatement. (#traitList -> #traitNameList)}.
+	{#GtPhpQuote. (#quoteType -> #type)}.
+	{#GtPhpForStatement. (#updaters -> #increasements)}
+	} ]
+	
 ]
 
 { #category : #accesssing }
