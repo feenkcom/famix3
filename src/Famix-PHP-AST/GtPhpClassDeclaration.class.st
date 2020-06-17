@@ -22,6 +22,6 @@ GtPhpClassDeclaration >> modifier [
 ]
 
 { #category : #accessing }
-GtPhpClassDeclaration >> superClass [
+GtPhpClassDeclaration >> superClassName [
 	^ superClassName
 ]

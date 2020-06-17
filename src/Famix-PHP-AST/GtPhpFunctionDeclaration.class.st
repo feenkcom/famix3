@@ -14,11 +14,6 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpFunctionDeclaration >> body [
-	^ functionBody
-]
-
-{ #category : #accessing }
 GtPhpFunctionDeclaration >> children [
 	| result |
 	result := super children.
@@ -34,6 +29,16 @@ GtPhpFunctionDeclaration >> formalParameters [
 	^ formalParameters
 ]
 
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> functionBody [
+	^ functionBody
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> functionName [
+	^ functionName
+]
+
 { #category : #initialization }
 GtPhpFunctionDeclaration >> initialize [
 	super initialize.
@@ -44,11 +49,6 @@ GtPhpFunctionDeclaration >> initialize [
 { #category : #accessing }
 GtPhpFunctionDeclaration >> isReference [
 	^ isReference
-]
-
-{ #category : #accessing }
-GtPhpFunctionDeclaration >> name [
-	^ functionName
 ]
 
 { #category : #accessing }

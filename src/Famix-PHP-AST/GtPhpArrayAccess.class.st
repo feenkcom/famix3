@@ -9,11 +9,6 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpArrayAccess >> arrayType [
-	^ type
-]
-
-{ #category : #accessing }
 GtPhpArrayAccess >> children [
 	| result |
 	result := super children.
@@ -24,4 +19,9 @@ GtPhpArrayAccess >> children [
 { #category : #accessing }
 GtPhpArrayAccess >> index [
 	^ index
+]
+
+{ #category : #accessing }
+GtPhpArrayAccess >> type [
+	^ type
 ]

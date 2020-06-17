@@ -19,16 +19,16 @@ GtPhpAssignment >> children [
 ]
 
 { #category : #accessing }
-GtPhpAssignment >> leftHandSide [
-	^ variableBase
-]
-
-{ #category : #accessing }
 GtPhpAssignment >> operator [
 	^ operator
 ]
 
 { #category : #accessing }
-GtPhpAssignment >> rightHandSide [
+GtPhpAssignment >> value [
 	^ value
+]
+
+{ #category : #accessing }
+GtPhpAssignment >> variableBase [
+	^ variableBase
 ]

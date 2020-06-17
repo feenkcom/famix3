@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpTypeDeclaration >> body [
+GtPhpTypeDeclaration >> block [
 	^ block
 ]
 
@@ -26,6 +26,11 @@ GtPhpTypeDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpTypeDeclaration >> className [
+	^ className
+]
+
 { #category : #initialization }
 GtPhpTypeDeclaration >> initialize [
 	super initialize.
@@ -36,9 +41,4 @@ GtPhpTypeDeclaration >> initialize [
 { #category : #accessing }
 GtPhpTypeDeclaration >> interfaces [
 	^ interfaces
-]
-
-{ #category : #accessing }
-GtPhpTypeDeclaration >> name [
-	^ className
 ]

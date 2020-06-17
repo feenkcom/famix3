@@ -11,11 +11,11 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpScalar >> scalarType [
+GtPhpScalar >> type [
 	^ type
 ]
 
 { #category : #accessing }
-GtPhpScalar >> stringValue [
+GtPhpScalar >> value [
 	^ value
 ]

@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpNamespaceDeclaration >> body [
+GtPhpNamespaceDeclaration >> block [
 	^ block
 ]
 
@@ -23,6 +23,6 @@ GtPhpNamespaceDeclaration >> children [
 ]
 
 { #category : #accessing }
-GtPhpNamespaceDeclaration >> name [
+GtPhpNamespaceDeclaration >> namespaceName [
 	^ namespaceName
 ]

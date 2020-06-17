@@ -17,11 +17,11 @@ GtPhpVariable >> children [
 ]
 
 { #category : #accessing }
-GtPhpVariable >> isDollared [
-	^ isDollared
+GtPhpVariable >> identifier [
+	^ identifier
 ]
 
 { #category : #accessing }
-GtPhpVariable >> name [
-	^ identifier
+GtPhpVariable >> isDollared [
+	^ isDollared
 ]

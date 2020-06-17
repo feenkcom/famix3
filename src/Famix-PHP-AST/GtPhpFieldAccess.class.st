@@ -16,6 +16,6 @@ GtPhpFieldAccess >> children [
 ]
 
 { #category : #accessing }
-GtPhpFieldAccess >> field [
+GtPhpFieldAccess >> property [
 	^ property
 ]

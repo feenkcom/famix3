@@ -42,6 +42,6 @@ GtPhpFormalParameter >> parameterName [
 ]
 
 { #category : #accessing }
-GtPhpFormalParameter >> parameterType [
+GtPhpFormalParameter >> type [
 	^ type
 ]

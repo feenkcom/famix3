@@ -29,6 +29,6 @@ GtPhpQuote >> initialize [
 ]
 
 { #category : #accessing }
-GtPhpQuote >> quoteType [
+GtPhpQuote >> type [
 	^ type
 ]

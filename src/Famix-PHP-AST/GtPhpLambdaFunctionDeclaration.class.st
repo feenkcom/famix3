@@ -13,11 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpLambdaFunctionDeclaration >> body [
-	^ functionBody
-]
-
-{ #category : #accessing }
 GtPhpLambdaFunctionDeclaration >> children [
 	| result |
 	result := super children.
@@ -31,6 +26,11 @@ GtPhpLambdaFunctionDeclaration >> children [
 { #category : #accessing }
 GtPhpLambdaFunctionDeclaration >> formalParameters [
 	^ formalParameters
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> functionBody [
+	^ functionBody
 ]
 
 { #category : #initialization }

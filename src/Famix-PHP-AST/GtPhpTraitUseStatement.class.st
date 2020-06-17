@@ -26,7 +26,7 @@ GtPhpTraitUseStatement >> initialize [
 ]
 
 { #category : #accessing }
-GtPhpTraitUseStatement >> traitList [
+GtPhpTraitUseStatement >> traitNameList [
 	^ traitNameList
 ]
 

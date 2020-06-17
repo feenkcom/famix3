@@ -16,6 +16,6 @@ GtPhpMethodInvocation >> children [
 ]
 
 { #category : #accessing }
-GtPhpMethodInvocation >> method [
+GtPhpMethodInvocation >> property [
 	^ property
 ]

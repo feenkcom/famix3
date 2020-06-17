@@ -30,7 +30,7 @@ GtPhpClassInstanceCreation >> className [
 ]
 
 { #category : #accessing }
-GtPhpClassInstanceCreation >> ctorParams [
+GtPhpClassInstanceCreation >> constructorParameters [
 	^ constructorParameters
 ]
 

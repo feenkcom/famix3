@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-GtPhpCastExpression >> castingType [
+GtPhpCastExpression >> castType [
 	^ castType
 ]
 

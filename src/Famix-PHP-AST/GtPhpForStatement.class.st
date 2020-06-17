@@ -32,20 +32,20 @@ GtPhpForStatement >> conditions [
 ]
 
 { #category : #accessing }
+GtPhpForStatement >> increasements [
+	^ increasements
+]
+
+{ #category : #accessing }
+GtPhpForStatement >> initializations [
+	^ initializations
+]
+
+{ #category : #accessing }
 GtPhpForStatement >> initialize [
 	super initialize.
 	increasements := OrderedCollection new.
 	conditions := OrderedCollection new.
 	initializations := OrderedCollection new.
 
-]
-
-{ #category : #accessing }
-GtPhpForStatement >> initializers [
-	^ initializations
-]
-
-{ #category : #accessing }
-GtPhpForStatement >> updaters [
-	^ increasements
 ]

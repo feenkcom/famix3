@@ -25,6 +25,6 @@ GtPhpMethodDeclaration >> comment [
 ]
 
 { #category : #accessing }
-GtPhpMethodDeclaration >> function [
+GtPhpMethodDeclaration >> functionDeclaration [
 	^ functionDeclaration
 ]
