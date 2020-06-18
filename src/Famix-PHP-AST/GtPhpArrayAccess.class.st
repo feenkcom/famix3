@@ -21,7 +21,6 @@ GtPhpArrayAccess >> children [
 { #category : #importing }
 GtPhpArrayAccess >> importFrom: anElement [
 	| variableNode |
-	self halt.
 	super importFrom: anElement.
 	
 	variableNode := anElement elements first.
