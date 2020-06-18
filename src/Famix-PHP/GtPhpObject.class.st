@@ -240,8 +240,11 @@ GtPhpObject >> length [
 ]
 
 { #category : #printing }
-GtPhpObject >> mooseNameOn: stream [
-	stream nextPutAll: self class typeName
+GtPhpObject >> mooseNameOn: aStream [
+	aStream nextPutAll: self class typeName.
+	aStream nextPutAll: ' ('.
+	self shortDescriptionOn: aStream.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #importing }
@@ -267,6 +270,10 @@ GtPhpObject >> propertyDictionary [
 { #category : #accessing }
 GtPhpObject >> propertyDictionary: anObject [
 	propertyDictionary := anObject
+]
+
+{ #category : #printing }
+GtPhpObject >> shortDescriptionOn: aStream [
 ]
 
 { #category : #accessing }

@@ -4,10 +4,7 @@ Trait {
 }
 
 { #category : #printing }
-TGtPhpIdentifier >> mooseNameOn: stream [
-	super mooseNameOn: stream.
-	stream 
-		nextPutAll: ' (';
-		nextPutAll: self name;
-		nextPutAll: ')'
+TGtPhpIdentifier >> shortDescriptionOn: aStream [
+	aStream
+		nextPutAll: self name
 ]
