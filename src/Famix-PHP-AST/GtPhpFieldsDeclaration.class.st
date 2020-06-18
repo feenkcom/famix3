@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFieldsDeclaration,
 	#superclass : #GtPhpBodyDeclaration,
+	#traits : 'TGtPhpFieldsDeclaration',
+	#classTraits : 'TGtPhpFieldsDeclaration classTrait',
 	#instVars : [
 		'fields',
 		'fieldsType'
