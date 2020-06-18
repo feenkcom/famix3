@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFunctionName,
 	#superclass : #GtPhpASTNode,
+	#traits : 'TGtPhpFunctionName',
+	#classTraits : 'TGtPhpFunctionName classTrait',
 	#instVars : [
 		'name'
 	],

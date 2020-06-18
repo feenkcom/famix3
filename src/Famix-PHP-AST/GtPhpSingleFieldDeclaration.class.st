@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpSingleFieldDeclaration,
 	#superclass : #GtPhpASTNode,
+	#traits : 'TGtPhpSingleFieldDeclaration',
+	#classTraits : 'TGtPhpSingleFieldDeclaration classTrait',
 	#instVars : [
 		'initialValue',
 		'variableName'

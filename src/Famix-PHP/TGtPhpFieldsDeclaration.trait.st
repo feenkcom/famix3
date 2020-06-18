@@ -26,8 +26,19 @@ TGtPhpFieldsDeclaration >> importFrom: anElement [
 			ifNotNil: [ singleFieldNode initialValue ]).
 		
 		singleFieldNode start: singleFieldNode variableName start.
-		singleFieldNode length: lastNode start asNumber + lastNode length asNumber - 1 .
+		singleFieldNode length: ((lastNode start asNumber + lastNode length asNumber) - singleFieldNode start asNumber) asString .
 		
 		self fields add: singleFieldNode ].
 	
+]
+
+{ #category : #printing }
+TGtPhpFieldsDeclaration >> shortDescriptionOn: aStream [
+	self modifier ifNotNil: [ 
+		aStream 
+			nextPutAll: self modifier;
+			nextPutAll: ' ' ].
+	self fields 
+		do: [ :aField | aField shortDescriptionOn: aStream ]
+		separatedBy: [ aStream nextPutAll: ', '] 
 ]

@@ -27,6 +27,7 @@ TGtPhpArrayAccess >> importFrom: anElement [
 TGtPhpArrayAccess >> shortDescriptionOn: aStream [
 	self identifier shortDescriptionOn: aStream.
 	aStream nextPutAll: '['.
-	self index shortDescriptionOn: aStream.
+	self index ifNotNil: [
+		self index shortDescriptionOn: aStream ].
 	aStream nextPutAll: ']'.
 ]

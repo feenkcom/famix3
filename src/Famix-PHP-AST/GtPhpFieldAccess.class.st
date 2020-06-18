@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFieldAccess,
 	#superclass : #GtPhpDispatch,
+	#traits : 'TGtPhpFieldAccess',
+	#classTraits : 'TGtPhpFieldAccess classTrait',
 	#instVars : [
 		'property'
 	],

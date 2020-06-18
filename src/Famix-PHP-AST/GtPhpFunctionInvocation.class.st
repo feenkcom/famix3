@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFunctionInvocation,
 	#superclass : #GtPhpVariableBase,
+	#traits : 'TGtPhpFunctionInvocation',
+	#classTraits : 'TGtPhpFunctionInvocation classTrait',
 	#instVars : [
 		'parameters',
 		'functionName'
