@@ -16,3 +16,13 @@ GtPhpFullyQualifiedTraitMethodReference >> children [
 	className ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpFullyQualifiedTraitMethodReference >> className [
+	^ className
+]
+
+{ #category : #accessing }
+GtPhpFullyQualifiedTraitMethodReference >> functionName [
+	^ functionName
+]

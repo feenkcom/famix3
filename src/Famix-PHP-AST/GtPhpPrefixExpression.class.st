@@ -15,3 +15,13 @@ GtPhpPrefixExpression >> children [
 	variable ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpPrefixExpression >> operator [
+	^ operator
+]
+
+{ #category : #accessing }
+GtPhpPrefixExpression >> variable [
+	^ variable
+]

@@ -20,3 +20,23 @@ GtPhpForEachStatement >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpForEachStatement >> expression [
+	^ expression
+]
+
+{ #category : #accessing }
+GtPhpForEachStatement >> key [
+	^ key
+]
+
+{ #category : #accessing }
+GtPhpForEachStatement >> statement [
+	^ statement
+]
+
+{ #category : #accessing }
+GtPhpForEachStatement >> value [
+	^ value
+]

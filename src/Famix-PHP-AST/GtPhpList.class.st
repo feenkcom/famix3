@@ -21,3 +21,8 @@ GtPhpList >> initialize [
 	variables := OrderedCollection new.
 
 ]
+
+{ #category : #accessing }
+GtPhpList >> variables [
+	^ variables
+]

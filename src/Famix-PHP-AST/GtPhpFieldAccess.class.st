@@ -14,3 +14,8 @@ GtPhpFieldAccess >> children [
 	property ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpFieldAccess >> property [
+	^ property
+]

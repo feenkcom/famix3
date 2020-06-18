@@ -18,3 +18,23 @@ GtPhpTraitAlias >> children [
 	functionName ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpTraitAlias >> functionName [
+	^ functionName
+]
+
+{ #category : #accessing }
+GtPhpTraitAlias >> modifier [
+	^ modifier
+]
+
+{ #category : #accessing }
+GtPhpTraitAlias >> modifierOffset [
+	^ modifierOffset
+]
+
+{ #category : #accessing }
+GtPhpTraitAlias >> traitMethod [
+	^ traitMethod
+]

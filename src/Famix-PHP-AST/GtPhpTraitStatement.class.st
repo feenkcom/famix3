@@ -14,3 +14,8 @@ GtPhpTraitStatement >> children [
 	exp ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpTraitStatement >> exp [
+	^ exp
+]

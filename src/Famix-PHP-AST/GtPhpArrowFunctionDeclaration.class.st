@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpArrowFunctionDeclaration >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpArrowFunctionDeclaration >> children [
 	| result |
 	result := super children.
@@ -21,9 +26,29 @@ GtPhpArrowFunctionDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpArrowFunctionDeclaration >> formalParameters [
+	^ formalParameters
+]
+
 { #category : #initialization }
 GtPhpArrowFunctionDeclaration >> initialize [
 	super initialize.
 	formalParameters := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpArrowFunctionDeclaration >> isReference [
+	^ isReference
+]
+
+{ #category : #accessing }
+GtPhpArrowFunctionDeclaration >> isStatic [
+	^ isStatic
+]
+
+{ #category : #accessing }
+GtPhpArrowFunctionDeclaration >> returnType [
+	^ returnType
 ]

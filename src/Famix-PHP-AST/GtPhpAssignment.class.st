@@ -17,3 +17,18 @@ GtPhpAssignment >> children [
 	value ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpAssignment >> operator [
+	^ operator
+]
+
+{ #category : #accessing }
+GtPhpAssignment >> value [
+	^ value
+]
+
+{ #category : #accessing }
+GtPhpAssignment >> variableBase [
+	^ variableBase
+]

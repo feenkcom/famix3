@@ -22,3 +22,13 @@ GtPhpBlock >> initialize [
 	statements := OrderedCollection new.
 
 ]
+
+{ #category : #accessing }
+GtPhpBlock >> isCurly [
+	^ isCurly
+]
+
+{ #category : #accessing }
+GtPhpBlock >> statements [
+	^ statements
+]

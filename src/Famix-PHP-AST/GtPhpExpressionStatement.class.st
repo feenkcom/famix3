@@ -14,3 +14,15 @@ GtPhpExpressionStatement >> children [
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpExpressionStatement >> expression [
+	^ expression
+]
+
+{ #category : #testing }
+GtPhpExpressionStatement >> isRouteConfigAsssignment [
+	^ (self expression isKindOf: GtPhpAssignment) and: [
+		(self expression value isKindOf: GtPhpScalar) and: [
+			self expression variableBase isKindOf: GtPhpArrayAccess] ]
+]

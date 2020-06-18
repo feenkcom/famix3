@@ -23,10 +23,40 @@ GtPhpLambdaFunctionDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> formalParameters [
+	^ formalParameters
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> functionBody [
+	^ functionBody
+]
+
 { #category : #initialization }
 GtPhpLambdaFunctionDeclaration >> initialize [
 	super initialize.
 	lexicalVariables := OrderedCollection new.
 	formalParameters := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> isReference [
+	^ isReference
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> isStatic [
+	^ isStatic
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> lexicalVariables [
+	^ lexicalVariables
+]
+
+{ #category : #accessing }
+GtPhpLambdaFunctionDeclaration >> returnType [
+	^ returnType
 ]

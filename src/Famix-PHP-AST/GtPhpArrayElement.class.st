@@ -16,3 +16,13 @@ GtPhpArrayElement >> children [
 	key ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpArrayElement >> key [
+	^ key
+]
+
+{ #category : #accessing }
+GtPhpArrayElement >> value [
+	^ value
+]

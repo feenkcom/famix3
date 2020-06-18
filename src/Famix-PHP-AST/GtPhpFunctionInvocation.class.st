@@ -17,9 +17,19 @@ GtPhpFunctionInvocation >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpFunctionInvocation >> functionName [
+	^ functionName
+]
+
 { #category : #initialization }
 GtPhpFunctionInvocation >> initialize [
 	super initialize.
 	parameters := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpFunctionInvocation >> parameters [
+	^ parameters
 ]

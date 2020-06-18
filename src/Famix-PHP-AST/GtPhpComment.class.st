@@ -6,3 +6,8 @@ Class {
 	],
 	#category : #'Famix-PHP-AST'
 }
+
+{ #category : #accessing }
+GtPhpComment >> commentType [
+	^ commentType
+]

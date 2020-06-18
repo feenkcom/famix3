@@ -9,9 +9,19 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpCastExpression >> castType [
+	^ castType
+]
+
+{ #category : #accessing }
 GtPhpCastExpression >> children [
 	| result |
 	result := super children.
 	expression ifNotNil: [ :x | result add: x ].
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpCastExpression >> expression [
+	^ expression
 ]

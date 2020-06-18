@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFunctionDeclaration,
 	#superclass : #GtPhpStatement,
+	#traits : 'TGtPhpFunctionDeclaration',
+	#classTraits : 'TGtPhpFunctionDeclaration classTrait',
 	#instVars : [
 		'returnType',
 		'isReference',
@@ -22,9 +24,34 @@ GtPhpFunctionDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> formalParameters [
+	^ formalParameters
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> functionBody [
+	^ functionBody
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> functionName [
+	^ functionName
+]
+
 { #category : #initialization }
 GtPhpFunctionDeclaration >> initialize [
 	super initialize.
 	formalParameters := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> isReference [
+	^ isReference
+]
+
+{ #category : #accessing }
+GtPhpFunctionDeclaration >> returnType [
+	^ returnType
 ]

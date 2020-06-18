@@ -15,3 +15,13 @@ GtPhpArrayAccess >> children [
 	index ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpArrayAccess >> index [
+	^ index
+]
+
+{ #category : #accessing }
+GtPhpArrayAccess >> type [
+	^ type
+]

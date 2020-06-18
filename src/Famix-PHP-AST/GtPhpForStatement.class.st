@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpForStatement >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpForStatement >> children [
 	| result |
 	result := super children.
@@ -19,6 +24,21 @@ GtPhpForStatement >> children [
 	body ifNotNil: [ :x | result add: x ].
 	result addAll: initializations.
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpForStatement >> conditions [
+	^ conditions
+]
+
+{ #category : #accessing }
+GtPhpForStatement >> increasements [
+	^ increasements
+]
+
+{ #category : #accessing }
+GtPhpForStatement >> initializations [
+	^ initializations
 ]
 
 { #category : #accessing }

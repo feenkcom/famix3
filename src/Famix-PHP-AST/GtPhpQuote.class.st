@@ -16,9 +16,19 @@ GtPhpQuote >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpQuote >> expressions [
+	^ expressions
+]
+
 { #category : #initialization }
 GtPhpQuote >> initialize [
 	super initialize.
 	expressions := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpQuote >> type [
+	^ type
 ]

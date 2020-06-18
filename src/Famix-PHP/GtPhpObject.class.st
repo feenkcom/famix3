@@ -13,6 +13,16 @@ Class {
 	#category : #'Famix-PHP-Generator'
 }
 
+{ #category : #accessing }
+GtPhpObject class >> classNamePrefix [
+	^ 'GtPhp'
+]
+
+{ #category : #accessing }
+GtPhpObject class >> typeName [ 
+	^ self name removePrefix: self classNamePrefix
+]
+
 { #category : #enumerating }
 GtPhpObject >> allChildrenDo: aBlock [
 	self childrenDo: [ :child | 
@@ -91,7 +101,7 @@ GtPhpObject >> childrenSelect: aBlock [
 
 { #category : #accessing }
 GtPhpObject >> classNamePrefix [
-	^ 'GtPhp'
+	^ self class classNamePrefix
 ]
 
 { #category : #accessing }
@@ -213,7 +223,7 @@ GtPhpObject >> initialize [
 
 { #category : #printing }
 GtPhpObject >> mooseNameOn: stream [
-	stream nextPutAll: (self class name removePrefix: self classNamePrefix)
+	stream nextPutAll: self class typeName
 ]
 
 { #category : #importing }

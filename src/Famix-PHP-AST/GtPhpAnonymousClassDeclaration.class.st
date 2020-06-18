@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpAnonymousClassDeclaration >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpAnonymousClassDeclaration >> children [
 	| result |
 	result := super children.
@@ -24,4 +29,14 @@ GtPhpAnonymousClassDeclaration >> initialize [
 	super initialize.
 	interfaces := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpAnonymousClassDeclaration >> interfaces [
+	^ interfaces
+]
+
+{ #category : #accessing }
+GtPhpAnonymousClassDeclaration >> superClass [
+	^ superClass
 ]

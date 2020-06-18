@@ -20,3 +20,28 @@ GtPhpFormalParameter >> children [
 	defaultValue ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpFormalParameter >> defaultValue [
+	^ defaultValue
+]
+
+{ #category : #accessing }
+GtPhpFormalParameter >> isMandatory [
+	^ isMandatory
+]
+
+{ #category : #accessing }
+GtPhpFormalParameter >> isVariadic [
+	^ isVariadic
+]
+
+{ #category : #accessing }
+GtPhpFormalParameter >> parameterName [
+	^ parameterName
+]
+
+{ #category : #accessing }
+GtPhpFormalParameter >> type [
+	^ type
+]

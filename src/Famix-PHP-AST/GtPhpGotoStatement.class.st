@@ -14,3 +14,8 @@ GtPhpGotoStatement >> children [
 	label ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpGotoStatement >> label [
+	^ label
+]

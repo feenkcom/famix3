@@ -14,3 +14,8 @@ GtPhpFunctionName >> children [
 	name ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpFunctionName >> name [
+	^ name
+]

@@ -23,3 +23,13 @@ GtPhpTraitPrecedence >> initialize [
 	trList := OrderedCollection new.
 
 ]
+
+{ #category : #accessing }
+GtPhpTraitPrecedence >> methodReference [
+	^ methodReference
+]
+
+{ #category : #accessing }
+GtPhpTraitPrecedence >> trList [
+	^ trList
+]

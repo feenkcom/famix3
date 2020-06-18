@@ -14,3 +14,8 @@ GtPhpStaticConstantAccess >> children [
 	constant ifNotNil: [ :x | result add: x ].
 	^ result
 ]
+
+{ #category : #accessing }
+GtPhpStaticConstantAccess >> constant [
+	^ constant
+]

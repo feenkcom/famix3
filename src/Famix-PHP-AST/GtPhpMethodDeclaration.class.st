@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpMethodDeclaration,
 	#superclass : #GtPhpBodyDeclaration,
+	#traits : 'TGtPhpMethodDeclaration',
+	#classTraits : 'TGtPhpMethodDeclaration classTrait',
 	#instVars : [
 		'comment',
 		'functionDeclaration'
@@ -15,4 +17,14 @@ GtPhpMethodDeclaration >> children [
 	functionDeclaration ifNotNil: [ :x | result add: x ].
 	comment ifNotNil: [ :x | result add: x ].
 	^ result
+]
+
+{ #category : #accessing }
+GtPhpMethodDeclaration >> comment [
+	^ comment
+]
+
+{ #category : #accessing }
+GtPhpMethodDeclaration >> functionDeclaration [
+	^ functionDeclaration
 ]

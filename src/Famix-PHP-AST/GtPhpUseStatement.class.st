@@ -20,9 +20,29 @@ GtPhpUseStatement >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpUseStatement >> emptyPart [
+	^ emptyPart
+]
+
 { #category : #initialization }
 GtPhpUseStatement >> initialize [
 	super initialize.
 	parts := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpUseStatement >> namespace [
+	^ namespace
+]
+
+{ #category : #accessing }
+GtPhpUseStatement >> parts [
+	^ parts
+]
+
+{ #category : #accessing }
+GtPhpUseStatement >> statementType [
+	^ statementType
 ]

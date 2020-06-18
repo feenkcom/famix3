@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpTypeDeclaration,
 	#superclass : #GtPhpStatement,
+	#traits : 'TGtPhpTypeDeclaration',
+	#classTraits : 'TGtPhpTypeDeclaration classTrait',
 	#instVars : [
 		'interfaces',
 		'className',
@@ -8,6 +10,11 @@ Class {
 	],
 	#category : #'Famix-PHP-AST'
 }
+
+{ #category : #accessing }
+GtPhpTypeDeclaration >> block [
+	^ block
+]
 
 { #category : #accessing }
 GtPhpTypeDeclaration >> children [
@@ -19,9 +26,19 @@ GtPhpTypeDeclaration >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpTypeDeclaration >> className [
+	^ className
+]
+
 { #category : #initialization }
 GtPhpTypeDeclaration >> initialize [
 	super initialize.
 	interfaces := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpTypeDeclaration >> interfaces [
+	^ interfaces
 ]

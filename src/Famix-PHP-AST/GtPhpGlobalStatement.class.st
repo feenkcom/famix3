@@ -21,3 +21,8 @@ GtPhpGlobalStatement >> initialize [
 	variables := OrderedCollection new.
 
 ]
+
+{ #category : #accessing }
+GtPhpGlobalStatement >> variables [
+	^ variables
+]

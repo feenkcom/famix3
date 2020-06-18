@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpTryStatement >> catchClauses [
+	^ catchClauses
+]
+
+{ #category : #accessing }
 GtPhpTryStatement >> children [
 	| result |
 	result := super children.
@@ -19,9 +24,19 @@ GtPhpTryStatement >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpTryStatement >> finallyClause [
+	^ finallyClause
+]
+
 { #category : #initialization }
 GtPhpTryStatement >> initialize [
 	super initialize.
 	catchClauses := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpTryStatement >> tryStatement [
+	^ tryStatement
 ]

@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #accessing }
+GtPhpCatchClause >> body [
+	^ body
+]
+
+{ #category : #accessing }
 GtPhpCatchClause >> children [
 	| result |
 	result := super children.
@@ -19,9 +24,19 @@ GtPhpCatchClause >> children [
 	^ result
 ]
 
+{ #category : #accessing }
+GtPhpCatchClause >> classNames [
+	^ classNames
+]
+
 { #category : #initialization }
 GtPhpCatchClause >> initialize [
 	super initialize.
 	classNames := OrderedCollection new.
 
+]
+
+{ #category : #accessing }
+GtPhpCatchClause >> variable [
+	^ variable
 ]
