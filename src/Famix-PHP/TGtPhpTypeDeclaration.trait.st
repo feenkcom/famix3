@@ -3,6 +3,11 @@ Trait {
 	#category : #'Famix-PHP-Traits-AST'
 }
 
+{ #category : #accessing }
+TGtPhpTypeDeclaration >> classNameValue [
+	^ self className name
+]
+
 { #category : #'tool-extensions' }
 TGtPhpTypeDeclaration >> gtSearchMethodsFor: aStep [
 	<gtSearch>
@@ -18,4 +23,13 @@ TGtPhpTypeDeclaration >> gtSearchMethodsFor: aStep [
 TGtPhpTypeDeclaration >> methods [
 	^ self block childrenSelect: [ :anAstNode |
 		anAstNode isKindOf: GtPhpMethodDeclaration ] 
+]
+
+{ #category : #printing }
+TGtPhpTypeDeclaration >> mooseNameOn: stream [
+	super mooseNameOn: stream.
+	stream 
+		nextPutAll: ' (';
+		nextPutAll: self classNameValue;
+		nextPutAll: ')'
 ]

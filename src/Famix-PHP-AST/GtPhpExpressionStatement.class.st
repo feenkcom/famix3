@@ -19,3 +19,10 @@ GtPhpExpressionStatement >> children [
 GtPhpExpressionStatement >> expression [
 	^ expression
 ]
+
+{ #category : #testing }
+GtPhpExpressionStatement >> isRouteConfigAsssignment [
+	^ (self expression isKindOf: GtPhpAssignment) and: [
+		(self expression value isKindOf: GtPhpScalar) and: [
+			self expression variableBase isKindOf: GtPhpArrayAccess] ]
+]

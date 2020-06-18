@@ -29,6 +29,14 @@ GtPhpIfStatement >> falseStatement [
 	^ falseStatement
 ]
 
+{ #category : #testing }
+GtPhpIfStatement >> isControllerRouteTest [
+	^ (self condition isKindOf: GtPhpInfixExpression) and: [
+		(self condition left isKindOf: GtPhpVariable) and: [
+			(self condition right isKindOf: GtPhpScalar) and: [ 
+				self condition left identifier name = 'action' ] ] ]
+]
+
 { #category : #accessing }
 GtPhpIfStatement >> trueStatement [
 	^ trueStatement
