@@ -2,8 +2,8 @@ Class {
 	#name : #GtPhpSingleFieldDeclaration,
 	#superclass : #GtPhpASTNode,
 	#instVars : [
-		'value',
-		'name'
+		'initialValue',
+		'variableName'
 	],
 	#category : #'Famix-PHP-AST'
 }
@@ -12,17 +12,17 @@ Class {
 GtPhpSingleFieldDeclaration >> children [
 	| result |
 	result := super children.
-	value ifNotNil: [ :x | result add: x ].
-	name ifNotNil: [ :x | result add: x ].
+	initialValue ifNotNil: [ :x | result add: x ].
+	variableName ifNotNil: [ :x | result add: x ].
 	^ result
 ]
 
 { #category : #accessing }
-GtPhpSingleFieldDeclaration >> name [
-	^ name
+GtPhpSingleFieldDeclaration >> initialValue [
+	^ initialValue
 ]
 
 { #category : #accessing }
-GtPhpSingleFieldDeclaration >> value [
-	^ value
+GtPhpSingleFieldDeclaration >> variableName [
+	^ variableName
 ]

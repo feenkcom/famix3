@@ -26,10 +26,6 @@ TGtPhpTypeDeclaration >> methods [
 ]
 
 { #category : #printing }
-TGtPhpTypeDeclaration >> mooseNameOn: stream [
-	super mooseNameOn: stream.
-	stream 
-		nextPutAll: ' (';
-		nextPutAll: self classNameValue;
-		nextPutAll: ')'
+TGtPhpTypeDeclaration >> shortDescriptionOn: aStream [
+	aStream nextPutAll: self classNameValue
 ]

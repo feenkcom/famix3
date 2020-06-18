@@ -7,3 +7,8 @@ Trait {
 TGtPhpFunctionDeclaration >> functionNameValue [
 	^ self functionName name
 ]
+
+{ #category : #accessing }
+TGtPhpFunctionDeclaration >> shortDescriptionOn: aStream [
+	aStream nextPutAll: self functionNameValue
+]

@@ -301,7 +301,9 @@ GtPhpAstCodeGenerator >> variablesRenames [
 	{#GtPhpForStatement. (#initializers -> #initializations)}.
 	{#GtPhpTraitUseStatement. (#traitList -> #traitNameList)}.
 	{#GtPhpQuote. (#quoteType -> #type)}.
-	{#GtPhpForStatement. (#updaters -> #increasements)}
+	{#GtPhpForStatement. (#updaters -> #increasements)}.
+	{#GtPhpSingleFieldDeclaration }. (#name -> #variableName).
+	{#GtPhpSingleFieldDeclaration }. (#value -> #initialValue)
 	} ]
 	
 ]

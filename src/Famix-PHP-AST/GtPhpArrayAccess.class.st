@@ -18,18 +18,6 @@ GtPhpArrayAccess >> children [
 	^ result
 ]
 
-{ #category : #importing }
-GtPhpArrayAccess >> importFrom: anElement [
-	| variableNode |
-	super importFrom: anElement.
-	
-	variableNode := anElement elements first.
-	self 
-		attributeAtXmlElementName: 'identifier' 
-		put: ((self newAstNodeNamed: variableNode localName) importFrom: variableNode)
-	
-]
-
 { #category : #accessing }
 GtPhpArrayAccess >> index [
 	^ index

@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpNamespaceName,
 	#superclass : #GtPhpIdentifier,
+	#traits : 'TGtPhpNamespaceName',
+	#classTraits : 'TGtPhpNamespaceName classTrait',
 	#instVars : [
 		'segments',
 		'global',

@@ -9,10 +9,6 @@ TGtPhpMethodDeclaration >> methodNameValue [
 ]
 
 { #category : #printing }
-TGtPhpMethodDeclaration >> mooseNameOn: stream [
-	super mooseNameOn: stream.
-	stream 
-		nextPutAll: ' (';
-		nextPutAll: self methodNameValue;
-		nextPutAll: ')'
+TGtPhpMethodDeclaration >> shortDescriptionOn: aStream [
+	aStream nextPutAll: self methodNameValue
 ]
