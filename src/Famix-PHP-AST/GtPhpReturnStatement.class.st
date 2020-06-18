@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpReturnStatement,
 	#superclass : #GtPhpStatement,
+	#traits : 'TGtPhpReturnStatement',
+	#classTraits : 'TGtPhpReturnStatement classTrait',
 	#instVars : [
 		'expression'
 	],

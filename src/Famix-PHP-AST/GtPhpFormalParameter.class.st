@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpFormalParameter,
 	#superclass : #GtPhpASTNode,
+	#traits : 'TGtPhpFormalParameter',
+	#classTraits : 'TGtPhpFormalParameter classTrait',
 	#instVars : [
 		'isVariadic',
 		'parameterName',
