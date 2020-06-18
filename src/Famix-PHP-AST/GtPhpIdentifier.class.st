@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpIdentifier,
 	#superclass : #GtPhpVariableBase,
+	#traits : 'TGtPhpIdentifier',
+	#classTraits : 'TGtPhpIdentifier classTrait',
 	#instVars : [
 		'nullable',
 		'name'
