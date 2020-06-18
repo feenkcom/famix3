@@ -157,6 +157,19 @@ GtPhpObject >> gtInspectorChildrenIn: composite [
 		children: #children
 ]
 
+{ #category : #ui }
+GtPhpObject >> gtSourceFor: aView [
+	<gtView> 
+	^ aView textEditor
+		title: 'Source';
+		priority: 6;
+		text: [ | completeContent |
+			completeContent := self fileReference contents.
+			completeContent 
+				copyFrom: self start asNumber + 1 
+				to: self start asNumber + self length asNumber ]
+]
+
 { #category : #private }
 GtPhpObject >> hasAttributeAtXmlElementName: aString [
 	^ self class allInstVarNames 
@@ -221,6 +234,11 @@ GtPhpObject >> initialize [
 	propertyDictionary := Dictionary new.
 ]
 
+{ #category : #accessing }
+GtPhpObject >> length [ 	
+	self subclassResponsibility
+]
+
 { #category : #printing }
 GtPhpObject >> mooseNameOn: stream [
 	stream nextPutAll: self class typeName
@@ -249,6 +267,11 @@ GtPhpObject >> propertyDictionary [
 { #category : #accessing }
 GtPhpObject >> propertyDictionary: anObject [
 	propertyDictionary := anObject
+]
+
+{ #category : #accessing }
+GtPhpObject >> start [ 	
+	self subclassResponsibility
 ]
 
 { #category : #importing }

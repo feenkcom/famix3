@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpVariable,
 	#superclass : #GtPhpVariableBase,
+	#traits : 'TGtPhpVariable',
+	#classTraits : 'TGtPhpVariable classTrait',
 	#instVars : [
 		'isDollared',
 		'identifier'
