@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpArrayCreation,
 	#superclass : #GtPhpVariableBase,
+	#traits : 'TGtPhpArrayCreation',
+	#classTraits : 'TGtPhpArrayCreation classTrait',
 	#instVars : [
 		'hasArrayKey',
 		'elements'

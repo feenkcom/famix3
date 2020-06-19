@@ -5,6 +5,5 @@ Trait {
 
 { #category : #printing }
 TGtPhpReturnStatement >> shortDescriptionOn: aStream [
-	aStream nextPutAll: 'return '.
 	self expression shortDescriptionOn: aStream
 ]

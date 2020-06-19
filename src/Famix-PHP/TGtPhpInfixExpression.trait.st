@@ -21,3 +21,8 @@ TGtPhpInfixExpression >> importFrom: anElement [
 	
 	self children do: [ :each | each parentNode: self ].
 ]
+
+{ #category : #printing }
+TGtPhpInfixExpression >> shortDescriptionOn: aStream [
+	aStream nextPutAll: self operator
+]
