@@ -34,10 +34,6 @@ TGtPhpFieldsDeclaration >> importFrom: anElement [
 
 { #category : #printing }
 TGtPhpFieldsDeclaration >> shortDescriptionOn: aStream [
-	self modifier ifNotNil: [ 
-		aStream 
-			nextPutAll: self modifier;
-			nextPutAll: ' ' ].
 	self fields 
 		do: [ :aField | aField shortDescriptionOn: aStream ]
 		separatedBy: [ aStream nextPutAll: ', '] 

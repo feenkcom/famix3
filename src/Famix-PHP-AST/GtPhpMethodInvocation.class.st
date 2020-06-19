@@ -1,6 +1,8 @@
 Class {
 	#name : #GtPhpMethodInvocation,
 	#superclass : #GtPhpDispatch,
+	#traits : 'TGtPhpMethodInvocation',
+	#classTraits : 'TGtPhpMethodInvocation classTrait',
 	#instVars : [
 		'property'
 	],
