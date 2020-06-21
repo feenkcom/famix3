@@ -27,20 +27,6 @@ GtPhpSymfonyImporter >> ensureServiceNamed: aString [
 		ifAbsentPut: [ GtPhpSymfonyService new name: aString asSymbol ]
 ]
 
-{ #category : #ui }
-GtPhpSymfonyImporter >> gtInspectorServiceMapIn: composite [
-	<gtInspectorPresentationOrder: 40>
-	composite roassal2
-		title: 'Services map';
-		initializeView: [ RTMondrian new ];
-		painting: [ :view |
-			view shape circle color: Color black.
-			view nodes: (services select: [:each | each implementationClass notNil and: [each implementationClass isStub not]]).
-			view shape line color: (Color gray alpha: 0.2). 
-			view edges moveBehind; connectToAll: [ :each | (each arguments reject: #isNil) collect: #service ].
-			view layout dominanceTree ]
-]
-
 { #category : #importing }
 GtPhpSymfonyImporter >> importArgumentFrom: argumentElement [
 	| argument service |
