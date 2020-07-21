@@ -15,7 +15,7 @@ TGtPhpTypeDeclaration >> gtSearchMethodsFor: aStep [
 		title: 'Methods';
 		allCandidates: [ self methods ];
 		itemName: #methodNameValue;
-		filter: GTFilterSubstrings;
+		filter: GtFilterSubstrings;
 		wantsToDisplayOnEmptyQuery: true
 ]
 

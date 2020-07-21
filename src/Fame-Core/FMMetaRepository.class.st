@@ -245,7 +245,7 @@ FMMetaRepository >> gtSpotterClassesFor: aStep [
 		title: 'Classes';
 		allCandidates: [ self classes ];
 		itemName: [ :class | class fullName ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'as yet unclassified' }
@@ -255,7 +255,7 @@ FMMetaRepository >> gtSpotterPackagesFor: aStep [
 		title: 'Packages';
 		allCandidates: [ self packages ];
 		itemName: [ :example | example fullName ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #accessing }

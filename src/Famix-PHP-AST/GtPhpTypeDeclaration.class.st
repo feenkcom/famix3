@@ -31,6 +31,17 @@ GtPhpTypeDeclaration >> className [
 	^ className
 ]
 
+{ #category : #'tool-extensions' }
+GtPhpTypeDeclaration >> gtSearchMethodsFor: aStep [
+	<gtSearch>
+	^ aStep listProcessor
+		title: 'Methods';
+		allCandidates: [ self methods ];
+		itemName: #methodNameValue;
+		filter: GtFilterSubstrings;
+		wantsToDisplayOnEmptyQuery: true
+]
+
 { #category : #initialization }
 GtPhpTypeDeclaration >> initialize [
 	super initialize.
