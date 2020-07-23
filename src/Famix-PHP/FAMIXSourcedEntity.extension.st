@@ -15,7 +15,9 @@ FAMIXSourcedEntity >> gtInspectorPhpSourceAstIn: composite [
 { #category : #'*Famix-PHP' }
 FAMIXSourcedEntity >> hasPhpAst [
 	^ self sourceAnchor notNil and: [
-		(self sourceAnchor fileReference withoutExtension, 'ast') exists ]
+		[ (self sourceAnchor fileReference withoutExtension, 'ast') exists ]
+			on: Error 
+			do: [ false ] ]
 ]
 
 { #category : #'*Famix-PHP' }
