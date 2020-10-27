@@ -827,7 +827,7 @@ FAMIXType >> tightClassCohesion [
 						do: [ :eachAccess | 
 							| var |
 							var := eachAccess variable.
-							var isAttribute
+							(var notNil and: [var isAttribute])
 								ifTrue: [ 
 									| varName accessedFrom |
 									varName := var name.
