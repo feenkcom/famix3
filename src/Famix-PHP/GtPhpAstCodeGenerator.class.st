@@ -42,7 +42,7 @@ GtPhpAstCodeGenerator >> addTraitUsageIfNecessaryToASTNodeClass: aFAMIXClass in:
 	trait isTrait
 		ifFalse: [ ^ self  ]. 
 	
-	(GtRBAddTraitUsageToClassByNameTransformation 
+	(RBAddTraitUsageToClassByNameRefactoring 
 		traitName: traitName 
 		inClassNamed: className)
 			model: anRBNamespace;
@@ -104,7 +104,7 @@ GtPhpAstCodeGenerator >> generateAccessorMethodsForASTNodeClass: aFAMIXClass in:
 				nextPutAll: actualAttributeName
 		].
 	
-		(GtRBSilentlyAddMethodRefactoring 
+		(RBSilentlyAddMethodRefactoring 
 			model: anRBNamespace
 			addMethod: methodSource
 			toClass: className
@@ -145,7 +145,7 @@ GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: anRBN
 			].
 		s tab; nextPutAll: '^ result'
 	].
-	(GtRBSilentlyAddMethodRefactoring 
+	(RBSilentlyAddMethodRefactoring 
 		model: anRBNamespace
 		addMethod: methodSource
 		toClass: (self pharoClassName: aClass name) asSymbol
@@ -154,7 +154,7 @@ GtPhpAstCodeGenerator >> generateChildrenMethodForASTNodeClass: aClass in: anRBN
 
 { #category : #'private - generation' }
 GtPhpAstCodeGenerator >> generateClassFromASTNodeClass: aFAMIXClass in: anRBNamespace [
-	(GtRBAddClassWithVarsRefactoring
+	(RBAddClassWithVarsRefactoring
 		model: anRBNamespace
 		addClass: (self pharoClassName: aFAMIXClass name)
 		superclass: (self pharoClassName: aFAMIXClass superclass name)
@@ -229,7 +229,7 @@ GtPhpAstCodeGenerator >> generateImportMethodForASTNodeClass: aClass in: namespa
 			s tab; nextPutAll: 'super importFrom: anElement.'; cr.
 			s nextPutAll: bodySource
 		].
-		(GtRBSilentlyAddMethodRefactoring 
+		(RBSilentlyAddMethodRefactoring 
 			model: namespace
 			addMethod: methodSource
 			toClass: (self pharoClassName: aClass name) asSymbol
@@ -255,7 +255,7 @@ GtPhpAstCodeGenerator >> generateInitializeMethodForASTNodeClass: aClass in: anR
 				nextPutAll: (self instVarNameForAttribute: listAttribute), ' := OrderedCollection new.'; 
 				cr ].
 	].
-	(GtRBSilentlyAddMethodRefactoring 
+	(RBSilentlyAddMethodRefactoring 
 		model: anRBNamespace
 		addMethod: methodSource
 		toClass: (self pharoClassName: aClass name) asSymbol
