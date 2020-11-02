@@ -84,6 +84,16 @@ FAMIXMethod >> initialize [
 ]
 
 { #category : #accessing }
+FAMIXMethod >> isJUnit3Test [
+	<MSEProperty: #isJUnit3Test type: #Boolean>
+	<derived>
+	<MSEComment: 'True if the method is considered as a Junit 3 Java test'>
+	^ (self name beginsWith: 'test')
+		and: [ self parentType superclassHierarchy
+				anySatisfy: [ :c | c mooseNameWithDots = 'junit.framework.TestCase' ] ]
+]
+
+{ #category : #accessing }
 FAMIXMethod >> kind [
 	<MSEProperty: #kind type: #String>
 	<MSEComment: 'Tag indicating a setter, getter, constant, constructor, or abstract method'>
