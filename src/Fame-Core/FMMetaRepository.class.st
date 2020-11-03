@@ -42,12 +42,6 @@ FMMetaRepository class >> fm3 [
 	^ repo
 ]
 
-{ #category : #examples }
-FMMetaRepository class >> gtExampleBasic [
-	<gtExample>
-	^ self new
-]
-
 { #category : #'instance creation' }
 FMMetaRepository class >> reset [
 	self error: 'I am a smell, no static state please!'
