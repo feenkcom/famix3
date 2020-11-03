@@ -36,6 +36,17 @@ FAMIXType >> allAnnotationTypes [
 ]
 
 { #category : #'*famix-extensions-nav All Dependencies' }
+FAMIXType >> allProviderTypes [
+	<MSEProperty: #allProviderTypes type: #FAMIXType>
+	<derived>
+	<multivalued>
+	<MSEComment: 'All types that the receiver depends on (inherites, staticly accesses, or uses some of their methods)'>
+	^ (self queryAllOutgoing atScope: FAMIXType) withoutSelfLoops
+		addAll: (self methods flatCollect: #providerTypes);
+		yourself
+]
+
+{ #category : #'*famix-extensions-nav All Dependencies' }
 FAMIXType >> clientClasses [
 	self deprecated: 'use clientTypes'.
 	

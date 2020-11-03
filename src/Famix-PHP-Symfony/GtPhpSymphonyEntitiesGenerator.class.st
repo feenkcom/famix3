@@ -14,12 +14,12 @@ GtPhpSymphonyEntitiesGenerator >> generateAccessorMethodForASTNodeClass: aFamixC
 			getterSource := attributeName, String cr, String tab, '^ ', attributeName.	
 			setterSource := attributeName asSymbol asMutator, ' ', 'anObject', String cr, String tab, attributeName, ' := ', 'anObject'.
 	
-			(GtRBSilentlyAddMethodRefactoring 
+			(RBSilentlyAddMethodRefactoring 
 				model: namespace
 				addMethod: getterSource
 				toClass: (self pharoClassName: aFamixClass name) asSymbol
 				inProtocols: #(#accessing)) primitiveExecute.
-			(GtRBSilentlyAddMethodRefactoring 
+			(RBSilentlyAddMethodRefactoring 
 				model: namespace
 				addMethod: setterSource
 				toClass: (self pharoClassName: aFamixClass name) asSymbol
@@ -37,7 +37,7 @@ GtPhpSymphonyEntitiesGenerator >> generateClass: aFamixClass [
 
 { #category : #'as yet unclassified' }
 GtPhpSymphonyEntitiesGenerator >> generateClass: aFamixClass in: namespace inPackageNamed: aSymbol [
-	(GtRBAddClassWithVarsRefactoring
+	(RBAddClassWithVarsRefactoring
 		model: namespace
 		addClass: (self pharoClassName: aFamixClass name)
 		superclass:
@@ -67,7 +67,7 @@ GtPhpSymphonyEntitiesGenerator >> generateEntitiesFromMooseModel: aMooseModel in
 	rootMooseEntities := aMooseModel allModelClasses
 		select: [ :each | each isPhpSymfonyEntity and: [ each superclass isNil ] ].
 	namespace := RBNamespace onEnvironment: RBBrowserEnvironment new.
-	(GtRBAddClassWithVarsRefactoring
+	(RBAddClassWithVarsRefactoring
 		model: namespace
 		addClass: (self pharoClassName: '')
 		superclass: Object
