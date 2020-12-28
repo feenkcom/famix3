@@ -14,7 +14,6 @@ BaselineOfFamix3SmalltalkImporter >> baseline: spec [
 				baseline: 'Famix3' with: [
 					spec repository: 'github://feenkcom/famix3/src' ].
 			spec 
-				package: 'Moose-SmalltalkImporter' with: [ spec requires: #('Famix3'). ];
 				package: #'Moose-Query-Test' with: [ ];
 				package: 'Moose-Tests-SmalltalkImporter-Core' with: [
 					spec requires: #('Moose-Tests-SmalltalkImporter-LAN' 'Moose-TestResources-Reference-PackageOne') ];
