@@ -17,10 +17,6 @@ BaselineOfFamix3 >> baseline: spec [
 				baseline: 'CollectionExtensions' with: [
 					spec repository: 'github://pharo-contributions/CollectionExtensions/src' ].
 			spec 
-				package: 'Famix-C' with: [
-					spec requires: #('Famix-Core' 'Famix-File' ). ];
-				package: 'Famix-CPP' with: [
-					spec requires: #('Famix-Core' 'Famix-File' 'Famix-C' ). ];
 				package: 'Famix-Core' with: [
 					spec requires: #('Moose-Core' ). ];
 				package: 'Famix-Extensions' with: [
@@ -29,6 +25,10 @@ BaselineOfFamix3 >> baseline: spec [
 					spec requires: #('Famix-Core' 'Famix-SourceAnchor' ). ];
 				package: 'Famix-Implementation' with: [
 					spec requires: #('Famix-Core' ). ];
+				package: 'Famix-C' with: [
+					spec requires: #('Famix-Core' 'Famix-File' ). ];
+				package: 'Famix-CPP' with: [
+					spec requires: #('Famix-Core' 'Famix-File' 'Famix-C' 'Famix-Extensions' ). ];
 				package: 'Famix-Java' with: [
 					spec requires: #('Famix-Core' ). ];
 				package: 'Famix-CSharp' with: [
@@ -40,7 +40,7 @@ BaselineOfFamix3 >> baseline: spec [
 				package: 'Famix-PHP-AST' with: [
 					spec requires: #('Famix-PHP' ). ];
 				package: 'Famix-PHP-Symfony' with: [
-					spec requires: #('Famix-PHP' ). ];
+					spec requires: #('Famix-PHP' 'Famix-Extensions'). ];
 				package: 'Famix-Smalltalk' with: [
 					spec requires: #('Famix-Core' 'Famix-Extensions'). ];
 				package: 'Famix-SourceAnchor' with: [
