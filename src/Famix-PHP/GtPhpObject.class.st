@@ -124,7 +124,7 @@ GtPhpObject >> gtCompleteSourceFor: aView [
 		priority: 5;
 		stencil: [ | e completeContent text |
 			completeContent := self fileReference contents.
-			text := BlRopedRawText string: completeContent.
+			text := completeContent asRopedText.
 			self withAllChildrenDo: [ :child |
 				(child class = GtPhpIdentifier and: [
 					child parentNode class = GtPhpFunctionDeclaration]) ifTrue: [ 
