@@ -266,14 +266,14 @@ FMMetaRepository >> gtTreeFor: aView [
 						pane := BrHorizontalPane new
 							vFitContent; hFitContent;
 							addChild: (BrLabel new 
-								text: (a name, ':'); look: BrGlamorousLabelLook;
+								text: (a name, ':'); aptitude: BrGlamorousLabelAptitude;
 								when: BlClickEvent do: [:e | e target phlow spawnObject: a]);
 							addChild: (BrLabel new 
-								text: a type name; look: (BrGlamorousLabelLook new foreground: Color gray);
+								text: a type name; aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 								when: BlClickEvent do: [:e | e target phlow spawnObject: a type]).
 						a hasOpposite ifTrue: [
 							pane addChild: (BrLabel new 
-								text: '(', a opposite name, ')'; look: (BrGlamorousLabelLook new foreground: Color gray);
+								text: '(', a opposite name, ')'; aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 								when: BlClickEvent do: [:e | e target phlow spawnObject: a opposite])].
 						pane ];
 					with: (each attributes sorted: [:a :b | a name < b name]).

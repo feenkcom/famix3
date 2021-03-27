@@ -140,7 +140,7 @@ GtPhpObject >> gtCompleteSourceFor: aView [
 					 
 			e := BrEditor new
 				text: text;
-				look: BrGlamorousCodeEditorLook new.
+				aptitude: BrGlamorousCodeEditorAptitude new.
 			
 			e
 				scrollToPosition: ( completeContent lineNumberCorrespondingToIndex: self start asNumber + 1).
