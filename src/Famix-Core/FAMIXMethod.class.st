@@ -59,7 +59,7 @@ FAMIXMethod >> belongsTo [
 
 { #category : #accessing }
 FAMIXMethod >> belongsTo: aType [
-	self parentType
+	self parentType: aType
 ]
 
 { #category : #accessing }
