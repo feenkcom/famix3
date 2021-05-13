@@ -70,7 +70,7 @@ FAMIXMethod >> springRoutePathLocalValue [
 
 { #category : #'*Famix-Java' }
 FAMIXMethod >> springRoutePathValue [
-	^ self parentType springRoutePathValue, self springRoutePathLocalValue
+	^ (self parentType springRoutePathValue ifNil: ['']), self springRoutePathLocalValue
 ]
 
 { #category : #'*Famix-Java' }
