@@ -27,6 +27,11 @@ FAMIXClass >> isIgnored [
 ]
 
 { #category : #'*Famix-Java' }
+FAMIXClass >> isSpringRestController [
+	^ self isAnnotatedWith: 'RestController'
+]
+
+{ #category : #'*Famix-Java' }
 FAMIXClass >> springRoutePathValue [
 	^ self annotationInstances
 		detect: [ :each | each annotationType name asSymbol = #RequestMapping ] 
