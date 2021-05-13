@@ -25,3 +25,15 @@ FAMIXClass >> isIgnored [
 		'If the class is a test class, it can be annotated with Ignore, all the tests of contained are bypassed'>
 	^ (self isAnnotatedWith: 'Ignore') 
 ]
+
+{ #category : #'*Famix-Java' }
+FAMIXClass >> springRoutePathValue [
+	^ self annotationInstances
+		detect: [ :each | each annotationType name asSymbol = #RequestMapping ] 
+		ifFound: [ :annotationInstance |
+			^ (((annotationInstance attributes byName: 'value') value)
+				removePrefix: '{')
+				removeSuffix: '}' ]
+		ifNone: [ 
+			^ nil ]
+]

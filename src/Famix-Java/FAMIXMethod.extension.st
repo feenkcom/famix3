@@ -52,6 +52,28 @@ FAMIXMethod >> isJUnit4Test [
 ]
 
 { #category : #'*Famix-Java' }
+FAMIXMethod >> isSpringRoute [
+	^ self isAnnotatedWith: 'RequestMapping'
+]
+
+{ #category : #'*Famix-Java' }
+FAMIXMethod >> springRoutePathLocalValue [
+	^ self annotationInstances
+		detect: [ :each | each annotationType name asSymbol = #RequestMapping ] 
+		ifFound: [ :annotationInstance |
+			^ ((annotationInstance attributes byName: 'value') value
+				removePrefix: '{')
+				removeSuffix: '}' ]
+		ifNone: [ 
+			^ nil ]
+]
+
+{ #category : #'*Famix-Java' }
+FAMIXMethod >> springRoutePathValue [
+	^ self parentType springRoutePathValue, self springRoutePathLocalValue
+]
+
+{ #category : #'*Famix-Java' }
 FAMIXMethod >> thrownExceptions [
 	<MSEProperty: #thrownExceptions type: #FAMIXThrownException opposite: #definingMethod> <multivalued> <derived>
 	<MSEComment: 'The exceptions thrown by the method'>
