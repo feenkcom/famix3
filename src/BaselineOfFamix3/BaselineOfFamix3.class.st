@@ -10,9 +10,9 @@ BaselineOfFamix3 >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Fame' with: [
-				spec repository: 'github://feenkcom/famix3:v0.8.10/src' ];
+				spec repository: 'github://feenkcom/famix3:main/src' ];
 			baseline: 'CollectionExtensions' with: [
-				spec repository: 'github://pharo-contributions/CollectionExtensions:7d61095afdead8d6949b7f0d5412964b200837a5/src' ].
+				spec repository: 'github://pharo-contributions/CollectionExtensions/src' ].
 		spec 
 			package: #'Moose-Query';
 			package: 'Moose-Core' with: [
