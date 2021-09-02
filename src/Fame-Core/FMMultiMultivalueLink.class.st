@@ -19,12 +19,12 @@ LIBBook>>authors: persons
 	authors value: persons
 "
 Class {
-	#name : #FMMultiMultivalueLink,
-	#superclass : #FMMultivalueLink,
-	#category : #'Fame-Core'
+	#name : 'FMMultiMultivalueLink',
+	#superclass : 'FMMultivalueLink',
+	#category : 'Fame-Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 FMMultiMultivalueLink >> add: anElement [
 
 	(anElement perform: opposite) unsafeAdd: owner.
@@ -34,7 +34,7 @@ FMMultiMultivalueLink >> add: anElement [
 	
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FMMultiMultivalueLink >> remove: anElement ifAbsent: exceptionBlock [ 
 	
 	values remove: anElement ifAbsent: [ ^exceptionBlock value ].
@@ -42,7 +42,7 @@ FMMultiMultivalueLink >> remove: anElement ifAbsent: exceptionBlock [
 	^anElement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FMMultiMultivalueLink >> with: element opposite: oppositeSelector [
 	self assert: oppositeSelector numArgs = 0.
 	values := OrderedCollection new.

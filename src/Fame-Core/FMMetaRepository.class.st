@@ -21,16 +21,16 @@ packageDict
 
 "
 Class {
-	#name : #FMMetaRepository,
-	#superclass : #FMRepository,
+	#name : 'FMMetaRepository',
+	#superclass : 'FMRepository',
 	#instVars : [
 		'classDict',
 		'nameDict'
 	],
-	#category : #'Fame-Core'
+	#category : 'Fame-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FMMetaRepository class >> fm3 [
 	| builder repo |
 	"Again, no singeltons please!"
@@ -42,12 +42,12 @@ FMMetaRepository class >> fm3 [
 	^ repo
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FMMetaRepository class >> reset [
 	self error: 'I am a smell, no static state please!'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FMMetaRepository >> addSmalltalkClasses: classes [ 
 	| builder |
 	builder := FMPragmaProcessor new.
@@ -56,7 +56,7 @@ FMMetaRepository >> addSmalltalkClasses: classes [
 	self addAll: builder elements
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FMMetaRepository >> addSmalltalkNamespace: pattern [ 
 	| classes |
 	classes := Object withAllSubclasses select: 
@@ -69,7 +69,7 @@ FMMetaRepository >> addSmalltalkNamespace: pattern [
 	self addSmalltalkClasses: classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> at: aString [
 
 	^self packageNamed: aString
@@ -77,18 +77,18 @@ FMMetaRepository >> at: aString [
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FMMetaRepository >> builderClass [
 	^FMMetamodelBuilder 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> classes [
 
 	^self elements select: [ :each | each isFM3Class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> createInstanceOf: aString [
 
 	| meta |
@@ -97,7 +97,7 @@ FMMetaRepository >> createInstanceOf: aString [
 	^ meta createInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> descriptionOf: smalltalkClass [ 
 	self flag: 'it should not return nil by default'.
 	^ classDict 
@@ -108,30 +108,30 @@ FMMetaRepository >> descriptionOf: smalltalkClass [
 				ifAbsent: [ nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> descriptionOf: smalltalkClass ifAbsent: elseBlock [ 
 	^ classDict 
 		at: smalltalkClass
 		ifAbsent: elseBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> elementNamed: aString [
 	^self elementNamed: aString ifAbsent: [ self error: 'Element ''', aString, ''' not found.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> elementNamed: aString ifAbsent: exceptionBlock [
 	^nameDict at: aString ifAbsent: exceptionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> elementsFromPackageNamed: aString [
 
 	^ self elements select: [:el | el packageName = aString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> gtClassesFor: aView [
 	<gtView>
 	^ aView list
@@ -143,7 +143,7 @@ FMMetaRepository >> gtClassesFor: aView [
 				ifFalse: [ each fullName asRopedText ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> gtHierarchiesFor: aView [
 	<gtView>
 	^ aView tree
@@ -156,7 +156,7 @@ FMMetaRepository >> gtHierarchiesFor: aView [
 				ifFalse: [ each fullName asRopedText ] ]
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 FMMetaRepository >> gtInspectorClassesIn: composite [
 	<gtInspectorPresentationOrder: 0>
 	^ composite fastList
@@ -176,7 +176,7 @@ FMMetaRepository >> gtInspectorClassesIn: composite [
 							entitled: 'Browse implementation'
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 FMMetaRepository >> gtInspectorHierarchiesIn: composite [
 	<gtInspectorPresentationOrder: 2>
 	^ composite tree
@@ -197,7 +197,7 @@ FMMetaRepository >> gtInspectorHierarchiesIn: composite [
 							entitled: 'Browse implementation'
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 FMMetaRepository >> gtInspectorPackagesIn: composite [
 	<gtInspectorPresentationOrder: 1>
 	^ composite fastList
@@ -206,7 +206,7 @@ FMMetaRepository >> gtInspectorPackagesIn: composite [
 		format: [ :each | each fullName ]
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 FMMetaRepository >> gtInspectorPropertiesIn: composite [
 	<gtInspectorPresentationOrder: 5>
 	^ composite table
@@ -223,7 +223,7 @@ FMMetaRepository >> gtInspectorPropertiesIn: composite [
 							entitled: 'Browse implementation'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> gtPackagesFor: aView [
 	<gtView>
 	^ aView list
@@ -232,7 +232,7 @@ FMMetaRepository >> gtPackagesFor: aView [
 		itemFormat: [ :each | each fullName ]
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 FMMetaRepository >> gtSpotterClassesFor: aStep [
 	<spotterOrder: 10>
 	aStep listProcessor
@@ -242,7 +242,7 @@ FMMetaRepository >> gtSpotterClassesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 FMMetaRepository >> gtSpotterPackagesFor: aStep [
 	<spotterOrder: 20>
 	aStep listProcessor
@@ -252,7 +252,7 @@ FMMetaRepository >> gtSpotterPackagesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> gtTreeFor: aView [
 	<gtView>
 	^ aView mondrian
@@ -291,58 +291,58 @@ FMMetaRepository >> gtTreeFor: aView [
 m layout tree levelDistance: 100.]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FMMetaRepository >> includes: element [
 	"Here we use the elements inst var instead of the getter to not cast the elements as array. It improve the perf a lot."
 
 	^ (element isFM3Class and: [ element isBuiltIn ]) or: [ elements includes: element ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FMMetaRepository >> initialize [
 
 	super initialize.
 	self updateCache.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FMMetaRepository >> isMetaMetamodel [
 	^self metamodel = self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FMMetaRepository >> isMetamodel [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> packageNamed: name [
 	^nameDict at: name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> packageNamed: name ifAbsentPut: aBlock [
 	^nameDict at: name ifAbsentPut: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> packages [
 
 	^self elements select: [ :each | each isFM3Package ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FMMetaRepository >> postAdd: element [
 	self updateCacheWith: element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMMetaRepository >> properties [
 
 	^self elements select: [ :each | each isFM3Property ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FMMetaRepository >> updateCache [
 
 	nameDict := Dictionary new.
@@ -359,7 +359,7 @@ FMMetaRepository >> updateCache [
 		self updateCacheWith: each ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FMMetaRepository >> updateCacheWith: element [
 
 	(element respondsTo: #fullName) ifTrue: [
@@ -375,7 +375,7 @@ FMMetaRepository >> updateCacheWith: element [
 	self  error: 'Element does not conform to FM3.'.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FMMetaRepository >> updateClassDict [
 
 	| class |
