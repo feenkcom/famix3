@@ -8,38 +8,38 @@ Probably a good candidate to be remove.
 
 "
 Class {
-	#name : #FM3,
-	#superclass : #Object,
-	#category : #'Fame-Core'
+	#name : 'FM3',
+	#superclass : 'Object',
+	#category : 'Fame-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FM3 class >> boolean [
 	^FM3MetaDescription boolean
 ]
 
-{ #category : #notes }
+{ #category : 'notes' }
 FM3 class >> note: text [
 
 	"do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FM3 class >> number [
 	^FM3MetaDescription number
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FM3 class >> object [
 	^FM3MetaDescription object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FM3 class >> string [
 	^FM3MetaDescription string
 ]
 
-{ #category : #notes }
+{ #category : 'notes' }
 FM3 class >> todo: text [
 
 	"do nothing"
