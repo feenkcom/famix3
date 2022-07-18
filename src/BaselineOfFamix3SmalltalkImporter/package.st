@@ -1,1 +1,1 @@
-Package { #name : 'BaselineOfFamix3SmalltalkImporter' }
+Package { #name : #BaselineOfFamix3SmalltalkImporter }

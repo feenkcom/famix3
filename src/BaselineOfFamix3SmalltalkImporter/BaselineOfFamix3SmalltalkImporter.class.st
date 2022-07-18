@@ -1,16 +1,16 @@
 Class {
-	#name : 'BaselineOfFamix3SmalltalkImporter',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfFamix3SmalltalkImporter'
+	#name : #BaselineOfFamix3SmalltalkImporter,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfFamix3SmalltalkImporter
 }
 
-{ #category : 'baseline' }
+{ #category : #baseline }
 BaselineOfFamix3SmalltalkImporter >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec
 			baseline: 'Famix3' with: [
-				spec repository: 'github://feenkcom/famix3:v0.8.12/src' ].
+				spec repository: 'github://feenkcom/famix3:v0.8.13/src' ].
 
 		spec package: 'Moose-Query-Test'.
 		spec package: 'Moose-TestResources-KGB-P4FullInteracted'.
