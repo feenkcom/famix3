@@ -28,8 +28,8 @@ You can also use a kind of DSL to describe your model. Have a look at document: 
 
 "
 Class {
-	#name : 'FMRepository',
-	#superclass : 'Object',
+	#name : #FMRepository,
+	#superclass : #Object,
 	#instVars : [
 		'elements',
 		'metamodel'
@@ -37,19 +37,19 @@ Class {
 	#category : 'Fame-Core'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 FMRepository class >> new [
 
 	self shouldNotImplement
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 FMRepository class >> with: aMetamodel [
 
 	^self basicNew initialize: aMetamodel
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 FMRepository >> accept: aParseClient [
 
 	| visitor |
@@ -59,21 +59,21 @@ FMRepository >> accept: aParseClient [
 	visitor run.
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 FMRepository >> add: element [
 	
 	elements add: element.
 	self postAdd: element.
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 FMRepository >> addAll: elementCollection [
 	
 	elementCollection do: [ :each |
 		self add: each ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 FMRepository >> asMetarepository [
 
 	| repo |
@@ -82,7 +82,7 @@ FMRepository >> asMetarepository [
 	^repo
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMRepository >> coerceProperty: propertyOrName receiver: receiver [
 
 	propertyOrName isFM3Property ifTrue: [ ^propertyOrName ].
@@ -93,7 +93,7 @@ FMRepository >> coerceProperty: propertyOrName receiver: receiver [
 
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 FMRepository >> compositeAdd: element [
 	
 	| meta |
@@ -109,7 +109,7 @@ FMRepository >> compositeAdd: element [
 	self postAdd: element.
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMRepository >> compositeDelete: element [
 	"Remove element and all its children (see FM3Property#container) from the model.
 	References by other elements to element and all its children are removed as well."
@@ -117,7 +117,7 @@ FMRepository >> compositeDelete: element [
 
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMRepository >> compositeRemove: element [
 	
 	| meta |
@@ -134,7 +134,7 @@ FMRepository >> compositeRemove: element [
 	self postRemove: element.
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FMRepository >> containerOf: element [ 
 	| meta property |
 	meta := self metaDescriptionOf: element.
@@ -147,7 +147,7 @@ FMRepository >> containerOf: element [
 	^ nil
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 FMRepository >> createElementWithType: aString [
 
 	| element |
@@ -157,7 +157,7 @@ FMRepository >> createElementWithType: aString [
 
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 FMRepository >> deepAdd: element [
 	
 	| meta |
@@ -173,7 +173,7 @@ FMRepository >> deepAdd: element [
 	self postAdd: element.
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMRepository >> deepRemove: element [
 	
 	| meta |
@@ -189,7 +189,7 @@ FMRepository >> deepRemove: element [
 	self postRemove: element.
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 FMRepository >> document: scriptBlock [
 	| importer builder |
 	importer := FMImporter new.
@@ -199,12 +199,12 @@ FMRepository >> document: scriptBlock [
 	builder document: scriptBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMRepository >> elements [
 	^elements asArray
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 FMRepository >> exportOn: aStream [
 
 	| printer |
@@ -212,7 +212,7 @@ FMRepository >> exportOn: aStream [
 	self accept: printer.
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 FMRepository >> exportString [
 
 	| printer |
@@ -221,13 +221,13 @@ FMRepository >> exportString [
 	^printer stream contents
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FMRepository >> get: propertyOrName element: element [ 
 
 	^(self coerceProperty: propertyOrName receiver: element) getFrom: element
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FMRepository >> gtExportAction [
 	<gtInspectorAction>
 	^ GLMGenericAction new
@@ -242,7 +242,7 @@ FMRepository >> gtExportAction [
 	
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 FMRepository >> importStream: aReadStream [
 
 	| importer |
@@ -253,51 +253,51 @@ FMRepository >> importStream: aReadStream [
 	self updateCache.	
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 FMRepository >> importString: mseString [
 
 	self importStream: mseString readStream.
 
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FMRepository >> includes: element [
 	"Do not use the getter here to not cast the elements as array. Important for performances."
 
 	^ elements includes: element
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 FMRepository >> initialize [
 
 	elements := IdentitySet new.
 
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 FMRepository >> initialize: aMetamodel [
 
 	self initialize.
 	metamodel := aMetamodel.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FMRepository >> isEmpty [
 
 	^elements isEmpty
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FMRepository >> isMetaMetamodel [
 	^false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FMRepository >> isMetamodel [
 	^false
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FMRepository >> metaDescriptionOf: element [ 
 
 	^(element isKindOf: FMRuntimeElement) 
@@ -305,30 +305,30 @@ FMRepository >> metaDescriptionOf: element [
 		ifFalse: [ metamodel descriptionOf: element class ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMRepository >> metamodel [
 	^metamodel
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMRepository >> postAdd: element [
 	"do nothing"
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMRepository >> postRemove: element [
 
 	"do nothing"
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMRepository >> remove: element [
 
 	elements remove: element ifAbsent: [].
 	self postRemove: element.
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMRepository >> removeAll: elementCollection [
 
 	elementCollection do: [
@@ -339,7 +339,7 @@ FMRepository >> removeAll: elementCollection [
 	"elements removeAll: elementCollection (without postRemove)"
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 FMRepository >> selectKindOf: smalltalkOrFameClass [
 
 	^smalltalkOrFameClass isBehavior 
@@ -347,18 +347,18 @@ FMRepository >> selectKindOf: smalltalkOrFameClass [
 		ifFalse: [ self elements select: [ :each | (self metaDescriptionOf: each) = smalltalkOrFameClass ] ]
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FMRepository >> set: propertyOrName element: element values: values [ 
 	
 	^(self coerceProperty: propertyOrName receiver: element) setOn: element values: values 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMRepository >> size [
 
 	^self elements size
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMRepository >> updateCache [
 ]

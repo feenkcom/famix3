@@ -2,8 +2,8 @@
 A FM3PackageDescription is 
 "
 Class {
-	#name : 'FM3PackageDescription',
-	#superclass : 'FM3Element',
+	#name : #FM3PackageDescription,
+	#superclass : #FM3Element,
 	#instVars : [
 		'classes',
 		'extensions'
@@ -11,31 +11,31 @@ Class {
 	#category : 'Fame-Core'
 }
 
-{ #category : 'meta' }
+{ #category : #meta }
 FM3PackageDescription class >> annotation [
 	<MSEClass: #Package super: #FM3Element>
 	<package: #FM3>
 
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 FM3PackageDescription class >> gtExampleBasic [
 	<gtExample>
 	^ self new
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3PackageDescription >> at: aString [
 	aString isSymbol ifTrue: [ self error ].
 	^ self classNamed: aString
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3PackageDescription >> classNamed: aString [
 	^ classes byName: aString ifAbsent: nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> classes [
 	<MSEProperty: #classes type: #FM3MetaDescription opposite: #package>
 	<multivalued>
@@ -43,13 +43,13 @@ FM3PackageDescription >> classes [
 	^classes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> classes: elementCollection [
 
 	classes value: elementCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> extensions [
 	<MSEProperty: #extensions type: 'FM3.Property' opposite: #package>
 	<multivalued>
@@ -57,13 +57,13 @@ FM3PackageDescription >> extensions [
 	^extensions
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> extensions: elementCollection [
 
 	extensions value: elementCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> gtClassesFor: aView [
 	<gtView>
 	^ aView list
@@ -75,7 +75,7 @@ FM3PackageDescription >> gtClassesFor: aView [
 				ifFalse: [ each fullName asRopedText ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> gtHierarchiesFor: aView [
 	<gtView>
 	^ aView tree
@@ -88,7 +88,7 @@ FM3PackageDescription >> gtHierarchiesFor: aView [
 				ifFalse: [ each fullName asRopedText ] ]
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3PackageDescription >> gtInspectorClassesIn: composite [
 	<gtInspectorPresentationOrder: 0>
 	^ composite fastList
@@ -100,7 +100,7 @@ FM3PackageDescription >> gtInspectorClassesIn: composite [
 				ifFalse: [ Text fromString: each fullName ] ]
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3PackageDescription >> gtInspectorExtensionsIn: composite [
 	<gtInspectorPresentationOrder: 1>
 	^ composite fastList
@@ -109,24 +109,24 @@ FM3PackageDescription >> gtInspectorExtensionsIn: composite [
 		format: [ :each | each gtDisplayString ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PackageDescription >> hasOwner [
 	^ false
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FM3PackageDescription >> initialize [
 
 	classes := FMMultivalueLink on: self opposite: #package:.
 	extensions := FMMultivalueLink on: self opposite: #package:.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PackageDescription >> isFM3Package [
 	^true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PackageDescription >> packageName [
 
 	^ self name

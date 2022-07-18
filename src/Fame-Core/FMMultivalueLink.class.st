@@ -31,8 +31,8 @@ that refers to it are updated accordingly.
 
 "
 Class {
-	#name : 'FMMultivalueLink',
-	#superclass : 'Collection',
+	#name : #FMMultivalueLink,
+	#superclass : #Collection,
 	#instVars : [
 		'values',
 		'owner',
@@ -41,7 +41,7 @@ Class {
 	#category : 'Fame-Core'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 FMMultivalueLink class >> on: element opposite: oppositeSelector [
 
 	^self new
@@ -49,7 +49,7 @@ FMMultivalueLink class >> on: element opposite: oppositeSelector [
 		opposite: oppositeSelector
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 FMMultivalueLink class >> on: element update: selector from: old to: new [
 	"refresh the other side of the relations to reflect change in value"
 	
@@ -59,12 +59,12 @@ FMMultivalueLink class >> on: element update: selector from: old to: new [
 	^new
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 FMMultivalueLink >> , aCollection [
 	^ self asOrderedCollection , aCollection
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 FMMultivalueLink >> = otherCollection [ 
 	"Answer true if the receiver is equivalent to the otherCollection.
 	First test for identity, then rule out different species and sizes of
@@ -76,25 +76,25 @@ FMMultivalueLink >> = otherCollection [
 	^ values hasEqualElements: otherCollection asOrderedCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> add: anElement [
 	anElement perform: opposite with: owner.
 	self unsafeAdd: anElement.
 	^ anElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> at: index [
 
 	^values at: index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> byName: name [
 	^ self byName: name ifAbsent: [ self errorNotFound: name ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> byName: name ifAbsent: exceptionBlock [
 
 	^values
@@ -103,18 +103,18 @@ FMMultivalueLink >> byName: name ifAbsent: exceptionBlock [
 	 
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 FMMultivalueLink >> do: aBlock [ 
 	
 	values do: aBlock
 ]
 
-{ #category : 'accessing-computed' }
+{ #category : #'accessing-computed' }
 FMMultivalueLink >> first [
 	^ self at: 1
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 FMMultivalueLink >> hash [
 	"From sequenceable collection"
 	| hash |
@@ -123,25 +123,25 @@ FMMultivalueLink >> hash [
 	^ hash
 ]
 
-{ #category : 'accessing-computed' }
+{ #category : #'accessing-computed' }
 FMMultivalueLink >> last [
 	^ values last
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 FMMultivalueLink >> postCopy [
 
 	super postCopy.
 	values := values copy.
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 FMMultivalueLink >> printOn: aStream [
 
 	self asArray printOn: aStream
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMMultivalueLink >> remove: anElement ifAbsent: exceptionBlock [ 
 	
 	values remove: anElement ifAbsent: [ ^exceptionBlock value ].
@@ -149,53 +149,53 @@ FMMultivalueLink >> remove: anElement ifAbsent: exceptionBlock [
 	^anElement
 ]
 
-{ #category : 'accessing-computed' }
+{ #category : #'accessing-computed' }
 FMMultivalueLink >> second [
 	^ self at: 2
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> size [
 
 	^values size
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMMultivalueLink >> species [
 
 	^OrderedCollection
 ]
 
-{ #category : 'accessing-computed' }
+{ #category : #'accessing-computed' }
 FMMultivalueLink >> third [
 	^ self at: 3
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMMultivalueLink >> unsafeAdd: element [
 	(values includes: element)
 		ifFalse: [ values add: element ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMMultivalueLink >> unsafeRemove: element [
 
 	values remove: element ifAbsent: nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> value [
 
 	^self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMMultivalueLink >> value: aCollection [
 
 	^self removeAll: values copy; addAll: aCollection
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMMultivalueLink >> with: element opposite: oppositeSelector [
 	self assert: oppositeSelector numArgs = 1.
 	values := OrderedCollection new.
@@ -203,7 +203,7 @@ FMMultivalueLink >> with: element opposite: oppositeSelector [
 	opposite := oppositeSelector
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 FMMultivalueLink >> withIndexDo: aBlock [ 
 	
 	values withIndexDo: aBlock

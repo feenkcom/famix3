@@ -10,8 +10,8 @@ FM3Property should be managed
 Note that it should be renamed FM3Class to be in sync with the rest of the documents.
 "
 Class {
-	#name : 'FM3MetaDescription',
-	#superclass : 'FM3Element',
+	#name : #FM3MetaDescription,
+	#superclass : #FM3Element,
 	#instVars : [
 		'isAbstract',
 		'superclass',
@@ -26,17 +26,17 @@ Class {
 		'number',
 		'string'
 	],
-	#category : 'Fame-Core'
+	#category : #'Fame-Core'
 }
 
-{ #category : 'meta' }
+{ #category : #meta }
 FM3MetaDescription class >> annotation [
 	<MSEClass: #Class super: #FM3Element>
 	<package: #FM3>
 
 ]
 
-{ #category : 'constants' }
+{ #category : #constants }
 FM3MetaDescription class >> boolean [
 
 	boolean isNil ifTrue: [ 
@@ -47,7 +47,7 @@ FM3MetaDescription class >> boolean [
 	^boolean
 ]
 
-{ #category : 'private-anonymous classes' }
+{ #category : #'private-anonymous classes' }
 FM3MetaDescription class >> booleanClass [
 
 	| class |
@@ -60,7 +60,7 @@ FM3MetaDescription class >> booleanClass [
 	^class
 ]
 
-{ #category : 'constants' }
+{ #category : #constants }
 FM3MetaDescription class >> constantsDo: aBlock [
 
 	aBlock value: self boolean.
@@ -69,20 +69,20 @@ FM3MetaDescription class >> constantsDo: aBlock [
 	aBlock value: self string.
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 FM3MetaDescription class >> gtExampleBasic [
 	<gtExample>
 	^ self new
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 FM3MetaDescription class >> gtExampleWithOnePrimitiveProperty: description [
 	<gtExample>
 	<depends: #gtExampleBasic>
 	^ description attributes add: FM3PropertyDescription new
 ]
 
-{ #category : 'constants' }
+{ #category : #constants }
 FM3MetaDescription class >> number [
 
 	number isNil ifTrue: [ 
@@ -93,7 +93,7 @@ FM3MetaDescription class >> number [
 	^number
 ]
 
-{ #category : 'private-anonymous classes' }
+{ #category : #'private-anonymous classes' }
 FM3MetaDescription class >> numberClass [
 
 	| class |
@@ -106,7 +106,7 @@ FM3MetaDescription class >> numberClass [
 	^class
 ]
 
-{ #category : 'constants' }
+{ #category : #constants }
 FM3MetaDescription class >> object [
 
 	object isNil ifTrue: [ 
@@ -118,7 +118,7 @@ FM3MetaDescription class >> object [
 	^object
 ]
 
-{ #category : 'private-anonymous classes' }
+{ #category : #'private-anonymous classes' }
 FM3MetaDescription class >> objectClass [
 
 	| class |
@@ -131,7 +131,7 @@ FM3MetaDescription class >> objectClass [
 	^class
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FM3MetaDescription class >> privateOnlyCallMeIfYourAreBDFLOrSystemAdminFromHellFlush [
 	"
 	self privateOnlyCallMeIfYourAreBDFLOrSystemAdminFromHellFlush
@@ -142,7 +142,7 @@ FM3MetaDescription class >> privateOnlyCallMeIfYourAreBDFLOrSystemAdminFromHellF
 	boolean := nil.
 ]
 
-{ #category : 'private-anonymous classes' }
+{ #category : #'private-anonymous classes' }
 FM3MetaDescription class >> setSuperclassClassOf: class [
 	"This method is an hack I do to correct a change in Pharo 7 since Moose will soon get a new stable version with the project MooseNG."
 
@@ -151,7 +151,7 @@ FM3MetaDescription class >> setSuperclassClassOf: class [
 		ifFalse: [ class basicSuperclass: self ]
 ]
 
-{ #category : 'constants' }
+{ #category : #constants }
 FM3MetaDescription class >> string [
 
 	string isNil ifTrue: [ 
@@ -162,7 +162,7 @@ FM3MetaDescription class >> string [
 	^string
 ]
 
-{ #category : 'private-anonymous classes' }
+{ #category : #'private-anonymous classes' }
 FM3MetaDescription class >> stringClass [
 
 	| class |
@@ -175,7 +175,7 @@ FM3MetaDescription class >> stringClass [
 	^class
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allAttributes [
 	<MSEProperty: #allAttributes type: 'FM3.Property'>
 	<multivalued>
@@ -188,7 +188,7 @@ FM3MetaDescription >> allAttributes [
 	^Array withAll: nameDict values
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 FM3MetaDescription >> allAttributesDo: block [
 	
 	attributes do: block.
@@ -196,45 +196,45 @@ FM3MetaDescription >> allAttributesDo: block [
 		self superclass allAttributesDo: block ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allAttributesNotDerived [
 	^ self allAttributes reject: [ :attr | attr isDerived ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allComplexAttributes [
 
 	^ self allAttributes reject: [:attr | attr type isPrimitive ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allComplexAttributesNotDerived [
 	^ self allAttributes reject: [ :attr | attr type isPrimitive or: [ attr isDerived ] ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allComplexAttributesWithOpposite [
 	^ self allAttributes reject: [ :attr | attr type isPrimitive or: [ attr hasOpposite not ] ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allContainerAttributes [
 	^ self allAttributes select: #isContainer
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allPrimitiveAttributes [
 
 	^ self allAttributes select: [:attr | 
 		attr type notNil and: [attr type isPrimitive ]]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> allPrimitiveAttributesNotDerived [
 	^ self allAttributes select: [ :attr | attr type notNil and: [ attr type isPrimitive and: [ attr isDerived not ] ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> allSubclasses [
 
 	| all |
@@ -243,7 +243,7 @@ FM3MetaDescription >> allSubclasses [
 	^ all
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> allSubclassesDo: aBlock [
 
 	self subclasses do: [:each | 
@@ -251,7 +251,7 @@ FM3MetaDescription >> allSubclassesDo: aBlock [
 		each allSubclassesDo: aBlock ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> allSuperclasses [
 
 	| mmclass superclasses |
@@ -266,29 +266,29 @@ FM3MetaDescription >> allSuperclasses [
 	^ superclasses
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> allSuperclassesDo: aBlock [
 	self allSuperclasses do: [ :each | aBlock value: each ]
 ]
 
-{ #category : 'private-anonymous behaviour' }
+{ #category : #'private-anonymous behaviour' }
 FM3MetaDescription >> anonymousReturnTrue [
 	^true
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> at: aString [
 	aString isSymbol ifTrue: [ self error ].
 	^ self attributeNamed: aString
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> attributeNamed: aString [
 
 	^self attributeNamed: aString ifAbsent: nil
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> attributeNamed: aString ifAbsent: aBlock [
 	"Cyril: I remove the #asString because it is longer to convert it ourself than to let the = manage it."
 
@@ -298,7 +298,7 @@ FM3MetaDescription >> attributeNamed: aString ifAbsent: aBlock [
 		ifNotNil: [ :sc | sc attributeNamed: aString ifAbsent: aBlock ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> attributes [
 	<MSEProperty: #attributes type: 'FM3.Property' opposite: #class>
 	<multivalued>
@@ -307,25 +307,25 @@ FM3MetaDescription >> attributes [
 	^attributes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> attributes: anObject [
 
 	attributes value: anObject
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> attributesNamed: aListOfSymbol [
 	
 	^ aListOfSymbol collect: [ :each | self attributeNamed: each ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> complexAttributes [
 
 	^ self attributes reject: [:attr | attr type isPrimitive ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 FM3MetaDescription >> createInstance [
 
 	^implementingClass isNil
@@ -333,13 +333,13 @@ FM3MetaDescription >> createInstance [
 		ifFalse: [ implementingClass new ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FM3MetaDescription >> defaultClassName [
 
 	^ (self package name, self name) asSymbol 
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3MetaDescription >> gtInspectorPropertiesIn: composite [
 	<gtInspectorPresentationOrder: 1>
 	^ composite table
@@ -363,7 +363,7 @@ FM3MetaDescription >> gtInspectorPropertiesIn: composite [
 		morphicSelectionAct: [ :list | list selection inspect ] icon: Smalltalk ui icons glamorousInspect entitled: 'Inspect'
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3MetaDescription >> gtInspectorRelationsIn: composite [
 	<gtInspectorPresentationOrder: 0>
 	^ composite table 
@@ -398,7 +398,7 @@ FM3MetaDescription >> gtInspectorRelationsIn: composite [
 			entitled: 'Inspect'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> gtPropertiesFor: aView [
 	<gtView>
 	^ aView columnedList
@@ -409,7 +409,7 @@ FM3MetaDescription >> gtPropertiesFor: aView [
 		column: 'Derived?' text: [ :each | each isDerived ] width: 50
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> gtRelationsFor: aView [
 	<gtView>
 	^ aView columnedList 
@@ -434,72 +434,79 @@ FM3MetaDescription >> gtRelationsFor: aView [
 			entitled: 'Browse implementation'; "
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> gtTreeFor: aView [
 	<gtView>
 	^ aView mondrian
 		title: 'Tree';
-		painting: [ :m |
-		m nodes 
-			umlClassShapeWithName: [:each | each name asRopedText ];
-			with: (self withAllSuperclasses, self allSubclasses) forEach: [:each | 
-				m nodes 
-					stencil: [:a | | pane |
-						pane := BrHorizontalPane new
-							vFitContent; hFitContent;
-							addChild: (BrLabel new 
-								text: (a name, ':'); aptitude: BrGlamorousLabelAptitude;
-								when: BlClickEvent do: [:e | e target phlow spawnObject: a]);
-							addChild: (BrLabel new 
-								text: a type name; aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
-								when: BlClickEvent do: [:e | e target phlow spawnObject: a type]).
-						a hasOpposite ifTrue: [
-							pane addChild: (BrLabel new 
-								text: '(', a opposite name, ')'; aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
-								when: BlClickEvent do: [:e | e target phlow spawnObject: a opposite])].
-						pane ];
-					with: (each attributes sorted: [:a :b | a name < b name]).
-					m layout vertical ].
-				m edges 
-					stencil: [:each | 
-						BlLineElement new 
+		painting: [ :m | 
+			m nodes
+				umlClassShapeWithName: [ :each | each name asRopedText ];
+				with: self withAllSuperclasses , self allSubclasses
+					forEach: [ :each | 
+						m nodes
+							stencil: [ :a | 
+								| pane |
+								pane := BrHorizontalPane new
+										vFitContent;
+										hFitContent;
+										addChild: (BrLabel new
+												text: a name , ':';
+												when: BlClickEvent do: [ :e | e target phlow spawnObject: a ]);
+										addChild: (BrLabel new
+												text: a type name;
+												aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
+												when: BlClickEvent do: [ :e | e target phlow spawnObject: a type ]).
+								a hasOpposite
+									ifTrue: [ pane
+											addChild: (BrLabel new
+													text: '(' , a opposite name , ')';
+													aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
+													when: BlClickEvent
+														do: [ :e | e target phlow spawnObject: a opposite ]) ].
+								pane ];
+							with: (each attributes sorted: [ :a :b | a name < b name ]).
+						m layout vertical ].
+			m edges
+				stencil: [ :each | 
+					BlLineElement new
 						border: (BlBorder paint: (Color gray alpha: 0.5) width: 1);
 						fromHead: (BlArrowheadTriangle new
-							scale: 4;
-							border: (BlBorder paint: (Color gray alpha: 0.5)))];
-	fromCenterBottom;
-	toCenterTop;
-	connectFrom: #superclass.
-m layout tree levelDistance: 30.]
+								scale: 4;
+								border: (BlBorder paint: (Color gray alpha: 0.5))) ];
+				fromCenterBottom;
+				toCenterTop;
+				connectFrom: #superclass.
+			m layout tree levelDistance: 30 ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> hasImplementingClass [
 	^ implementingClass notNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> hasOwner [
 	^ self hasPackage
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> hasPackage [
 	^package notNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> hasSuperclass [
 	^ superclass isNil not
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FM3MetaDescription >> implementingClass [
 	
 	^implementingClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> inheritsFrom: aClass [
 	self
 		allSuperclassesDo: [ :each | 
@@ -508,7 +515,7 @@ FM3MetaDescription >> inheritsFrom: aClass [
 	^ false
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 FM3MetaDescription >> initialize [
 
 	attributes := FMMultivalueLink on: self opposite: #mmClass:.
@@ -519,33 +526,33 @@ FM3MetaDescription >> initialize [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> isAbstract [
 	<MSEProperty: #abstract type: #'Boolean'>
 	^isAbstract
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> isAbstract: anObject [
 	isAbstract := anObject
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> isAssociation [
 	^ self allSuperclasses anySatisfy: [ :aSuperclass | aSuperclass name = #Association ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> isBuiltIn [
 	^self isPrimitive or: [ self isRoot ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> isFM3Class [
 	^true
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> isPrimitive [
 	<MSEProperty: #primitive type: #'Boolean'>
 	<derived>
@@ -553,7 +560,7 @@ FM3MetaDescription >> isPrimitive [
 	^false
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> isRoot [
 	<MSEProperty: #root type: #'Boolean'>
 	<derived>
@@ -561,25 +568,25 @@ FM3MetaDescription >> isRoot [
 	^false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> owner [
 	^self package
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> ownerAttribute [
 	self flag: #FIXME.
 	self flag: 'It is possible that several containers exists for a given entity -> we have not a tree, but we should not get cycles at ALL'.
 	^self allAttributes detect: #isContainer ifNone: [ nil ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> ownerAttributes [
 
 	^self allAttributes select: #isContainer 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> package [
 	<MSEProperty: #package type: #FM3PackageDescription opposite: #classes>
 	<container>
@@ -587,7 +594,7 @@ FM3MetaDescription >> package [
 	^package
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> package: newPackage [
 	
 	package := FMMultivalueLink on: self
@@ -596,24 +603,24 @@ FM3MetaDescription >> package: newPackage [
 					to: newPackage
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> packageName [
 
 	^ self package name
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3MetaDescription >> primitiveAttributes [
 
 	^ self attributes select: [:attr | attr type isPrimitive ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FM3MetaDescription >> setImplementingClass: smalltalkClass [
 	implementingClass := smalltalkClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> subclasses [ 
 	<MSEProperty: #subclasses type: #FM3MetaDescription opposite: #superclass>
 	<derived>
@@ -621,19 +628,19 @@ FM3MetaDescription >> subclasses [
 	^subclasses
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> subclasses: anObject [
 
 	subclasses value: anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> superclass [
 	<MSEProperty: #superclass type: #FM3MetaDescription opposite: #subclasses>
 	^superclass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> superclass: newClass [
 
 	superclass := FMMultivalueLink on: self
@@ -642,28 +649,28 @@ FM3MetaDescription >> superclass: newClass [
 					to: newClass
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3MetaDescription >> todo [
 
 	self flag: #renameFM3MetaDescriptionIntoFM3Class.
 	self flag: #superInvocationInInitialize.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> withAllSubclasses [
 	^ self allSubclasses
 		add: self;
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> withAllSuperclasses [
 	^ self allSuperclasses
 		add: self;
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3MetaDescription >> withSuperclassesDo: aBlock [
 	aBlock value: self.
 	self allSuperclassesDo: aBlock
