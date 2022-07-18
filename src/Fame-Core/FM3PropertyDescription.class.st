@@ -14,8 +14,8 @@ Instance Variables
 
 "
 Class {
-	#name : 'FM3PropertyDescription',
-	#superclass : 'FM3Element',
+	#name : #FM3PropertyDescription,
+	#superclass : #FM3Element,
 	#instVars : [
 		'isContainer',
 		'isDerived',
@@ -32,26 +32,26 @@ Class {
 	#category : 'Fame-Core'
 }
 
-{ #category : 'meta' }
+{ #category : #meta }
 FM3PropertyDescription class >> annotation [
 	<MSEClass: #Property super: #FM3Element>
 	<package: #FM3>
 
 ]
 
-{ #category : 'example' }
+{ #category : #example }
 FM3PropertyDescription class >> gtExampleBasic [
 	<gtExample>
 	^ self new
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3PropertyDescription >> compiledMethod [
 
 	^ self mmClass implementingClass methodNamed: self implementingSelector
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FM3PropertyDescription >> getFrom: element [
 	"This method is meant to be used by the repository"
 
@@ -62,7 +62,7 @@ FM3PropertyDescription >> getFrom: element [
 		ifFalse: [ result ifNil: [ Array new ] ifNotNil: [ Array with: result ] ]
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FM3PropertyDescription >> getRawFrom: element [
 	"This is internal logic for retrieving the actual value of a property from an element.
 	By default call the implementing selector."
@@ -70,20 +70,20 @@ FM3PropertyDescription >> getRawFrom: element [
 	^ element perform: self implementingSelector
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3PropertyDescription >> gtDisplayOn: stream [
 	stream 
 		nextPutAll: self fullName
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3PropertyDescription >> gtInspectorSourceIn: composite [
 	<gtInspectorPresentationOrder: 0>
 	self hasImplementingSelector ifTrue: [
 		self compiledMethod ifNotNil: [ :c | c asRingDefinition gtInspectorSourceIn: composite ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> gtSourceFor: composite [
 	<gtView>
 	self hasImplementingSelector ifFalse: [ ^ composite empty].
@@ -92,7 +92,7 @@ FM3PropertyDescription >> gtSourceFor: composite [
 		ifNotNil: [ :c | c asRingDefinition gtSourceFor: composite ]
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 FM3PropertyDescription >> gtTypeString [
 	^ String streamContents: [ :s | 
 		s nextPutAll: self type name. 
@@ -100,37 +100,37 @@ FM3PropertyDescription >> gtTypeString [
 		self isDerived ifTrue: [ s nextPutAll: ' /'] ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PropertyDescription >> hasImplementingSelector [
 	^ self implementingSelector notNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PropertyDescription >> hasKey [
 	^ key isNil not
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PropertyDescription >> hasMmClass [
 	^class notNil
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3PropertyDescription >> hasOpposite [
 	^opposite notNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PropertyDescription >> hasOwner [
 	^ self hasMmClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> implementingSelector [
 	^ implementingSelector
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 FM3PropertyDescription >> initialize [
 
 	isContainer := false.
@@ -143,94 +143,94 @@ FM3PropertyDescription >> initialize [
 	opposite := nil.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PropertyDescription >> isChildrenProperty [
 	^ self hasOpposite and: [ self opposite isContainer ]
 ]
 
-{ #category : 'accessing-query' }
+{ #category : #'accessing-query' }
 FM3PropertyDescription >> isComposite [
 	<MSEProperty: #composite type: #Boolean>
 	<derived>
 	^ self hasOpposite and: [ self opposite isContainer ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isContainer [
 	<MSEProperty: #container type: #Boolean>
 	^isContainer
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isContainer: anObject [
 	isContainer := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isDerived [
 	<MSEProperty: #derived type: #Boolean>
 	^isDerived
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isDerived: anObject [
 	isDerived := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isExtension [
 	^ self package notNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FM3PropertyDescription >> isFM3Property [
 	^true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isMultivalued [
 	<MSEProperty: #multivalued type: #Boolean>
 	^isMultivalued
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isMultivalued: anObject [
 	isMultivalued := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isSource [
 	^ isSource
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isSource: anObject [
 	isSource := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isTarget [
 	^ isTarget
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> isTarget: anObject [
 	isTarget := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> key [
 	FM3 note: 'Todo, think about and meta-describe key'.
 	^key
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> key: anObject [
 
 	key := anObject asSymbol
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> mmClass [
 	<MSEProperty: #class type: #FM3MetaDescription opposite: #attributes>
 	<container>
@@ -238,7 +238,7 @@ FM3PropertyDescription >> mmClass [
 	^class 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> mmClass: newClass [
 	class := FMMultivalueLink on: self
 					update: #attributes
@@ -246,14 +246,14 @@ FM3PropertyDescription >> mmClass: newClass [
 					to: newClass.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> opposite [
 	<MSEProperty: #opposite type: 'FM3.Property' opposite: #opposite>
 	
 	^opposite 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> opposite: new [
 	
 	opposite ~~ new ifTrue: [
@@ -264,12 +264,12 @@ FM3PropertyDescription >> opposite: new [
 		new notNil ifTrue: [ new opposite: self ]]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> owner [
 	^self mmClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> package [
 	<MSEProperty: #package type: #FM3PackageDescription opposite: #extensions>
 	
@@ -277,7 +277,7 @@ FM3PropertyDescription >> package [
 	^package 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> package: newPackage [
 	
 	package := FMMultivalueLink on: self
@@ -286,7 +286,7 @@ FM3PropertyDescription >> package: newPackage [
 					to: newPackage
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> packageName [
 	"always returns the package name to which this property belongs, be it an extension or a core element"
 
@@ -295,12 +295,12 @@ FM3PropertyDescription >> packageName [
 			ifTrue: [ package name ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FM3PropertyDescription >> setImplementingSelector: compiledMethod [ 
 	implementingSelector := compiledMethod
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FM3PropertyDescription >> setOn: element rawValue: array [
 	"This is the internal logic to set the value inside the object.
 	By default build and call a mutator for the implementing selector"
@@ -308,7 +308,7 @@ FM3PropertyDescription >> setOn: element rawValue: array [
 	element perform: self implementingSelector asMutator with: array
 ]
 
-{ #category : 'accessing-meta' }
+{ #category : #'accessing-meta' }
 FM3PropertyDescription >> setOn: element values: array [
 	"This method is meant to be used by the repository"
 
@@ -323,13 +323,13 @@ FM3PropertyDescription >> setOn: element values: array [
 	element mmSetProperty: self to: parameter.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> type [
 	<MSEProperty: #type type: #FM3MetaDescription>
 	^type
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FM3PropertyDescription >> type: anObject [
 	type := anObject
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'FMNullMultivalueLink',
-	#superclass : 'Collection',
+	#name : #FMNullMultivalueLink,
+	#superclass : #Collection,
 	#instVars : [
 		'selector',
 		'owner',
@@ -9,7 +9,7 @@ Class {
 	#category : 'Fame-Core'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 FMNullMultivalueLink class >> on: anOwner opposite: anOpposite selector: aSelector [ 
 	^self new
 		with: anOwner opposite: anOpposite selector: aSelector;
@@ -17,122 +17,122 @@ FMNullMultivalueLink class >> on: anOwner opposite: anOpposite selector: aSelect
 		
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 FMNullMultivalueLink >> , aCollection [
 	^ self asOrderedCollection , aCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> add: anElement [
 	self noMoreNull add: anElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> at: anIndex [
 	^self errorSubscriptBounds: anIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> byName: aName ifAbsent: aBlock [
 	^aBlock value
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 FMNullMultivalueLink >> do: aBlock [
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> first [
 	^self errorSubscriptBounds: 1	
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FMNullMultivalueLink >> isEmpty [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 FMNullMultivalueLink >> isNotEmpty [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> last [
 	^self errorSubscriptBounds: 0
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> noMoreNull [
 	^ self owner instVarNamed: self selector put: (FMMultivalueLink on: self owner opposite: self opposite)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> opposite [
 	^ opposite
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> owner [
 	^ owner
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 FMNullMultivalueLink >> printOn: aStream [
 	self asArray printOn: aStream
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 FMNullMultivalueLink >> remove: anElement ifAbsent: exceptionBlock [
 	^exceptionBlock value
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> second [
 	^self errorSubscriptBounds: 2
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> selector [
 	^ selector
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> size [
 	^0
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> species [
 	^ OrderedCollection 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> third [
 	^self errorSubscriptBounds: 3
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMNullMultivalueLink >> unsafeAdd: anElement [
 	^self noMoreNull unsafeAdd: anElement
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMNullMultivalueLink >> unsafeRemove: anElement [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> value [
 	^self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 FMNullMultivalueLink >> value: aCollection [
 	aCollection ifEmpty: [ ^self ].
 	^self noMoreNull value: aCollection
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 FMNullMultivalueLink >> with: anOwner opposite: anOpposite selector: aSelector [
 
 	self assert: anOpposite numArgs = 1.
@@ -141,6 +141,6 @@ FMNullMultivalueLink >> with: anOwner opposite: anOpposite selector: aSelector [
 	selector := aSelector
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 FMNullMultivalueLink >> withIndexDo: aBlock [ 
 ]
