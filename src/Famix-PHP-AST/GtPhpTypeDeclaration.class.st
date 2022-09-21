@@ -32,13 +32,13 @@ GtPhpTypeDeclaration >> className [
 ]
 
 { #category : #'tool-extensions' }
-GtPhpTypeDeclaration >> gtSearchMethodsFor: aStep [
+GtPhpTypeDeclaration >> gtSearchMethodsFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		title: 'Methods';
-		allCandidates: [ self methods ];
+		items: [ self methods ];
 		itemName: #methodNameValue;
-		filter: GtFilterSubstrings;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
