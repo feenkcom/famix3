@@ -234,23 +234,25 @@ FMMetaRepository >> gtPackagesFor: aView [
 ]
 
 { #category : #ui }
-FMMetaRepository >> gtSpotterClassesFor: aStep [
-	<spotterOrder: 10>
-	aStep listProcessor
+FMMetaRepository >> gtSpotterClassesFor: aSearch [
+	<gtSearch>
+
+	^ aSearch list
 		title: 'Classes';
-		allCandidates: [ self classes ];
-		itemName: [ :class | class fullName ];
-		filter: GtFilterSubstring
+		items: [ self classes ];
+		itemName: #fullName;
+		filterBySubstring
 ]
 
 { #category : #'as yet unclassified' }
-FMMetaRepository >> gtSpotterPackagesFor: aStep [
-	<spotterOrder: 20>
-	aStep listProcessor
+FMMetaRepository >> gtSpotterPackagesFor: aSearch [
+	<gtSearch>
+
+	^ aSearch list
 		title: 'Packages';
-		allCandidates: [ self packages ];
-		itemName: [ :example | example fullName ];
-		filter: GtFilterSubstring
+		items: [ self packages ];
+		itemName: #fullName;
+		filterBySubstring
 ]
 
 { #category : #accessing }
