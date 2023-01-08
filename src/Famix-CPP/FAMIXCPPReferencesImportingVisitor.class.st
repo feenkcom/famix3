@@ -209,27 +209,30 @@ FAMIXCPPReferencesImportingVisitor >> localFilename: aString from: aNode [
 
 { #category : #private }
 FAMIXCPPReferencesImportingVisitor >> processDirective: anInterval in: aNode [
-	| source |
-	source := aNode completeSource.
-	'\#include\s*("|<)([^">]+)("|>)\s*' asRegex
-		matchesIn: (source copyFrom: anInterval first to: anInterval last) asString
-		subexpressionsDo: [ :string :items | 
-			| included include |
-			included := items first = '<'
-				ifTrue: [ importer ensureFileNamed: (self includedFilename: items second) ]
-				ifFalse: [ importer
-						ensureFileNamed: (self localFilename: items second from: aNode) ].
-			include := FAMIXInclude new.
-			include source: importer currentFile.
-			include target: included.
-			include
-				sourceAnchor:
-					(importer
-						sourceAnchorFor: aNode
-						from: anInterval first
-						to: anInterval last) yourself.
-			self addEntity: include.
-			self model add: include ]
+    | regex source |
+    source := aNode completeSource.
+    regex := '\#include\s*("|<)([^">]+)("|>)\s*' asRegex.
+    (regex
+        matchesIn: (source copyFrom: anInterval first to: anInterval last) asString
+        collect: [ :aMatch | 
+            regex matches: aMatch.
+            ((1 to: regex subexpressionCount)
+                collect: [ :each | regex subexpression: each ]) allButFirst ])
+        do: [ :items | 
+            | included include |
+            included := items first = '<'
+                    ifTrue: [ importer ensureFileNamed: (self includedFilename: items second) ]
+                    ifFalse: [ importer ensureFileNamed: (self localFilename: items second from: aNode) ].
+            include := FAMIXInclude new.
+            include source: importer currentFile.
+            include target: included.
+            include
+                sourceAnchor: (importer
+                        sourceAnchorFor: aNode
+                        from: anInterval first
+                        to: anInterval last) yourself.
+            self addEntity: include.
+            self model add: include ]
 ]
 
 { #category : #private }
