@@ -1,22 +1,17 @@
 Class {
-	#name : #ClassC,
+	#name : #MooseTestClassD,
 	#superclass : #Object,
-	#instVars : [
-		'a1'
-	],
 	#category : #'Moose-TestResources-LCOM'
 }
 
 { #category : #stub }
-ClassC >> m1 [
-	a1
+MooseTestClassD >> m1 [
 ]
 
 { #category : #stub }
-ClassC >> m2 [
-	a1
+MooseTestClassD >> m2 [
 ]
 
 { #category : #stub }
-ClassC >> m3 [
+MooseTestClassD >> m3 [
 ]
