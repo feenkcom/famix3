@@ -1,5 +1,5 @@
 Class {
-	#name : #ClassB,
+	#name : #MooseTestClassB2,
 	#superclass : #Object,
 	#instVars : [
 		'a1',
@@ -9,19 +9,21 @@ Class {
 }
 
 { #category : #stub }
-ClassB >> m1 [
+MooseTestClassB2 >> m1 [
+	a1.
+	a1.
+	a2
+]
+
+{ #category : #stub }
+MooseTestClassB2 >> m2 [
 	a1.
 	a2.
-]
-
-{ #category : #stub }
-ClassB >> m2 [
-	a1.
 	a2
 ]
 
 { #category : #stub }
-ClassB >> m3 [
+MooseTestClassB2 >> m3 [
 	a1.
-	a2
+	a1
 ]

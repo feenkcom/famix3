@@ -1,5 +1,5 @@
 Class {
-	#name : #ClassF1,
+	#name : #MooseTestClassE,
 	#superclass : #Object,
 	#instVars : [
 		'a1',
@@ -8,13 +8,3 @@ Class {
 	],
 	#category : #'Moose-TestResources-LCOM'
 }
-
-{ #category : #stub }
-ClassF1 >> m1 [
-
-]
-
-{ #category : #stub }
-ClassF1 >> m2 [
-
-]
