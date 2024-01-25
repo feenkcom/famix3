@@ -288,6 +288,15 @@ MooseGroup >> removeAll: collection [
 	self updateTypeAccordingToEntities
 ]
 
+{ #category : #accessing }
+MooseGroup >> rootClasses [
+	<navigation: 'Root classes'>
+	
+	^ self allClasses select: [ :each |
+		each directSuperclasses allSatisfy: [ :another | 
+			(self includes: another) not ]  ]
+]
+
 { #category : #enumerating }
 MooseGroup >> select: aBlock [
 	^ self species withAll: (self entities select: aBlock)
