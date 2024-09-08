@@ -1,1 +1,5 @@
-{	"repositories" : {		"github://pharo-contributions/CollectionExtensions/src" : "7d61095afdead8d6949b7f0d5412964b200837a5"	}}
+{
+	"repositories" : {
+		"github://pharo-contributions/CollectionExtensions/src" : "7d61095afdead8d6949b7f0d5412964b200837a5"
+	}
+}
