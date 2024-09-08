@@ -75,3 +75,9 @@ FAMIXFunction >> parentScope: aScopingEntity [
 	self deprecated: 'Please use container: instead of parentScope:'.
 	self container: aScopingEntity
 ]
+
+{ #category : #'moose-chef-scoping-filtering' }
+FAMIXFunction >> typeScope [
+	^ self container 
+		ifNotNil: [ self container typeScope ]
+]
