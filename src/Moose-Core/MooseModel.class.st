@@ -457,7 +457,7 @@ MooseModel >> name: aStringOrSymbol [
 	| oldName |
 	oldName := name.
 	name := aStringOrSymbol.
-	(oldName notNil and: [oldName ~= name]) ifTrue: [ 
+	(oldName notNil and: [ (oldName sameContentAs: name) not ]) ifTrue: [ 
 		self announcer announce: (MooseEntityRenamed new oldName: oldName) ]
 ]
 
