@@ -360,6 +360,16 @@ MooseModel >> exportToMSEStream: aStream [
 	self class export: self to: aStream
 ]
 
+{ #category : #'as yet unclassified' }
+MooseModel >> gtAllModelTypesFor: aView [
+	<gtView>
+	^ aView columnedList 
+		title: 'Model types';
+		items: [ self allModelTypes ];
+		column: 'Name' text: #name;
+		column: 'Type' text: [:each | each mooseDescription name ]
+]
+
 { #category : #actions }
 MooseModel >> importFromMSEStream: aStream [
 	"Benchmarks
