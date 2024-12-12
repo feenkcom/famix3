@@ -1,12 +1,12 @@
 Class {
 	#name : #FAMIXInvocationGroup,
-	#superclass : #MooseGroup,
+	#superclass : #FAMIXAssociationGroup,
 	#category : #'Famix-Extensions'
 }
 
 { #category : #meta }
 FAMIXInvocationGroup class >> annotation [
-	<MSEClass: #InvocationGroup super: #MooseGroup>
+	<MSEClass: #InvocationGroup super: #FAMIXAssociationGroup>
 	<package: #FAMIX>
 
 ]
