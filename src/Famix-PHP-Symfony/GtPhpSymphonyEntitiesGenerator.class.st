@@ -82,7 +82,7 @@ GtPhpSymphonyEntitiesGenerator >> generateEntitiesFromMooseModel: aMooseModel in
 GtPhpSymphonyEntitiesGenerator >> instVarNameForAttribute: aFamixAttribute [
 	^ ((aFamixAttribute name beginsWith: '$')
 		ifTrue: [ aFamixAttribute name removePrefix: '$' ] 
-		ifFalse: [ aFamixAttribute name ]) asGtPhpCammelCaseFromUnderscore uncapitalized
+		ifFalse: [ aFamixAttribute name ]) asGtPhpCamelCaseFromUnderscore uncapitalized
 ]
 
 { #category : #private }
