@@ -10,7 +10,7 @@ BaselineOfFamix3SmalltalkImporter >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Famix3' with: [
-				spec repository: 'github://feenkcom/famix3:v0.8.28/src' ].
+				spec repository: 'github://feenkcom/famix3:v0.8.29/src' ].
 
 		spec package: 'Moose-Query-Test'.
 		spec package: 'Moose-TestResources-KGB-P4FullInteracted'.
