@@ -1,7 +1,7 @@
 Extension { #name : #String }
 
 { #category : #'*Famix-PHP-Symfony' }
-String >> asGtPhpCammelCaseFromUnderscore [
+String >> asGtPhpCamelCaseFromUnderscore [
     | substrings |
     substrings := self substrings: (CharacterSet newFrom: '_').
     ^ (String streamContents: [:stream |
