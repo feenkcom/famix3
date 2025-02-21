@@ -10,7 +10,7 @@ String >> asGtPhpCammelCaseFromUnderscore [
 ]
 
 { #category : #'*Famix-PHP-Symfony' }
-String >> asGtPhpUnderscoreFromCammelCase [
+String >> asGtPhpUnderscoreFromCamelCase [
    | substrings |
   	substrings := self piecesCutWhereCamelCase.
 	^ String streamContents: [:s | 
