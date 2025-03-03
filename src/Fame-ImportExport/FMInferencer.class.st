@@ -189,7 +189,7 @@ FMInferencer >> primitive: value [
 { #category : #parsing }
 FMInferencer >> referenceName: name [ 
 
-	self halt
+	self shouldBeImplemented
 ]
 
 { #category : #parsing }
