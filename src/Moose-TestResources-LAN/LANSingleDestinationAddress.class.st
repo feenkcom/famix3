@@ -10,7 +10,7 @@ Class {
 { #category : #comparing }
 LANSingleDestinationAddress >> equalsMultiple: aSingleNodeAddress [ 
 	 
-	^self halt
+	^self shouldBeImplemented
 ]
 
 { #category : #comparing }
