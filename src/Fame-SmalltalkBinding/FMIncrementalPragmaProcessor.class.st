@@ -72,7 +72,7 @@ FMIncrementalPragmaProcessor >> processClassMethod: aMethod [
 	superclassName := pragma argumentAt: 2.
 
 	"the description for the class"
-	meta := FM3MetaDescription new halt.
+	meta := FM3MetaDescription new.
 	meta name: className asString.
 	superclass := self findFameClass: superclassName.
 	superclass isNil ifTrue: [

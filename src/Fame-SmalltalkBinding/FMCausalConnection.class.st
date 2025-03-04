@@ -31,7 +31,7 @@ FMCausalConnection >> event: anEvent [
 			^self methodAddedEvent: anEvent ].
 		anEvent isRemoved ifTrue: [ 
 			^self methodRemovedEvent: anEvent ].
-		anEvent halt ].
+		anEvent error: 'Unknown event state' ].
 ]
 
 { #category : #private }
