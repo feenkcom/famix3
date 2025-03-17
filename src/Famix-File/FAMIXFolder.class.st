@@ -72,6 +72,24 @@ FAMIXFolder >> foldersGroup [
 	^FAMIXFolderGroup withAll: self folders withDescription: 'Folders'
 ]
 
+{ #category : #views }
+FAMIXFolder >> gtDirectoryFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Directory';
+		object: [ self fileReference ];
+		view: #gtTreeFor:
+]
+
+{ #category : #views }
+FAMIXFolder >> gtPathFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Path';
+		object: [ self fileReference ];
+		view: #gtPathFor:
+]
+
 { #category : #testing }
 FAMIXFolder >> isFolder [
 	^ true
