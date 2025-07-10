@@ -116,36 +116,6 @@ MooseScripts class >> createMediumModelForNetwork [
 ]
 
 { #category : #'loading scripts' }
-MooseScripts class >> createModelForConfigurationOfMoose [
-	"self createModelForConfigurationOfMoose"
-
-	| model importer packages rpackages |
-	
-	packages := Set new.
-	((ConfigurationOfMoose new project version: #development) packagesForSpecNamed: 'default') do: [ :spec | 
-		packages add: spec name ].
-	(ConfigurationOfMoose new project version: #development) projects do: [ :project |
-		packages addAll: ((project version packagesForSpecNamed: 'default') collect: #name) ].
-
-	rpackages := RPackage organizer packages select: [ :each | 
-		packages anySatisfy: [:p | p, '*' match: each name  ]].
-
-	model := MooseModel new.
-	model name: 'Moose'.
-	importer := MoosePharoImporterTask new.
-	importer importingContext 
-		mergeClassAndMetaclass";
-		computeTypeOfAttributes".
-	importer runCandidateOperator.
-	importer model: model; 
-		addFromPackagesNamed: (rpackages collect: #name);
-		runWithProgress.
-	model install.
-	^ model
-
-]
-
-{ #category : #'loading scripts' }
 MooseScripts class >> createModelForMorphic [
 	"
 	MessageTally spyOn: [self createModelForMorphic]
@@ -285,8 +255,8 @@ MooseScripts class >> packageNamesFor: aPrefixString withTestPackages: aBoolean 
 	"
 	
 	| packages packageNames aTestPrefixString |
-	RPackage organizer unregisterPackageNamed: aPrefixString. 
-	packages := RPackage organizer packages select: [:each | aPrefixString match: each name ].
+	self class packageOrganizer unregisterPackageNamed: aPrefixString. 
+	packages := self class packageOrganizer packages select: [:each | aPrefixString match: each name ].
 	packageNames := packages collect: [:pak | pak name].
 	aBoolean ifFalse: [
 		aTestPrefixString := aPrefixString, 'Tests*'.
@@ -317,8 +287,9 @@ MooseScripts class >> pharoPackageNames [
 	"self pharoPackageNames"
 	
 	| packages packageNames |
-	packages := (RPackage organizer packages select:[:each | each class = RPackage])
-									  asSortedCollection: [:a :b | a name <= b name].
+	packages := (RPackage organizer packages 
+		select:[:each | each isPharoPackageModel ])
+			asSortedCollection: [:a :b | a name <= b name].
 	packageNames := packages collect: [:pak | pak name].
 	^ packageNames
 ]

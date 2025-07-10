@@ -50,13 +50,14 @@ MoosePharoImporterTask >> addFromPackage: aRPackage [
 { #category : #adding }
 MoosePharoImporterTask >> addFromPackageNamed: aPackageName [
 
-	self addFromPackage: (RPackage organizer packageNamed: aPackageName asSymbol)
+	self addFromPackage: (self class packageOrganizer 
+		packageNamed: aPackageName asSymbol)
 ]
 
 { #category : #adding }
 MoosePharoImporterTask >> addFromPackagesMatching: aBlock [
 
-	RPackage organizer packages do: [:each |
+	self class packageOrganizer packages do: [:each |
 		 (aBlock value: each) ifTrue: [self addFromPackage: each]]
 ]
 
