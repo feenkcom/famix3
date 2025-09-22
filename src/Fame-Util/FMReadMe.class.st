@@ -14,7 +14,7 @@ FMReadMe >> export: class name: name on: stream [
 		[ :selector | 
 		stream
 			nextPutAll: 'm class: ' , name printString , 
-				' heading: ', (class organization categoryOfElement: selector) printString ,
+				' heading: ', (class protocolNameOfSelector: selector) printString ,
 				' compile: ' , (class sourceCodeAt: selector) asString printString;
 			nextPut: $.;
 			cr ]

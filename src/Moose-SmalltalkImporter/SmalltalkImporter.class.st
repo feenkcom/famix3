@@ -209,8 +209,8 @@ SmalltalkImporter >> createMethod: aCompiledMethod [
 	method hasClassScope: aCompiledMethod methodClass isMeta.
 	method
 		category:
-			(aCompiledMethod methodClass organization
-				categoryOfElement: aCompiledMethod selector).
+			(aCompiledMethod methodClass
+				protocolNameOfSelector: aCompiledMethod selector).
 	method isPublic: true.
 	method timeStamp: aCompiledMethod timeStamp.
 	importingContext shouldImportMethodBody
