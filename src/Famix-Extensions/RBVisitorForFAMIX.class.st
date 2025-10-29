@@ -58,7 +58,7 @@ RBVisitorForFAMIX >> importer: anObject [
 { #category : #private }
 RBVisitorForFAMIX >> isDirtySuperInMethod: sel withReceiver: rcvr [
 	
-	^(sel == self methodEntity name) not and: [rcvr isSuper]
+	^(sel == self methodEntity name) not and: [rcvr isMessage and: [ rcvr isSuperSend] ]
 ]
 
 { #category : #private }
