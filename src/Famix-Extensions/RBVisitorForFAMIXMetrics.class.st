@@ -202,10 +202,12 @@ RBVisitorForFAMIXMetrics >> processMethod: aMethodEntity usingImporter: anImport
 	self importer: anImporter.
 	self methodEntity: aMethodEntity.
 	self compiledMethod ifNil: [ ^ self ].
-	parseTree := self compiledMethod methodClass parseTreeFor: self compiledMethod selector.
+	parseTree := self compiledMethod methodClass
+			parseTreeForSelector: self compiledMethod selector.
 	parseTree
-		ifNotNil: [ "parseTreeOrNil := self stParseTree.
-	parseTreeOrNil isNil ifFalse: [self visitNode: parseTreeOrNil]" self visitMethodNode: parseTree ]
+		ifNotNil: [  "parseTreeOrNil := self stParseTree.
+	parseTreeOrNil isNil ifFalse: [self visitNode: parseTreeOrNil]"self
+				visitMethodNode: parseTree ]
 ]
 
 { #category : #'initialize-release' }

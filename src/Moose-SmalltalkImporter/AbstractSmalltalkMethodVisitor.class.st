@@ -180,11 +180,11 @@ AbstractSmalltalkMethodVisitor >> resolveInstanceSide: aNamedEntity [
 ]
 
 { #category : #accessing }
-AbstractSmalltalkMethodVisitor >> runWith: aCompiledMethod and: anEntity [ 
+AbstractSmalltalkMethodVisitor >> runWith: aCompiledMethod and: anEntity [
 	| parseTree |
 	self initializeForMethod: anEntity inClass: aCompiledMethod methodClass.
 
-	parseTree := theClass parseTreeFor: aCompiledMethod selector.
+	parseTree := theClass parseTreeForSelector: aCompiledMethod selector.
 	parseTree ifNotNil: [ self visitMethodNode: parseTree	"sourceCodeAt:" ]
 ]
 

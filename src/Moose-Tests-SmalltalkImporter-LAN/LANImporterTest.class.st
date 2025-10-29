@@ -343,7 +343,8 @@ LANImporterTest >> testNamespace [
 
 	| namespace |
 	namespace := self model entityNamed: #Smalltalk.
-	self assert: namespace class equals: FAMIXNamespace
+	self assert: namespace class equals: FAMIXNamespace.
+	^ namespace
 ]
 
 { #category : #tests }
