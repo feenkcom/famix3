@@ -287,7 +287,7 @@ MooseScripts class >> pharoPackageNames [
 	"self pharoPackageNames"
 	
 	| packages packageNames |
-	packages := (RPackage organizer packages 
+	packages := (self packageOrganizer packages 
 		select:[:each | each isPharoPackageModel ])
 			asSortedCollection: [:a :b | a name <= b name].
 	packageNames := packages collect: [:pak | pak name].

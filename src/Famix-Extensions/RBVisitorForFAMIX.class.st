@@ -1,6 +1,6 @@
 Class {
 	#name : #RBVisitorForFAMIX,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #OCProgramNodeVisitor,
 	#instVars : [
 		'methodEntity',
 		'stClass',
