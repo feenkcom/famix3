@@ -132,7 +132,7 @@ GtPhpObject >> gtCompleteSourceFor: aView [
 					from: child start asNumber + 1 
 					to: child start asNumber + child length asNumber)
 				attributes:
-					{(BlTextHighlightAttribute new
+					{(BlTextUnderlayAttribute new
 						beNotOverwritableByStyler;
 						paint: (BrGlamorousColors neutralBackgroundColor))}.
 				
