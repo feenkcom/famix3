@@ -72,6 +72,12 @@ BaselineOfFamix3 >> baseline: spec [
 			package: 'Famix-Tests-Extensions' with: [
 				spec requires: #('Moose-TestResources-LCOM' ). ];
 			package: #'Moose-Query-Test' with: [
-				spec requires: #('Famix-Core' #'Moose-Query-Extensions' ). ]. ].
+				spec requires: #('Famix-Core' #'Moose-Query-Extensions' ). ].
+		self 
+				forPharo13AndNewer: [] 
+				forOlder: [
+					spec package: 'Moose-Core-Pharo12Extensions' with: [ 
+						spec requires: #('Moose-Core') ] ]
+		].
 
 ]
