@@ -10,7 +10,7 @@ BaselineOfFamix3 >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'Fame' with: [
-				spec repository: 'github://feenkcom/famix3:v0.8.40/src' ].
+				spec repository: 'github://feenkcom/famix3:v0.8.41/src' ].
 		spec
 			baseline: 'CollectionExtensions' with: [
 				spec repository: 'github://pharo-contributions/CollectionExtensions:7d61095afdead8d6949b7f0d5412964b200837a5/src' ].
@@ -74,5 +74,7 @@ BaselineOfFamix3 >> baseline: spec [
 			spec requires: #(#'Moose-TestResources-LCOM') ].
 		spec package: 'Moose-Query-Test' with: [
 			spec requires: #(#'Famix-Core' #'Moose-Query-Extensions') ].
+		spec package: 'Moose-Core-Pharo12Extensions' with: [
+			spec requires: #(#'Moose-Core') ].
 	]
 ]
