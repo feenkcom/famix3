@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+FameNameConventionBetweenFM3AndSmalltalkRule class >> group [
+	^ 'Fame'
+]
+
+{ #category : #accessing }
 FameNameConventionBetweenFM3AndSmalltalkRule class >> uniqueIdentifierName [
 	^ 'NameConventionBetweenFM3AndSmalltalk'
 ]
@@ -85,7 +90,7 @@ FameNameConventionBetweenFM3AndSmalltalkRule >> checkClass: aContext [
 
 { #category : #accessing }
 FameNameConventionBetweenFM3AndSmalltalkRule >> group [
-	^ 'Fame'
+	^ self class group
 ]
 
 { #category : #accessing }

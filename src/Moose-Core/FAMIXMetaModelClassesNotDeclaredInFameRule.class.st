@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+FAMIXMetaModelClassesNotDeclaredInFameRule class >> group [
+	^ 'FAMIX'
+]
+
+{ #category : #accessing }
 FAMIXMetaModelClassesNotDeclaredInFameRule class >> uniqueIdentifierName [
 	^ 'MetaModelClassesNotDeclaredInFame'
 ]
@@ -29,7 +34,7 @@ FAMIXMetaModelClassesNotDeclaredInFameRule >> checkClass: aContext [
 
 { #category : #accessing }
 FAMIXMetaModelClassesNotDeclaredInFameRule >> group [
-	^ 'FAMIX'
+	^ self class group
 ]
 
 { #category : #accessing }
