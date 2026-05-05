@@ -13,6 +13,18 @@ FAMIXMetaModelClassesNotDeclaredInFameRule class >> group [
 ]
 
 { #category : #accessing }
+FAMIXMetaModelClassesNotDeclaredInFameRule class >> rationale [
+
+	^ 'check if a metamodel class is properly declared using a <MSEClass:super:> pragma. Additionally, this pragma should be in a #annotation class-side method, although this is not enforced. Default Moose tools are resilient with respect to metamodel descriptions, and accept as metamodel classes any subclass of MooseEntity. This rule enforces that all such classes are properly described in Fame, ensuring proper use by strict tools.'
+]
+
+{ #category : #accessing }
+FAMIXMetaModelClassesNotDeclaredInFameRule class >> ruleName [
+
+	^ 'A metamodel class is not properly Fame-described by a <MSEClass:super:> pragma'
+]
+
+{ #category : #accessing }
 FAMIXMetaModelClassesNotDeclaredInFameRule class >> uniqueIdentifierName [
 	^ 'MetaModelClassesNotDeclaredInFame'
 ]
@@ -46,13 +58,13 @@ FAMIXMetaModelClassesNotDeclaredInFameRule >> metaModelClasses [
 { #category : #accessing }
 FAMIXMetaModelClassesNotDeclaredInFameRule >> name [
 
-	^ 'A metamodel class is not properly Fame-described by a <MSEClass:super:> pragma'
+	^ self class ruleName
 ]
 
 { #category : #accessing }
 FAMIXMetaModelClassesNotDeclaredInFameRule >> rationale [
 
-	^ 'check if a metamodel class is properly declared using a <MSEClass:super:> pragma. Additionally, this pragma should be in a #annotation class-side method, although this is not enforced. Default Moose tools are resilient with respect to metamodel descriptions, and accept as metamodel classes any subclass of MooseEntity. This rule enforces that all such classes are properly described in Fame, ensuring proper use by strict tools.'
+	^ self class rationale
 ]
 
 { #category : #running }

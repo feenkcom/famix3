@@ -10,6 +10,19 @@ FameNameConventionBetweenFM3AndSmalltalkRule class >> group [
 ]
 
 { #category : #accessing }
+FameNameConventionBetweenFM3AndSmalltalkRule class >> rationale [
+
+	^ 'check (for a class metadescribed with FM3 pragmas) if the FM3 class generated respect the convention between FM3  and Smalltalk:
+	A FM3 class should be named PACKAGE.CLASSNAME whereas the smalltalk class associated should  be named PACKAGECLASSNAME. It is also an error to declare a FM3 meta-description without a package.'
+]
+
+{ #category : #accessing }
+FameNameConventionBetweenFM3AndSmalltalkRule class >> ruleName [
+
+	^ 'FM3 class doesnt respect the fame name convention between FM3 and Smalltalk '
+]
+
+{ #category : #accessing }
 FameNameConventionBetweenFM3AndSmalltalkRule class >> uniqueIdentifierName [
 	^ 'NameConventionBetweenFM3AndSmalltalk'
 ]
@@ -96,12 +109,11 @@ FameNameConventionBetweenFM3AndSmalltalkRule >> group [
 { #category : #accessing }
 FameNameConventionBetweenFM3AndSmalltalkRule >> name [
 
-	^ 'FM3 class doesnt respect the fame name convention between FM3 and Smalltalk '
+	^self class ruleName
 ]
 
 { #category : #accessing }
 FameNameConventionBetweenFM3AndSmalltalkRule >> rationale [
 
-	^ 'check (for a class metadescribed with FM3 pragmas) if the FM3 class generated respect the convention between FM3  and Smalltalk:
-	A FM3 class should be named PACKAGE.CLASSNAME whereas the smalltalk class associated should  be named PACKAGECLASSNAME. It is also an error to declare a FM3 meta-description without a package.'
+	^ self class rationale
 ]
