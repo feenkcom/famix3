@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+FameSuperclassMetaDescribedExistRule class >> group [
+	^ 'Fame'
+]
+
+{ #category : #accessing }
 FameSuperclassMetaDescribedExistRule class >> uniqueIdentifierName [
 	^ 'SuperclassMetaDescribedExist'
 ]
@@ -35,7 +40,7 @@ FameSuperclassMetaDescribedExistRule >> checkClass: aContext [
 
 { #category : #accessing }
 FameSuperclassMetaDescribedExistRule >> group [
-	^ 'Fame'
+	^ self class group
 ]
 
 { #category : #accessing }

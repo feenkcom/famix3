@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+FAMIXMetaModelClassesShouldNotOverrideRule class >> group [
+	^ 'FAMIX'
+]
+
+{ #category : #accessing }
 FAMIXMetaModelClassesShouldNotOverrideRule class >> uniqueIdentifierName [
 	^ 'MetaModelClassShouldNotOverride'
 ]
@@ -30,7 +35,7 @@ FAMIXMetaModelClassesShouldNotOverrideRule >> checkClass: aContext [
 
 { #category : #accessing }
 FAMIXMetaModelClassesShouldNotOverrideRule >> group [
-	^ 'FAMIX'
+	^ self class group
 ]
 
 { #category : #accessing }

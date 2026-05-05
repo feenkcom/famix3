@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+FameOppositeClassNotExistRule class >> group [
+
+	^ 'Fame'
+]
+
+{ #category : #accessing }
 FameOppositeClassNotExistRule class >> uniqueIdentifierName [
 	^ 'OppositeClassNotExist'
 ]
@@ -29,7 +35,7 @@ FameOppositeClassNotExistRule >> checkMethod: aContext [
 { #category : #accessing }
 FameOppositeClassNotExistRule >> group [
 
-	^ 'Fame'
+	^ self class group
 ]
 
 { #category : #accessing }

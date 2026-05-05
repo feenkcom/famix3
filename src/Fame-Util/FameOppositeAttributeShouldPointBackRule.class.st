@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+FameOppositeAttributeShouldPointBackRule class >> group [
+	^ 'Fame'
+]
+
+{ #category : #accessing }
 FameOppositeAttributeShouldPointBackRule class >> uniqueIdentifierName [
 	^ 'OppositeAttributeShouldPointBack'
 ]
@@ -36,7 +41,7 @@ FameOppositeAttributeShouldPointBackRule >> checkMethod: aContext [
 
 { #category : #accessing }
 FameOppositeAttributeShouldPointBackRule >> group [
-	^ 'Fame'
+	^ self class group
 ]
 
 { #category : #accessing }
