@@ -10,6 +10,18 @@ FameOppositeAttributeShouldPointBackRule class >> group [
 ]
 
 { #category : #accessing }
+FameOppositeAttributeShouldPointBackRule class >> rationale [
+
+	^ 'Check if an opposite attribute declared in a pragma #MSEProperty:type:opposite: also define a pragma pointing back to the initial class and the initial attribute.'
+]
+
+{ #category : #accessing }
+FameOppositeAttributeShouldPointBackRule class >> ruleName [
+
+	^ 'An opposite attribute declared in pragma does not point back to the initial attribute'
+]
+
+{ #category : #accessing }
 FameOppositeAttributeShouldPointBackRule class >> uniqueIdentifierName [
 	^ 'OppositeAttributeShouldPointBack'
 ]
@@ -47,11 +59,11 @@ FameOppositeAttributeShouldPointBackRule >> group [
 { #category : #accessing }
 FameOppositeAttributeShouldPointBackRule >> name [
 
-	^ 'An opposite attribute declared in pragma does not point back to the initial attribute'
+	^self class ruleName
 ]
 
 { #category : #accessing }
 FameOppositeAttributeShouldPointBackRule >> rationale [
 
-	^ 'Check if an opposite attribute declared in a pragma #MSEProperty:type:opposite: also define a pragma pointing back to the initial class and the initial attribute.'
+	^ self class rationale
 ]

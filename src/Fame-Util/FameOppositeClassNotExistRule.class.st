@@ -11,6 +11,18 @@ FameOppositeClassNotExistRule class >> group [
 ]
 
 { #category : #accessing }
+FameOppositeClassNotExistRule class >> rationale [
+
+	^ 'Check if the opposite class declared in a pragma #MSEProperty:type:opposite: is defined.'
+]
+
+{ #category : #accessing }
+FameOppositeClassNotExistRule class >> ruleName [
+
+	^ 'An opposite class declared in pragma #MSEProperty:type:opposite: does not exist'
+]
+
+{ #category : #accessing }
 FameOppositeClassNotExistRule class >> uniqueIdentifierName [
 	^ 'OppositeClassNotExist'
 ]
@@ -41,11 +53,11 @@ FameOppositeClassNotExistRule >> group [
 { #category : #accessing }
 FameOppositeClassNotExistRule >> name [
 
-	^ 'An opposite class declared in pragma #MSEProperty:type:opposite: does not exist'
+	^ self class ruleName
 ]
 
 { #category : #accessing }
 FameOppositeClassNotExistRule >> rationale [
 
-	^ 'Check if the opposite class declared in a pragma #MSEProperty:type:opposite: is defined.'
+	^ self class rationale
 ]
