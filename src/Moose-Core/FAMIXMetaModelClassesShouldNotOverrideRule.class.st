@@ -8,6 +8,23 @@ Class {
 }
 
 { #category : #accessing }
+FAMIXMetaModelClassesShouldNotOverrideRule class >> group [
+	^ 'FAMIX'
+]
+
+{ #category : #accessing }
+FAMIXMetaModelClassesShouldNotOverrideRule class >> rationale [
+
+	^ 'check if a metamodel class (FAMIXEntity and all its subclasses) override some methods that it should not override. Those methods are specified by RBFAMIXMetaModelClassesShouldNotOverrideRule >> selectorsThatShouldNotBeOverriden'
+]
+
+{ #category : #accessing }
+FAMIXMetaModelClassesShouldNotOverrideRule class >> ruleName [
+
+	^ 'A metamodel class override a method that it should not override'
+]
+
+{ #category : #accessing }
 FAMIXMetaModelClassesShouldNotOverrideRule class >> uniqueIdentifierName [
 	^ 'MetaModelClassShouldNotOverride'
 ]
@@ -30,7 +47,7 @@ FAMIXMetaModelClassesShouldNotOverrideRule >> checkClass: aContext [
 
 { #category : #accessing }
 FAMIXMetaModelClassesShouldNotOverrideRule >> group [
-	^ 'FAMIX'
+	^ self class group
 ]
 
 { #category : #accessing }
@@ -42,13 +59,13 @@ FAMIXMetaModelClassesShouldNotOverrideRule >> metaModelClasses [
 { #category : #accessing }
 FAMIXMetaModelClassesShouldNotOverrideRule >> name [
 
-	^ 'A metamodel class override a method that it should not override'
+	^self class ruleName
 ]
 
 { #category : #accessing }
 FAMIXMetaModelClassesShouldNotOverrideRule >> rationale [
 
-	^ 'check if a metamodel class (FAMIXEntity and all its subclasses) override some methods that it should not override. Those methods are specified by RBFAMIXMetaModelClassesShouldNotOverrideRule >> selectorsThatShouldNotBeOverriden'
+	^ self class rationale
 ]
 
 { #category : #accessing }
