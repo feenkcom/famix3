@@ -94,6 +94,18 @@ MooseMemoryEfficientState >> flushProperties [
 	propertyCache initialize
 ]
 
+{ #category : #views }
+MooseMemoryEfficientState >> gtPropertyCacheFor: aView [
+	<gtView>
+	propertyCache ifNil: [ ^ aView empty ].
+	^ aView columnedList
+		title: 'PropertyCache';
+		items: [ propertyCache associations ];
+		column: 'Key' text: [ :each | each key ];
+		column: 'Value' text: [ :each | each value ];
+		send: #value
+]
+
 { #category : #testing }
 MooseMemoryEfficientState >> hasMooseModel [
 	1 to: attributes size do: [ :n | 
