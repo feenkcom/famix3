@@ -138,7 +138,8 @@ FAMIXAnnotationInstance >> name [
 		streamContents: [ :stream | 
 			stream << '@'
 				<< (self annotationType ifNil: [ super name ] ifNotNil: [ :type | type name ])
-				<< ' on ' << (self annotatedEntity ifNotNil: #name ifNil: [ 'undefined' ]) ]
+				<< ' on '
+				<< (self annotatedEntity ifNotNil: [ :v | v name ] ifNil: [ 'undefined' ]) ]
 ]
 
 { #category : #'moosequery-queries-outgoing' }
