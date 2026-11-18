@@ -25,7 +25,9 @@ FAMIXPharoAnchor >> initialize [
 
 { #category : #accessing }
 FAMIXPharoAnchor >> lineCount [
-	^ self sourceText ifNotNil: #lineCount ifNil: [ self notExistentMetricValue ]
+	^ self sourceText
+		ifNotNil: [ :v | v lineCount ]
+		ifNil: [ self notExistentMetricValue ]
 ]
 
 { #category : #accessing }
@@ -44,5 +46,5 @@ FAMIXPharoAnchor >> pharoEntity: anObject [
 
 { #category : #accessing }
 FAMIXPharoAnchor >> sourceText [
-	^ self pharoEntity ifNotNil: #definition  
+	^ self pharoEntity ifNotNil: [ :v | v definition ]
 ]
