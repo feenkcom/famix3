@@ -274,7 +274,7 @@ SmalltalkImporter >> createUnknownVariable: name [
 
 	| unknown |
 	unknown := globals
-		at: name
+		at: name asSymbol
 		put: FAMIXUnknownVariable new.
 	unknown name: name.
 	^unknown
@@ -398,7 +398,7 @@ SmalltalkImporter >> ensurePackage: aPackageModel [
 SmalltalkImporter >> ensureUnknownVariable: name [
 	
 	^globals
-		at: name
+		at: name asSymbol
 		ifAbsent: [self createUnknownVariable: name]
 ]
 

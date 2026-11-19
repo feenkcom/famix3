@@ -495,7 +495,7 @@ MooseModel >> removeAll: collection [
 MooseModel >> removeModelNamed: aStringOrSymbol [
 
 	| el |
-	el := self entityStorage elements detect: [:each | each name = aStringOrSymbol asSymbol] ifNone: [nil].
+	el := self entityStorage elements detect: [:each | each name sameContentAs: aStringOrSymbol] ifNone: [nil].
 	el ifNotNil: [self entityStorage remove: el.
 				el privateSetMooseModel: nil.].
 	^el

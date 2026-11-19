@@ -363,7 +363,7 @@ AbstractSmalltalkMethodVisitor >> visitVariableNode: aVariableNode [
 			"Warning! Smalltalk is both a Namespace and a GlobalVariable.
 		By default the importer resolves Smalltalk to the namespace (for class and namespace creation).
 		When we access Smalltalk as a variable, we create an access to the SmalltalkGlobalVariable instead"
-			aVariableNode name = 'Smalltalk'
+			aVariableNode name = #Smalltalk
 				ifTrue: [ global := importer ensureGlobalVariable: #SmalltalkGlobalVariable value: Smalltalk.
 					access := self createAccessTo: global writing: false ]
 				ifFalse: [ namedEntity := self resolve: aVariableNode name asString.
