@@ -18,7 +18,9 @@ FAMIXSourceTextAnchor class >> annotation [
 
 { #category : #accessing }
 FAMIXSourceTextAnchor >> lineCount [
-	^ self sourceText ifNotNil: #lineCount ifNil: [ self notExistentMetricValue ]
+	^ self sourceText
+		ifNotNil: [ :v | v lineCount ]
+		ifNil: [ self notExistentMetricValue ]
 ]
 
 { #category : #accessing }
