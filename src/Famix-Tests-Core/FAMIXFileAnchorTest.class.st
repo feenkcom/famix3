@@ -98,7 +98,7 @@ FAMIXFileAnchorTest >> testMooseNameOn [
 		startLine: 1;
 		endLine: 9;
 		yourself.
-	self assert: fileAnchor mooseName equals: 'file(1@nil-9@nil)'
+	self assert: fileAnchor mooseName equals: #'file(1@nil-9@nil)'
 ]
 
 { #category : #tests }
@@ -111,7 +111,7 @@ FAMIXFileAnchorTest >> testMooseNameWithColumns [
 		endLine: 3;
 		endColumn: 4;
 		yourself.
-	self assert: fileAnchor mooseName equals: 'file(1@2-3@4)'
+	self assert: fileAnchor mooseName equals: #'file(1@2-3@4)'
 ]
 
 { #category : #tests }

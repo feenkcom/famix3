@@ -384,7 +384,7 @@ MooseModelTest >> testRemoveModelNamedFromRoot [
 	self assert: model2 mooseModel == parentModel.
 	self assert: parentModel size equals: 2.
 	res := parentModel removeModelNamed: 'zork'.
-	self assert: res name equals: #zork.
+	self assert: res name equals: 'zork'.
 	self assert: res mooseModel isNil.
 	self deny: (parentModel includes: res).
 	self assert: parentModel size equals: 1
