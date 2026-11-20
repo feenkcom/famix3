@@ -18,12 +18,12 @@ SmalltalkScope class >> extend: aScope [
 
 { #category : #accessing }
 SmalltalkScope >> at: name bind: object [ 
-	^dictionary at: name put: object
+	^dictionary at: name asSymbol put: object
 ]
 
 { #category : #accessing }
 SmalltalkScope >> at: name ifAbsent: aBlock [ 
-	^dictionary at: name ifAbsent: aBlock
+	^dictionary at: name asSymbol ifAbsent: aBlock
 ]
 
 { #category : #enumerating }
@@ -55,7 +55,7 @@ SmalltalkScope >> parent: anObject [
 SmalltalkScope >> resolve: name ifAbsent: aBlock [ 
 	 
 	^dictionary 
-		at: name 
+		at: name asSymbol 
 		ifAbsent: 
 			[parent ~~ nil 
 				ifTrue: [parent resolve: name ifAbsent: aBlock] 
