@@ -502,7 +502,7 @@ MooseEntity >> propertyNamed: propertyName ifAbsent: aBlock [
 { #category : #properties }
 MooseEntity >> propertyNamed: name ifAbsentPut: value [ 
 	 
-	^self privateState propertyAt: name ifAbsentPut: value
+	^self privateState propertyAt: name asSymbol ifAbsentPut: value
 ]
 
 { #category : #properties }
@@ -523,7 +523,7 @@ MooseEntity >> propertyNamed: propertyName ifNil: aBlock [
 { #category : #properties }
 MooseEntity >> propertyNamed: name put: value [ 
 	 
-	^self privateState propertyAt: name put: value
+	^self privateState propertyAt: name asSymbol put: value
 ]
 
 { #category : #accessing }
