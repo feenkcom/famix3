@@ -28,10 +28,11 @@ FAMIXNamespaceTest >> setUp [
 
 { #category : #testing }
 FAMIXNamespaceTest >> testMooseDisplayString [
+	"mooseName is a Symbol (FAMIXNamedEntity>>#name: converts with asSymbol), the display string a String"
 	{root.
 	child1.
 	child2.
-	child11} do: [ :each | self assert: each gtDisplayString equals: each mooseName ]
+	child11} do: [ :each | self assert: each gtDisplayString equals: each mooseName asString ]
 ]
 
 { #category : #testing }

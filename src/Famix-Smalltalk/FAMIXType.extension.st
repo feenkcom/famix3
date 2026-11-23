@@ -56,7 +56,8 @@ FAMIXType >> isInstanceSide [
 
 { #category : #'*Famix-Smalltalk' }
 FAMIXType >> isSUnitTestCase [
-	self allSuperclassesDo: [:each | each name = 'TestCase' ifTrue: [^ true] ].
+	"FAMIX names are Symbols (FAMIXNamedEntity>>#name: converts with asSymbol)"
+	self allSuperclassesDo: [:each | each name = #TestCase ifTrue: [^ true] ].
 	^ false
 ]
 
